@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holy Qur'an - The Believers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/QuranWBW/fonts@latest/dist/v4.2.1/QuranWBW.css" rel="stylesheet">
+    <style>
+        .quran-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .surah-card {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(45, 212, 20, 0.05) 100%);
+            border: 2px solid var(--color-neon-green);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(45, 212, 20, 0.2);
+        }
+
+        .surah-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--color-neon-green), inset 0 0 15px rgba(45, 212, 20, 0.1);
+        }
+
+        .surah-number {
+            font-size: 0.875rem;
+            color: var(--color-gray-400);
+            margin-bottom: 0.5rem;
+        }
+
+        .surah-arabic {
+            font-size: 1.75rem;
+            color: var(--color-neon-green);
+            font-family: 'Amiri', serif;
+            text-align: right;
+            margin: 1rem 0;
+            line-height: 1.8;
+            text-shadow: 0 0 10px rgba(45, 212, 20, 0.3);
+        }
+
+        .surah-english {
+            font-size: 1.125rem;
+            color: var(--color-white);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .surah-info {
+            font-size: 0.875rem;
+            color: var(--color-gray-400);
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(45, 212, 20, 0.2);
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .quran-search {
+            width: 100%;
+            padding: 1rem;
+            background: var(--color-primary-light);
+            border: 2px solid var(--color-neon-green);
+            border-radius: 0.75rem;
+            color: var(--color-white);
+            font-size: 1rem;
+        }
+
+        .quran-search::placeholder {
+            color: var(--color-gray-400);
+        }
+
+        .quran-search:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--color-neon-green);
+        }
+
+        /* Indo-Pak Nastaleeq Text */
+        .indopak-text {
+            font-family: 'QuranWBW', serif;
+            font-size: 1.4rem;
+            line-height: 2.2;
+            text-align: right;
+            direction: rtl;
+        }
+
+        body.light-mode .surah-card {
+            background: linear-gradient(135deg, #ffffff 0%, rgba(45, 212, 20, 0.02) 100%);
+            border-color: #2DD414;
+        }
+
+        body.light-mode .surah-arabic {
+            color: #2DD414;
+        }
+
+        body.light-mode .quran-search {
+            background: #f5f5f5;
+            color: #000;
+            border-color: #2DD414;
+        }
+
+        /* Mushaf Full Page */
+        .mushaf-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--color-primary);
+            z-index: 1000;
+            overflow-y: auto;
+            flex-direction: column;
+        }
+
+        .mushaf-modal.active {
+            display: flex;
+        }
+
+        .mushaf-content {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 2rem;
+            max-width: 100%;
+            width: 100%;
+            max-height: none;
+            overflow-y: auto;
+            box-shadow: none;
+            position: relative;
+            flex: 1;
+        }
+
+        .mushaf-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-neon-green);
+            position: sticky;
+            top: 0;
+            background: var(--color-primary);
+            z-index: 10;
+        }
+
+        .mushaf-title {
+            font-size: 2.5rem;
+            color: var(--color-neon-green);
+            font-family: 'Amiri', serif;
+            margin: 1rem 0;
+            text-shadow: 0 0 10px rgba(45, 212, 20, 0.3);
+        }
+
+        .mushaf-close {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--color-neon-green);
+            color: #000;
+            border: none;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            font-size: 1.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            box-shadow: 0 0 15px var(--color-neon-green);
+        }
+
+        .mushaf-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 0 25px var(--color-neon-green);
+        }
+
+        .mushaf-verses {
+            font-family: 'Amiri', serif;
+            line-height: 2;
+            text-align: right;
+            direction: rtl;
+            color: var(--color-white);
+        }
+
+        .ayah-block {
+            background: linear-gradient(135deg, rgba(45, 212, 20, 0.05) 0%, transparent 100%);
+            border: 1px solid rgba(45, 212, 20, 0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .ayah-text {
+            font-size: 1.5rem;
+            margin: 0;
+            line-height: 2.2;
+            word-spacing: 0.5rem;
+        }
+
+        .ayah-number {
+            color: var(--color-neon-green);
+            font-weight: bold;
+            margin: 0 0.5rem;
+            text-shadow: 0 0 5px rgba(45, 212, 20, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .mushaf-content {
+                padding: 1.5rem;
+                max-width: 100%;
+            }
+
+            .mushaf-title {
+                font-size: 1.75rem;
+            }
+
+            .ayah-text {
+                font-size: 1.25rem;
+                line-height: 2;
+                word-spacing: 0.3rem;
+            }
+
+            .ayah-block {
+                min-height: 280px;
+                padding: 1.25rem;
+            }
+
+            .mushaf-close {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.5rem;
+                top: 1.5rem;
+                right: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mushaf-content {
+                padding: 1rem;
+            }
+
+            .ayah-text {
+                font-size: 1.1rem;
+                line-height: 1.9;
+                word-spacing: 0.2rem;
+            }
+
+            .ayah-block {
+                min-height: 240px;
+                padding: 1rem;
+            }
+
+            .mushaf-title {
+                font-size: 1.5rem;
+            }
+
+            .mushaf-close {
+                width: 2.25rem;
+                height: 2.25rem;
+                font-size: 1.25rem;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .mushaf-header {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">☪</div>
+                    <span class="logo-text">The Believers</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link">Islamic Tools ▾</a>
+                        <div class="dropdown-content">
+                            <a href="prayer-times.html">Prayer Times</a>
+                            <a href="quran.html">Qur'an</a>
+                            <a href="zakat.html">Zakat Calculator</a>
+                            <a href="calendar.html">Calendar</a>
+                            <a href="mosque-finder.html">Mosque Finder</a>
+                        </div>
+                    </div>
+                    <a href="multimedia.html" class="nav-link">Multimedia</a>
+                    <a href="counter.html" class="nav-link">Counter</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="suggestions.html" class="nav-link">Suggestions</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn" id="themeToggle">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="4"/><path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title neon-text">The Holy Qur'an</h1>
+                <p class="page-subtitle">All 114 Surahs - بسم الله الرحمن الرحيم</p>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="surahSearch" class="quran-search" placeholder="Search Surah by name or number...">
+            </div>
+
+            <div class="quran-grid" id="quranGrid"></div>
+        </div>
+    </main>
+
+    <!-- Mushaf Modal -->
+    <div class="mushaf-modal" id="mushafModal">
+        <div class="mushaf-content">
+            <button class="mushaf-close" onclick="closeMushaf()">✕</button>
+            <div class="mushaf-header">
+                <h2 class="mushaf-title" id="mushafTitle"></h2>
+                <p style="color: var(--color-gray-400);" id="mushafInfo"></p>
+            </div>
+            <div class="mushaf-verses" id="mushafVerses"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">☪</div>
+                        <span class="logo-text">The Believers</span>
+                    </div>
+                    <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
+                    <div class="social-links">
+                        <a href="https://youtube.com" class="social-link" title="YouTube">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="https://tiktok.com" class="social-link" title="TikTok">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-.94-.08A5.77 5.77 0 0 0 6.59 19a5.77 5.77 0 0 0 5.77 5.77 5.77 5.77 0 0 0 5.77-5.77V12.6a7.66 7.66 0 0 0 4.54 1.71v-3.5a4.83 4.83 0 0 1-1.18-.15z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="prayer-times.html">Prayer Times</a></li>
+                        <li><a href="quran.html">Qur'an</a></li>
+                        <li><a href="zakat.html">Zakat Calculator</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>📧 info@thebelievers.com</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Latest Videos</h3>
+                    <div class="footer-videos">
+                        <a href="#" class="video-link">Islamic Lecture 1</a>
+                        <a href="#" class="video-link">Nasheed Collection</a>
+                        <a href="#" class="video-link">Quran Recitation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Believers. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        const surahs = [
+            { number: 1, arabic: 'الفاتحة', english: 'Al-Fatihah', verses: 7, revelation: 'Meccan' },
+            { number: 2, arabic: 'البقرة', english: 'Al-Baqarah', verses: 286, revelation: 'Medinan' },
+            { number: 3, arabic: 'آل عمران', english: 'Al-Imran', verses: 200, revelation: 'Medinan' },
+            { number: 4, arabic: 'النساء', english: 'An-Nisa', verses: 176, revelation: 'Medinan' },
+            { number: 5, arabic: 'المائدة', english: 'Al-Maidah', verses: 120, revelation: 'Medinan' },
+            { number: 6, arabic: 'الأنعام', english: 'Al-Anam', verses: 165, revelation: 'Meccan' },
+            { number: 7, arabic: 'الأعراف', english: 'Al-Araf', verses: 206, revelation: 'Meccan' },
+            { number: 8, arabic: 'الأنفال', english: 'Al-Anfal', verses: 75, revelation: 'Medinan' },
+            { number: 9, arabic: 'التوبة', english: 'At-Taubah', verses: 129, revelation: 'Medinan' },
+            { number: 10, arabic: 'يونس', english: 'Yunus', verses: 109, revelation: 'Meccan' },
+            { number: 11, arabic: 'هود', english: 'Hud', verses: 123, revelation: 'Meccan' },
+            { number: 12, arabic: 'يوسف', english: 'Yusuf', verses: 111, revelation: 'Meccan' },
+            { number: 13, arabic: 'الرعد', english: 'Ar-Rad', verses: 43, revelation: 'Medinan' },
+            { number: 14, arabic: 'إبراهيم', english: 'Ibrahim', verses: 52, revelation: 'Meccan' },
+            { number: 15, arabic: 'الحجر', english: 'Al-Hijr', verses: 99, revelation: 'Meccan' },
+            { number: 16, arabic: 'النحل', english: 'An-Nahl', verses: 128, revelation: 'Meccan' },
+            { number: 17, arabic: 'الإسراء', english: 'Al-Isra', verses: 111, revelation: 'Meccan' },
+            { number: 18, arabic: 'الكهف', english: 'Al-Kahf', verses: 110, revelation: 'Meccan' },
+            { number: 19, arabic: 'مريم', english: 'Maryam', verses: 98, revelation: 'Meccan' },
+            { number: 20, arabic: 'طه', english: 'Ta-Ha', verses: 135, revelation: 'Meccan' },
+            { number: 21, arabic: 'الأنبياء', english: 'Al-Anbiya', verses: 112, revelation: 'Meccan' },
+            { number: 22, arabic: 'الحج', english: 'Al-Hajj', verses: 78, revelation: 'Medinan' },
+            { number: 23, arabic: 'المؤمنون', english: 'Al-Muminun', verses: 118, revelation: 'Meccan' },
+            { number: 24, arabic: 'النور', english: 'An-Nur', verses: 64, revelation: 'Medinan' },
+            { number: 25, arabic: 'الفرقان', english: 'Al-Furqan', verses: 77, revelation: 'Meccan' },
+            { number: 26, arabic: 'الشعراء', english: 'Ash-Shuara', verses: 227, revelation: 'Meccan' },
+            { number: 27, arabic: 'النمل', english: 'An-Naml', verses: 93, revelation: 'Meccan' },
+            { number: 28, arabic: 'القصص', english: 'Al-Qasas', verses: 88, revelation: 'Meccan' },
+            { number: 29, arabic: 'العنكبوت', english: 'Al-Ankabut', verses: 69, revelation: 'Meccan' },
+            { number: 30, arabic: 'الروم', english: 'Ar-Rum', verses: 60, revelation: 'Meccan' },
+            { number: 31, arabic: 'لقمان', english: 'Luqman', verses: 34, revelation: 'Meccan' },
+            { number: 32, arabic: 'السجدة', english: 'As-Sajdah', verses: 30, revelation: 'Meccan' },
+            { number: 33, arabic: 'الأحزاب', english: 'Al-Ahzab', verses: 73, revelation: 'Medinan' },
+            { number: 34, arabic: 'سبأ', english: 'Saba', verses: 54, revelation: 'Meccan' },
+            { number: 35, arabic: 'فاطر', english: 'Fatir', verses: 45, revelation: 'Meccan' },
+            { number: 36, arabic: 'يس', english: 'Ya-Sin', verses: 83, revelation: 'Meccan' },
+            { number: 37, arabic: 'الصافات', english: 'As-Saffat', verses: 182, revelation: 'Meccan' },
+            { number: 38, arabic: 'ص', english: 'Sad', verses: 88, revelation: 'Meccan' },
+            { number: 39, arabic: 'الزمر', english: 'Az-Zumar', verses: 75, revelation: 'Meccan' },
+            { number: 40, arabic: 'غافر', english: 'Ghafir', verses: 85, revelation: 'Meccan' },
+            { number: 41, arabic: 'فصلت', english: 'Fussilat', verses: 54, revelation: 'Meccan' },
+            { number: 42, arabic: 'الشورى', english: 'Ash-Shura', verses: 53, revelation: 'Meccan' },
+            { number: 43, arabic: 'الزخرف', english: 'Az-Zukhruf', verses: 89, revelation: 'Meccan' },
+            { number: 44, arabic: 'الدخان', english: 'Ad-Dukhan', verses: 59, revelation: 'Meccan' },
+            { number: 45, arabic: 'الجاثية', english: 'Al-Jathiyah', verses: 37, revelation: 'Meccan' },
+            { number: 46, arabic: 'الأحقاف', english: 'Al-Ahqaf', verses: 35, revelation: 'Meccan' },
+            { number: 47, arabic: 'محمد', english: 'Muhammad', verses: 38, revelation: 'Medinan' },
+            { number: 48, arabic: 'الفتح', english: 'Al-Fath', verses: 29, revelation: 'Medinan' },
+            { number: 49, arabic: 'الحجرات', english: 'Al-Hujurat', verses: 18, revelation: 'Medinan' },
+            { number: 50, arabic: 'ق', english: 'Qaf', verses: 45, revelation: 'Meccan' },
+            { number: 51, arabic: 'الذاريات', english: 'Adh-Dhariyat', verses: 60, revelation: 'Meccan' },
+            { number: 52, arabic: 'الطور', english: 'At-Tur', verses: 49, revelation: 'Meccan' },
+            { number: 53, arabic: 'النجم', english: 'An-Najm', verses: 62, revelation: 'Meccan' },
+            { number: 54, arabic: 'القمر', english: 'Al-Qamar', verses: 55, revelation: 'Meccan' },
+            { number: 55, arabic: 'الرحمن', english: 'Ar-Rahman', verses: 78, revelation: 'Medinan' },
+            { number: 56, arabic: 'الواقعة', english: 'Al-Waqiah', verses: 96, revelation: 'Meccan' },
+            { number: 57, arabic: 'الحديد', english: 'Al-Hadid', verses: 29, revelation: 'Medinan' },
+            { number: 58, arabic: 'المجادلة', english: 'Al-Mujadalah', verses: 22, revelation: 'Medinan' },
+            { number: 59, arabic: 'الحشر', english: 'Al-Hashr', verses: 24, revelation: 'Medinan' },
+            { number: 60, arabic: 'الممتحنة', english: 'Al-Mumtahanah', verses: 13, revelation: 'Medinan' },
+            { number: 61, arabic: 'الصف', english: 'As-Saff', verses: 14, revelation: 'Medinan' },
+            { number: 62, arabic: 'الجمعة', english: 'Al-Jumah', verses: 11, revelation: 'Medinan' },
+            { number: 63, arabic: 'المنافقون', english: 'Al-Munafiqun', verses: 11, revelation: 'Medinan' },
+            { number: 64, arabic: 'التغابن', english: 'At-Taghabun', verses: 18, revelation: 'Medinan' },
+            { number: 65, arabic: 'الطلاق', english: 'At-Talaq', verses: 12, revelation: 'Medinan' },
+            { number: 66, arabic: 'التحريم', english: 'At-Tahrim', verses: 12, revelation: 'Medinan' },
+            { number: 67, arabic: 'الملك', english: 'Al-Mulk', verses: 30, revelation: 'Meccan' },
+            { number: 68, arabic: 'القلم', english: 'Al-Qalam', verses: 52, revelation: 'Meccan' },
+            { number: 69, arabic: 'الحاقة', english: 'Al-Haqqah', verses: 52, revelation: 'Meccan' },
+            { number: 70, arabic: 'المعارج', english: 'Al-Maarij', verses: 44, revelation: 'Meccan' },
+            { number: 71, arabic: 'نوح', english: 'Nuh', verses: 28, revelation: 'Meccan' },
+            { number: 72, arabic: 'الجن', english: 'Al-Jinn', verses: 28, revelation: 'Meccan' },
+            { number: 73, arabic: 'المزمل', english: 'Al-Muzzammil', verses: 20, revelation: 'Meccan' },
+            { number: 74, arabic: 'المدثر', english: 'Al-Muddathir', verses: 56, revelation: 'Meccan' },
+            { number: 75, arabic: 'القيامة', english: 'Al-Qiyamah', verses: 40, revelation: 'Meccan' },
+            { number: 76, arabic: 'الإنسان', english: 'Al-Insan', verses: 31, revelation: 'Medinan' },
+            { number: 77, arabic: 'المرسلات', english: 'Al-Mursalat', verses: 50, revelation: 'Meccan' },
+            { number: 78, arabic: 'النبأ', english: 'An-Naba', verses: 40, revelation: 'Meccan' },
+            { number: 79, arabic: 'الناعات', english: 'An-Naziat', verses: 46, revelation: 'Meccan' },
+            { number: 80, arabic: 'عبس', english: 'Abasa', verses: 42, revelation: 'Meccan' },
+            { number: 81, arabic: 'التكوير', english: 'At-Takwir', verses: 29, revelation: 'Meccan' },
+            { number: 82, arabic: 'الانفطار', english: 'Al-Infitar', verses: 19, revelation: 'Meccan' },
+            { number: 83, arabic: 'المطففين', english: 'Al-Mutaffifin', verses: 36, revelation: 'Meccan' },
+            { number: 84, arabic: 'الانشقاق', english: 'Al-Inshiqaq', verses: 25, revelation: 'Meccan' },
+            { number: 85, arabic: 'البروج', english: 'Al-Buruj', verses: 22, revelation: 'Meccan' },
+            { number: 86, arabic: 'الطارق', english: 'At-Tariq', verses: 17, revelation: 'Meccan' },
+            { number: 87, arabic: 'الأعلى', english: 'Al-Ala', verses: 19, revelation: 'Meccan' },
+            { number: 88, arabic: 'الغاشية', english: 'Al-Ghashiyah', verses: 26, revelation: 'Meccan' },
+            { number: 89, arabic: 'الفجر', english: 'Al-Fajr', verses: 30, revelation: 'Meccan' },
+            { number: 90, arabic: 'البلد', english: 'Al-Balad', verses: 20, revelation: 'Meccan' },
+            { number: 91, arabic: 'الشمس', english: 'Ash-Shams', verses: 15, revelation: 'Meccan' },
+            { number: 92, arabic: 'الليل', english: 'Al-Lail', verses: 21, revelation: 'Meccan' },
+            { number: 93, arabic: 'الضحى', english: 'Ad-Duha', verses: 11, revelation: 'Meccan' },
+            { number: 94, arabic: 'الشرح', english: 'Ash-Sharh', verses: 8, revelation: 'Meccan' },
+            { number: 95, arabic: 'التين', english: 'At-Tin', verses: 8, revelation: 'Meccan' },
+            { number: 96, arabic: 'العلق', english: 'Al-Alaq', verses: 19, revelation: 'Meccan' },
+            { number: 97, arabic: 'القدر', english: 'Al-Qadr', verses: 5, revelation: 'Meccan' },
+            { number: 98, arabic: 'البينة', english: 'Al-Bayyinah', verses: 8, revelation: 'Medinan' },
+            { number: 99, arabic: 'الزلزلة', english: 'Az-Zalzalah', verses: 8, revelation: 'Medinan' },
+            { number: 100, arabic: 'العاديات', english: 'Al-Adiyat', verses: 11, revelation: 'Meccan' },
+            { number: 101, arabic: 'القارعة', english: 'Al-Qaria', verses: 11, revelation: 'Meccan' },
+            { number: 102, arabic: 'التكاثر', english: 'At-Takathur', verses: 8, revelation: 'Meccan' },
+            { number: 103, arabic: 'العصر', english: 'Al-Asr', verses: 3, revelation: 'Meccan' },
+            { number: 104, arabic: 'الهمزة', english: 'Al-Humaza', verses: 9, revelation: 'Meccan' },
+            { number: 105, arabic: 'الفيل', english: 'Al-Fil', verses: 5, revelation: 'Meccan' },
+            { number: 106, arabic: 'قريش', english: 'Quraysh', verses: 4, revelation: 'Meccan' },
+            { number: 107, arabic: 'الماعون', english: 'Al-Maun', verses: 7, revelation: 'Meccan' },
+            { number: 108, arabic: 'الكوثر', english: 'Al-Kawthar', verses: 3, revelation: 'Meccan' },
+            { number: 109, arabic: 'الكافرون', english: 'Al-Kafirun', verses: 6, revelation: 'Meccan' },
+            { number: 110, arabic: 'النصر', english: 'An-Nasr', verses: 3, revelation: 'Medinan' },
+            { number: 111, arabic: 'المسد', english: 'Al-Masad', verses: 5, revelation: 'Meccan' },
+            { number: 112, arabic: 'الإخلاص', english: 'Al-Ikhlas', verses: 4, revelation: 'Meccan' },
+            { number: 113, arabic: 'الفلق', english: 'Al-Falaq', verses: 5, revelation: 'Meccan' },
+            { number: 114, arabic: 'الناس', english: 'An-Nas', verses: 6, revelation: 'Meccan' }
+        ];
+
+        function renderSurahs(filtered = surahs) {
+            const grid = document.getElementById('quranGrid');
+            grid.innerHTML = '';
+            
+            filtered.forEach(surah => {
+                const card = document.createElement('div');
+                card.className = 'surah-card';
+                card.innerHTML = `
+                    <div class="surah-number">Surah ${surah.number}</div>
+                    <div class="surah-arabic">${surah.arabic}</div>
+                    <div class="surah-english">${surah.english}</div>
+                    <div class="surah-info">
+                        <span>${surah.verses} verses</span>
+                        <span>${surah.revelation}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => loadMushaf(surah));
+                grid.appendChild(card);
+            });
+        }
+
+        // Load Mushaf view with Indo-Pak text
+        async function loadMushaf(surah) {
+            const modal = document.getElementById('mushafModal');
+            const pageContent = document.querySelector('.page-content');
+            const title = document.getElementById('mushafTitle');
+            const info = document.getElementById('mushafInfo');
+            const verses = document.getElementById('mushafVerses');
+            
+            title.textContent = surah.arabic;
+            info.textContent = `${surah.english} - ${surah.verses} Verses - ${surah.revelation}`;
+            verses.innerHTML = '<p style="text-align: center; color: var(--color-gray-400);">Loading...</p>';
+            
+            modal.classList.add('active');
+            pageContent.style.display = 'none';
+            document.body.style.overflow = 'hidden';
+            
+            try {
+                const ayahs = await getSurahAyahs(surah.number);
+                
+                if (ayahs && ayahs.length > 0) {
+                    displayMushaf(ayahs);
+                } else {
+                    verses.innerHTML = '<p style="color: var(--color-gray-400);">Unable to load Surah text</p>';
+                }
+            } catch (error) {
+                console.error('Error loading Surah:', error);
+                verses.innerHTML = '<p style="color: var(--color-gray-400);">Error loading Surah. Please try again.</p>';
+            }
+        }
+
+        // Display Mushaf with Indo-Pak Nastaleeq text
+        function displayMushaf(ayahs) {
+            const container = document.getElementById('mushafVerses');
+            container.innerHTML = '';
+            
+            // Display Bismillah separately at the top
+            const bismillahDiv = document.createElement('div');
+            bismillahDiv.style.cssText = `
+                text-align: center;
+                font-size: 1.75rem;
+                color: var(--color-neon-green);
+                margin-bottom: 2rem;
+                padding: 1.5rem;
+                border-bottom: 2px solid var(--color-neon-green);
+                text-shadow: 0 0 10px rgba(45, 212, 20, 0.3);
+            `;
+            bismillahDiv.innerHTML = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+            bismillahDiv.className = 'indopak-text';
+            container.appendChild(bismillahDiv);
+            
+            // Filter out if first ayah contains Bismillah (some surahs have it)
+            let filteredAyahs = ayahs.filter((ayah, idx) => {
+                if (idx === 0 && ayah.text.includes('بِسْمِ')) {
+                    return false;
+                }
+                return true;
+            });
+            
+            // Create blocks based on the formatted ayahs
+            createBlocksByLineCount(filteredAyahs);
+        }
+
+        // Create blocks based on line count (16 lines per block)
+        function createBlocksByLineCount(ayahsData) {
+            const container = document.getElementById('mushafVerses');
+            let blockContent = [];
+            let wordCount = 0;
+            const WORDS_PER_BLOCK = 112; // Approximately 16 lines × 7 words per line
+            
+            ayahsData.forEach((ayah, index) => {
+                const text = ayah.text;
+                const number = ayah.number ? ayah.number.inSurah : ayah.number;
+                const words = text.split(' ').length;
+                
+                blockContent.push({
+                    text: text,
+                    number: number
+                });
+                wordCount += words;
+                
+                // Create block when reaching ~112 words (16 lines) or at the end
+                if (wordCount >= WORDS_PER_BLOCK || index === ayahsData.length - 1) {
+                    const blockDiv = document.createElement('div');
+                    blockDiv.className = 'ayah-block indopak-text';
+                    
+                    let blockHTML = '';
+                    blockContent.forEach(item => {
+                        blockHTML += item.text + ` <span class="ayah-number">[${item.number}]</span> `;
+                    });
+                    
+                    blockDiv.innerHTML = `<div class="ayah-text">${blockHTML.trim()}</div>`;
+                    container.appendChild(blockDiv);
+                    
+                    blockContent = [];
+                    wordCount = 0;
+                }
+            });
+        }
+
+        // Close Mushaf modal
+        function closeMushaf() {
+            const modal = document.getElementById('mushafModal');
+            const pageContent = document.querySelector('.page-content');
+            
+            modal.classList.remove('active');
+            pageContent.style.display = 'block';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('mushafModal').addEventListener('click', (e) => {
+            if (e.target.id === 'mushafModal') {
+                closeMushaf();
+            }
+        });
+
+        // Search functionality
+        document.getElementById('surahSearch').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = surahs.filter(surah => 
+                surah.english.toLowerCase().includes(query) ||
+                surah.number.toString().includes(query) ||
+                surah.arabic.includes(query)
+            );
+            renderSurahs(filtered);
+        });
+
+        // Initial render
+        renderSurahs();
+    </script>
+    <script src="js/quran-data.js"></script>
+</body>
+</html>

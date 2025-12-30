@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mosque Finder - The Believers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .mosque-finder-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .search-section {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(45, 212, 20, 0.05) 100%);
+            border: 2px solid var(--color-neon-green);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 20px rgba(45, 212, 20, 0.2);
+        }
+
+        .light-mode .search-section {
+            background: white;
+            border-color: #2DD414;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(45, 212, 20, 0.3);
+            border-radius: 0.5rem;
+            color: var(--color-white);
+            font-size: 1rem;
+            font-family: var(--font-sans);
+        }
+
+        .light-mode .search-input {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+            color: #111827;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--color-neon-green);
+            box-shadow: 0 0 10px rgba(45, 212, 20, 0.3);
+        }
+
+        .search-btn, .location-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--color-neon-green) 0%, #25a00f 100%);
+            color: var(--color-primary);
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(45, 212, 20, 0.4);
+            white-space: nowrap;
+        }
+
+        .search-btn:hover, .location-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(45, 212, 20, 0.6);
+        }
+
+        .light-mode .search-btn, .light-mode .location-btn {
+            color: white;
+        }
+
+        .location-btn {
+            background: linear-gradient(135deg, var(--color-gold) 0%, #d4af37 100%);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .light-mode .location-btn {
+            color: #0a0a0a;
+        }
+
+        .location-btn:hover {
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .map-container {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(45, 212, 20, 0.05) 100%);
+            border: 2px solid var(--color-neon-green);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 0 20px rgba(45, 212, 20, 0.2);
+            height: 600px;
+        }
+
+        .light-mode .map-container {
+            background: white;
+            border-color: #2DD414;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 0.5rem;
+        }
+
+        .mosque-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .mosque-card {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(45, 212, 20, 0.03) 100%);
+            border: 1px solid rgba(45, 212, 20, 0.3);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .light-mode .mosque-card {
+            background: white;
+            border-color: #E5E7EB;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .mosque-card:hover {
+            box-shadow: 0 0 20px rgba(45, 212, 20, 0.3);
+            transform: translateX(5px);
+            border-color: var(--color-neon-green);
+        }
+
+        .light-mode .mosque-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mosque-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .mosque-name {
+            color: var(--color-neon-green);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .light-mode .mosque-name {
+            color: #059669;
+        }
+
+        .mosque-distance {
+            background: rgba(45, 212, 20, 0.1);
+            color: var(--color-neon-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .light-mode .mosque-distance {
+            background: #F0FDF4;
+            color: #059669;
+        }
+
+        .mosque-info {
+            color: var(--color-gray-400);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .light-mode .mosque-info {
+            color: #6B7280;
+        }
+
+        .mosque-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(45, 212, 20, 0.1);
+            border: 1px solid var(--color-neon-green);
+            border-radius: 0.5rem;
+            color: var(--color-neon-green);
+            text-decoration: none;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .light-mode .action-btn {
+            background: #F0FDF4;
+            border-color: #2DD414;
+            color: #059669;
+        }
+
+        .action-btn:hover {
+            background: var(--color-neon-green);
+            color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        .light-mode .action-btn:hover {
+            background: #2DD414;
+            color: white;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--color-neon-green);
+        }
+
+        .loading-spinner.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid rgba(45, 212, 20, 0.1);
+            border-top: 3px solid var(--color-neon-green);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--color-gray-400);
+            display: none;
+        }
+
+        .no-results.active {
+            display: block;
+        }
+
+        .light-mode .no-results {
+            color: #9CA3AF;
+        }
+
+        .info-message {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--color-gold);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            color: var(--color-gold);
+            font-size: 0.875rem;
+        }
+
+        .light-mode .info-message {
+            background: #FFFBEB;
+            border-color: #FCD34D;
+            color: #92400E;
+        }
+
+        /* Scrollbar styling */
+        .mosque-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .mosque-list::-webkit-scrollbar-track {
+            background: rgba(45, 212, 20, 0.05);
+            border-radius: 4px;
+        }
+
+        .mosque-list::-webkit-scrollbar-thumb {
+            background: var(--color-neon-green);
+            border-radius: 4px;
+        }
+
+        .light-mode .mosque-list::-webkit-scrollbar-track {
+            background: #F3F4F6;
+        }
+
+        .light-mode .mosque-list::-webkit-scrollbar-thumb {
+            background: #9CA3AF;
+        }
+
+        /* Error/Alert Modal */
+        .alert-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .alert-modal.show {
+            display: flex;
+        }
+
+        .alert-content {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(45, 212, 20, 0.1) 100%);
+            border: 2px solid var(--color-neon-green);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 400px;
+            box-shadow: 0 0 30px rgba(45, 212, 20, 0.5);
+            text-align: center;
+        }
+
+        .light-mode .alert-content {
+            background: white;
+            border-color: #2DD414;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .alert-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .alert-title {
+            color: var(--color-neon-green);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .light-mode .alert-title {
+            color: #059669;
+        }
+
+        .alert-message {
+            color: var(--color-white);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .light-mode .alert-message {
+            color: #374151;
+        }
+
+        .alert-btn {
+            background: linear-gradient(135deg, var(--color-neon-green) 0%, #25a00f 100%);
+            color: var(--color-primary);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(45, 212, 20, 0.4);
+        }
+
+        .alert-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(45, 212, 20, 0.6);
+        }
+
+        .light-mode .alert-btn {
+            color: white;
+        }
+
+        /* Report Section */
+        .report-section {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(45, 212, 20, 0.05) 100%);
+            border: 2px solid var(--color-gold);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .light-mode .report-section {
+            background: #FFFBEB;
+            border-color: #FCD34D;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .report-icon {
+            font-size: 2rem;
+        }
+
+        .report-title {
+            color: var(--color-gold);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .light-mode .report-title {
+            color: #92400E;
+        }
+
+        .report-text {
+            color: var(--color-white);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .light-mode .report-text {
+            color: #374151;
+        }
+
+        .report-btn {
+            background: linear-gradient(135deg, var(--color-gold) 0%, #d4af37 100%);
+            color: var(--color-primary);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .report-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+        }
+
+        .light-mode .report-btn {
+            color: white;
+        }
+
+        /* Report Modal */
+        .report-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .report-modal.show {
+            display: flex;
+        }
+
+        .report-modal-content {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(45, 212, 20, 0.05) 100%);
+            border: 2px solid var(--color-neon-green);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 0 30px rgba(45, 212, 20, 0.5);
+        }
+
+        .light-mode .report-modal-content {
+            background: white;
+            border-color: #2DD414;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .report-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-modal-title {
+            color: var(--color-neon-green);
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        .light-mode .report-modal-title {
+            color: #059669;
+        }
+
+        .close-modal-btn {
+            background: none;
+            border: none;
+            color: var(--color-gray-400);
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--color-neon-green);
+        }
+
+        .report-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .report-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-neon-green);
+            font-weight: 500;
+        }
+
+        .light-mode .report-form-group label {
+            color: #059669;
+        }
+
+        .report-form-group input,
+        .report-form-group textarea,
+        .report-form-group select {
+            width: 100%;
+            padding: 0.875rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(45, 212, 20, 0.3);
+            border-radius: 0.5rem;
+            color: var(--color-white);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+        }
+
+        .report-form-group select option {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .light-mode .report-form-group input,
+        .light-mode .report-form-group textarea,
+        .light-mode .report-form-group select {
+            background: #F9FAFB;
+            border-color: #D1D5DB;
+            color: #111827;
+        }
+
+        .light-mode .report-form-group select option {
+            background: #FFFFFF;
+            color: #111827;
+        }
+
+        .report-form-group input:focus,
+        .report-form-group textarea:focus,
+        .report-form-group select:focus {
+            outline: none;
+            border-color: var(--color-neon-green);
+            box-shadow: 0 0 10px rgba(45, 212, 20, 0.3);
+        }
+
+        .report-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .report-submit-btn {
+            background: linear-gradient(135deg, var(--color-neon-green) 0%, #25a00f 100%);
+            color: var(--color-primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(45, 212, 20, 0.4);
+            width: 100%;
+        }
+
+        .report-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(45, 212, 20, 0.6);
+        }
+
+        .light-mode .report-submit-btn {
+            color: white;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">☪</div>
+                    <span class="logo-text">The Believers</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link">Islamic Tools ▾</a>
+                        <div class="dropdown-content">
+                            <a href="prayer-times.html">Prayer Times</a>
+                            <a href="quran.html">Qur'an</a>
+                            <a href="zakat.html">Zakat Calculator</a>
+                            <a href="calendar.html">Calendar</a>
+                            <a href="mosque-finder.html">Mosque Finder</a>
+                        </div>
+                    </div>
+                    <a href="multimedia.html" class="nav-link">Multimedia</a>
+                    <a href="counter.html" class="nav-link">Counter</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="suggestions.html" class="nav-link">Suggestions</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn" id="themeToggle">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="4"/><path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="mosque-finder-container">
+                <div class="page-header">
+                    <h1 class="page-title neon-text">🕌 Mosque Finder</h1>
+                    <p class="page-subtitle">Find Sunni mosques near you</p>
+                </div>
+
+                <div class="search-section">
+                    <div class="info-message">
+                        💡 Enter a location to search for mosques, or click "Use My Location" to find mosques nearby. Data from OpenStreetMap.
+                    </div>
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            class="search-input" 
+                            placeholder="Enter city, address, or zip code..."
+                            onkeypress="if(event.key === 'Enter') searchMosques()"
+                        >
+                        <button class="location-btn" onclick="useMyLocation()">
+                            📍 Use My Location
+                        </button>
+                        <button class="search-btn" onclick="searchMosques()">
+                            🔍 Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="map-container">
+                        <div id="map"></div>
+                    </div>
+
+                    <div class="mosque-list-container">
+                        <h3 class="gold-text" style="margin-bottom: 1rem;">Nearby Mosques</h3>
+                        
+                        <div class="loading-spinner" id="loadingSpinner">
+                            <div class="spinner"></div>
+                            <p>Searching for mosques...</p>
+                        </div>
+
+                        <div class="no-results" id="noResults">
+                            <p>No mosques found. Try searching a different location.</p>
+                        </div>
+
+                        <div class="mosque-list" id="mosqueList">
+                            <!-- Mosques will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <div class="report-header">
+                        <span class="report-icon">📢</span>
+                        <h3 class="report-title">Help Us Improve</h3>
+                    </div>
+                    <p class="report-text">
+                        Found a mosque that's missing from our map? Or noticed a mosque that's incorrectly listed as Sunni? 
+                        Let us know so we can keep our database accurate and helpful for everyone.
+                    </p>
+                    <button class="report-btn" onclick="openReportModal()">
+                        <span>📝</span> Report Missing or Incorrect Mosque
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">☪</div>
+                        <span class="logo-text">The Believers</span>
+                    </div>
+                    <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
+                    <div class="social-links">
+                        <a href="https://youtube.com" class="social-link" title="YouTube">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="https://tiktok.com" class="social-link" title="TikTok">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-.94-.08A5.77 5.77 0 0 0 6.59 19a5.77 5.77 0 0 0 5.77 5.77 5.77 5.77 0 0 0 5.77-5.77V12.6a7.66 7.66 0 0 0 4.54 1.71v-3.5a4.83 4.83 0 0 1-1.18-.15z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="prayer-times.html">Prayer Times</a></li>
+                        <li><a href="quran.html">Qur'an</a></li>
+                        <li><a href="zakat.html">Zakat Calculator</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>📧 info@thebelievers.com</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Latest Videos</h3>
+                    <div class="footer-videos">
+                        <a href="#" class="video-link">Islamic Lecture 1</a>
+                        <a href="#" class="video-link">Nasheed Collection</a>
+                        <a href="#" class="video-link">Quran Recitation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Believers. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Alert Modal -->
+    <div class="alert-modal" id="alertModal">
+        <div class="alert-content">
+            <div class="alert-icon" id="alertIcon">⚠️</div>
+            <h3 class="alert-title" id="alertTitle">Notice</h3>
+            <p class="alert-message" id="alertMessage"></p>
+            <button class="alert-btn" onclick="closeAlert()">Okay</button>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div class="report-modal" id="reportModal">
+        <div class="report-modal-content">
+            <div class="report-modal-header">
+                <h3 class="report-modal-title">Report Issue</h3>
+                <button class="close-modal-btn" onclick="closeReportModal()">×</button>
+            </div>
+
+            <form id="reportForm">
+                <div class="report-form-group">
+                    <label for="reportType">Issue Type *</label>
+                    <select id="reportType" required>
+                        <option value="">Select issue type...</option>
+                        <option value="missing">Missing Mosque - Not on the map</option>
+                        <option value="not-sunni">Incorrect Listing - Not a Sunni mosque</option>
+                        <option value="closed">Mosque is closed/no longer exists</option>
+                        <option value="wrong-info">Wrong information (address, name, etc.)</option>
+                    </select>
+                </div>
+
+                <div class="report-form-group">
+                    <label for="mosqueName">Mosque Name *</label>
+                    <input type="text" id="mosqueName" placeholder="Enter mosque name" required>
+                </div>
+
+                <div class="report-form-group">
+                    <label for="mosqueLocation">Location/Address *</label>
+                    <input type="text" id="mosqueLocation" placeholder="City, State or full address" required>
+                </div>
+
+                <div class="report-form-group">
+                    <label for="mosqueDetails">Additional Details *</label>
+                    <textarea id="mosqueDetails" placeholder="Provide any additional information that would help us verify this mosque..." required></textarea>
+                </div>
+
+                <div class="report-form-group">
+                    <label for="reporterEmail">Your Email (optional)</label>
+                    <input type="email" id="reporterEmail" placeholder="your.email@example.com (if you'd like a response)">
+                </div>
+
+                <button type="submit" class="report-submit-btn">Submit Report</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        let map;
+        let markers = [];
+        let userLocation = null;
+        let userMarker = null;
+
+        // Custom alert function
+        function showAlert(title, message, icon = '⚠️') {
+            document.getElementById('alertTitle').textContent = title;
+            document.getElementById('alertMessage').textContent = message;
+            document.getElementById('alertIcon').textContent = icon;
+            document.getElementById('alertModal').classList.add('show');
+        }
+
+        function closeAlert() {
+            document.getElementById('alertModal').classList.remove('show');
+        }
+
+        // Open report modal
+        function openReportModal() {
+            document.getElementById('reportModal').classList.add('show');
+        }
+
+        // Close report modal
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.remove('show');
+            document.getElementById('reportForm').reset();
+        }
+
+        // Handle report form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const reportForm = document.getElementById('reportForm');
+            if (reportForm) {
+                reportForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const reportData = {
+                        type: document.getElementById('reportType').value,
+                        mosqueName: document.getElementById('mosqueName').value,
+                        location: document.getElementById('mosqueLocation').value,
+                        details: document.getElementById('mosqueDetails').value,
+                        email: document.getElementById('reporterEmail').value,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Store in localStorage (you can later integrate with a backend)
+                    const existingReports = JSON.parse(localStorage.getItem('mosqueReports') || '[]');
+                    existingReports.push(reportData);
+                    localStorage.setItem('mosqueReports', JSON.stringify(existingReports));
+                    
+                    closeReportModal();
+                    showAlert('Report Submitted', 'Thank you for your report! We will review it and update our database accordingly.', '✅');
+                });
+            }
+        });
+
+        // Initialize map with OpenStreetMap
+        function initMap() {
+            // Default location (Mecca)
+            const defaultLocation = [21.4225, 39.8262];
+            
+            map = L.map('map').setView(defaultLocation, 12);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+        }
+
+        // Use user's current location
+        function useMyLocation() {
+            if (navigator.geolocation) {
+                document.getElementById('loadingSpinner').classList.add('active');
+                document.getElementById('noResults').classList.remove('active');
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        
+                        map.setView([userLocation.lat, userLocation.lng], 13);
+                        searchNearbyMosques(userLocation);
+                    },
+                    (error) => {
+                        showAlert('Location Error', 'Unable to get your location. Please enter an address manually.', '📍');
+                        document.getElementById('loadingSpinner').classList.remove('active');
+                    }
+                );
+            } else {
+                showAlert('Not Supported', 'Geolocation is not supported by your browser.', '❌');
+            }
+        }
+
+        // Search mosques by address using Nominatim (OpenStreetMap geocoding)
+        function searchMosques() {
+            const address = document.getElementById('searchInput').value.trim();
+            
+            if (!address) {
+                showAlert('Input Required', 'Please enter a location to search for mosques.', '📝');
+                return;
+            }
+
+            document.getElementById('loadingSpinner').classList.add('active');
+            document.getElementById('noResults').classList.remove('active');
+            document.getElementById('mosqueList').innerHTML = '';
+            
+            // Use Nominatim geocoding API - search for mosques specifically too
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=5`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        // Use the first result as the center point
+                        const firstResult = data[0];
+                        userLocation = {
+                            lat: parseFloat(firstResult.lat),
+                            lng: parseFloat(firstResult.lon)
+                        };
+                        
+                        map.setView([userLocation.lat, userLocation.lng], 13);
+                        
+                        // Check if the first result is itself a mosque/place of worship
+                        const isMosqueResult = data.filter(result => 
+                            result.type === 'place_of_worship' || 
+                            result.class === 'amenity' && result.type === 'place_of_worship' ||
+                            result.display_name.toLowerCase().includes('mosque') ||
+                            result.display_name.toLowerCase().includes('masjid')
+                        );
+                        
+                        searchNearbyMosques(userLocation, isMosqueResult);
+                    } else {
+                        showAlert('Location Not Found', 'Location not found. Please try a different address.', '🔍');
+                        document.getElementById('loadingSpinner').classList.remove('active');
+                    }
+                })
+                .catch(error => {
+                    console.error('Geocoding error:', error);
+                    showAlert('Search Error', 'Error finding location. Please try again.', '⚠️');
+                    document.getElementById('loadingSpinner').classList.remove('active');
+                });
+        }
+
+        // Search for nearby mosques using Overpass API (OpenStreetMap data)
+        function searchNearbyMosques(location, directMosqueResults = []) {
+            // Clear previous markers
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+            
+            if (userMarker) {
+                map.removeLayer(userMarker);
+            }
+
+            // Add user location marker
+            const userIcon = L.divIcon({
+                html: '<div style="background: #2DD414; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(45,212,20,0.5);"></div>',
+                className: 'user-marker',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+            
+            userMarker = L.marker([location.lat, location.lng], { icon: userIcon })
+                .addTo(map)
+                .bindPopup('Your Location');
+
+            // Search radius in meters (10km)
+            const radius = 10000;
+            
+            // Overpass API query for mosques
+            const overpassUrl = 'https://overpass-api.de/api/interpreter';
+            const query = `
+                [out:json][timeout:25];
+                (
+                    node["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng});
+                    way["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng});
+                );
+                out center tags;
+            `;
+
+            fetch(overpassUrl, {
+                method: 'POST',
+                body: query
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loadingSpinner').classList.remove('active');
+                
+                let allMosques = [];
+                
+                // Add direct mosque results from geocoding if any
+                if (directMosqueResults && directMosqueResults.length > 0) {
+                    directMosqueResults.forEach(result => {
+                        allMosques.push({
+                            lat: parseFloat(result.lat),
+                            lon: parseFloat(result.lon),
+                            tags: {
+                                name: result.display_name.split(',')[0],
+                                'addr:full': result.display_name
+                            },
+                            id: 'geocode_' + result.place_id
+                        });
+                    });
+                }
+                
+                // Add nearby mosques from Overpass
+                if (data.elements && data.elements.length > 0) {
+                    allMosques = allMosques.concat(data.elements);
+                }
+                
+                // Remove duplicates based on proximity (within 50 meters)
+                allMosques = removeDuplicateMosques(allMosques);
+                
+                if (allMosques.length > 0) {
+                    displayMosques(allMosques, location);
+                    document.getElementById('noResults').classList.remove('active');
+                } else {
+                    document.getElementById('mosqueList').innerHTML = '';
+                    document.getElementById('noResults').classList.add('active');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching mosques:', error);
+                document.getElementById('loadingSpinner').classList.remove('active');
+                
+                // If Overpass fails but we have direct results, still show them
+                if (directMosqueResults && directMosqueResults.length > 0) {
+                    const mosques = directMosqueResults.map(result => ({
+                        lat: parseFloat(result.lat),
+                        lon: parseFloat(result.lon),
+                        tags: {
+                            name: result.display_name.split(',')[0],
+                            'addr:full': result.display_name
+                        }
+                    }));
+                    displayMosques(mosques, location);
+                    document.getElementById('noResults').classList.remove('active');
+                } else {
+                    showAlert('Search Error', 'Error searching for mosques. Please try again.', '⚠️');
+                }
+            });
+        }
+
+        // Remove duplicate mosques that are very close to each other
+        function removeDuplicateMosques(mosques) {
+            const unique = [];
+            const threshold = 0.05; // ~50 meters
+            
+            mosques.forEach(mosque => {
+                const lat = mosque.lat || mosque.center?.lat;
+                const lon = mosque.lon || mosque.center?.lon;
+                
+                if (!lat || !lon) return;
+                
+                const isDuplicate = unique.some(existing => {
+                    const existingLat = existing.lat || existing.center?.lat;
+                    const existingLon = existing.lon || existing.center?.lon;
+                    const distance = Math.sqrt(
+                        Math.pow(lat - existingLat, 2) + 
+                        Math.pow(lon - existingLon, 2)
+                    );
+                    return distance < threshold / 111; // rough conversion to degrees
+                });
+                
+                if (!isDuplicate) {
+                    unique.push(mosque);
+                }
+            });
+            
+            return unique;
+        }
+
+        // Display mosques on map and list
+        function displayMosques(mosques, userLoc) {
+            const mosqueList = document.getElementById('mosqueList');
+            mosqueList.innerHTML = '';
+
+            // Filter out non-Sunni mosques
+            const filteredMosques = mosques.filter(mosque => {
+                const tags = mosque.tags || {};
+                const denomination = (tags.denomination || '').toLowerCase();
+                const muslim_denomination = (tags['muslim:denomination'] || '').toLowerCase();
+                
+                // Exclude known non-Sunni denominations
+                const nonSunniKeywords = ['shia', 'shi\'a', 'shiite', 'ahmadi', 'ahmadiyya', 'ismaili', 'sufi'];
+                
+                // Check if mosque is explicitly non-Sunni
+                const isNonSunni = nonSunniKeywords.some(keyword => 
+                    denomination.includes(keyword) || muslim_denomination.includes(keyword)
+                );
+                
+                // If not marked as non-Sunni, include it (including untagged mosques)
+                // Only if explicitly marked as Sunni or no denomination specified
+                return !isNonSunni;
+            });
+
+            // Calculate distances and sort by distance
+            const mosquesWithDistance = filteredMosques.map(mosque => {
+                const lat = mosque.lat || mosque.center?.lat;
+                const lon = mosque.lon || mosque.center?.lon;
+                
+                if (!lat || !lon) return null;
+                
+                const distance = calculateDistance(
+                    userLoc.lat,
+                    userLoc.lng,
+                    lat,
+                    lon
+                );
+                
+                return { ...mosque, lat, lon, distance };
+            }).filter(m => m !== null);
+
+            mosquesWithDistance.sort((a, b) => a.distance - b.distance);
+
+            mosquesWithDistance.forEach((mosque, index) => {
+                // Create custom mosque icon
+                const mosqueIcon = L.divIcon({
+                    html: '<div style="font-size: 24px;">🕌</div>',
+                    className: 'mosque-marker',
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15]
+                });
+
+                // Add marker to map
+                const marker = L.marker([mosque.lat, mosque.lon], { icon: mosqueIcon })
+                    .addTo(map)
+                    .bindPopup(`<b>${mosque.tags?.name || 'Mosque'}</b>`);
+
+                markers.push(marker);
+
+                // Create mosque card
+                createMosqueCard(mosque, marker);
+            });
+
+            // Fit map to show all markers
+            if (markers.length > 0) {
+                const group = L.featureGroup([userMarker, ...markers]);
+                map.fitBounds(group.getBounds().pad(0.1));
+            }
+        }
+
+        // Create mosque card
+        function createMosqueCard(mosque, marker) {
+            const card = document.createElement('div');
+            card.className = 'mosque-card';
+            card.onclick = () => {
+                map.setView([mosque.lat, mosque.lon], 16);
+                marker.openPopup();
+            };
+
+            const name = mosque.tags?.name || 'Mosque';
+            const address = formatAddress(mosque.tags);
+                const denomination = mosque.tags?.denomination || mosque.tags?.['muslim:denomination'] || '';
+                const isSunni = !denomination || denomination.toLowerCase().includes('sunni');
+
+            const website = mosque.tags?.website || mosque.tags?.contact?.website || '';
+            const phone = mosque.tags?.phone || mosque.tags?.contact?.phone || '';
+
+            card.innerHTML = `
+                <div class="mosque-header">
+                    <div>
+                        <h3 class="mosque-name">${name}</h3>
+                        ${isSunni && denomination ? `<div class="mosque-info">📿 ${denomination}</div>` : ''}
+                    </div>
+                    <span class="mosque-distance">${mosque.distance.toFixed(1)} km</span>
+                </div>
+                
+                ${address ? `
+                    <div class="mosque-info">
+                        📍 ${address}
+                    </div>
+                ` : ''}
+                
+                ${phone ? `
+                    <div class="mosque-info">
+                        📞 ${phone}
+                    </div>
+                ` : ''}
+                
+                <div class="mosque-actions">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${mosque.lat},${mosque.lon}" 
+                       target="_blank" 
+                       class="action-btn">
+                        🗺️ Directions
+                    </a>
+                    ${website ? `
+                        <a href="${website}" 
+                           target="_blank" 
+                           class="action-btn">
+                            🌐 Website
+                        </a>
+                    ` : ''}
+                </div>
+            `;
+
+            document.getElementById('mosqueList').appendChild(card);
+        }
+
+        // Format address from OSM tags
+        function formatAddress(tags) {
+            if (!tags) return '';
+            
+            // Check if there's a full address from geocoding
+            if (tags['addr:full']) {
+                return tags['addr:full'];
+            }
+            
+            const parts = [];
+            if (tags['addr:housenumber'] && tags['addr:street']) {
+                parts.push(`${tags['addr:housenumber']} ${tags['addr:street']}`);
+            } else if (tags['addr:street']) {
+                parts.push(tags['addr:street']);
+            }
+            
+            if (tags['addr:city']) parts.push(tags['addr:city']);
+            if (tags['addr:state']) parts.push(tags['addr:state']);
+            if (tags['addr:postcode']) parts.push(tags['addr:postcode']);
+            
+            return parts.length > 0 ? parts.join(', ') : 'Address not available';
+        }
+
+        // Calculate distance between two coordinates (Haversine formula)
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                     Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // Initialize map when page loads
+        window.onload = initMap;
+    </script>
+</body>
+</html>
