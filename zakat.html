@@ -13,7 +13,7 @@
         <div class="container">
             <div class="nav-content">
                 <a href="index.html" class="logo">
-                    <div class="logo-icon">☪</div>
+                    <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
                     <span class="logo-text">The Believers</span>
                 </a>
                 <div class="nav-links" id="navLinks">
@@ -28,6 +28,8 @@
                             <a href="mosque-finder.html">Mosque Finder</a>
                         </div>
                     </div>
+                    <a href="live.html" class="nav-link">Live Streams</a>
+                    <a href="subjects.html" class="nav-link">Learn</a>
                     <a href="multimedia.html" class="nav-link">Multimedia</a>
                     <a href="counter.html" class="nav-link">Counter</a>
                     <a href="contact.html" class="nav-link">Contact</a>
@@ -52,6 +54,185 @@
                 <p style="color: var(--color-gray-400); max-width: 600px; margin: 0 auto;">Calculate your Zakat accurately with multiple asset types and real-time calculations.</p>
                 <div style="margin-top: 2rem;"><a href="index.html" class="btn btn-primary">Back to Home</a></div>
             </div>
+
+            <!-- Basic Calculator -->
+            <div class="glass-card" style="padding: 2rem; margin-top: 2rem; max-width: 400px; margin-left: auto; margin-right: auto;">
+                <h3 class="neon-text" style="text-align: center; margin-bottom: 1.5rem;">Quick Calculator</h3>
+                
+                <style>
+                    .calculator-display {
+                        width: 100%;
+                        padding: 1.25rem;
+                        font-size: 1.75rem;
+                        text-align: right;
+                        background: rgba(45, 212, 20, 0.1);
+                        border: 2px solid var(--color-neon-green);
+                        border-radius: 0.5rem;
+                        color: var(--color-neon-green);
+                        margin-bottom: 1rem;
+                        font-weight: 600;
+                        min-height: 60px;
+                        word-wrap: break-word;
+                    }
+                    body.light-mode .calculator-display {
+                        background: rgba(26, 153, 6, 0.05);
+                        border-color: #1a9906;
+                        color: #1a9906;
+                    }
+                    .calculator-buttons {
+                        display: grid;
+                        grid-template-columns: repeat(4, 1fr);
+                        gap: 0.75rem;
+                    }
+                    .calc-btn {
+                        padding: 1.25rem;
+                        font-size: 1.25rem;
+                        font-weight: 600;
+                        background: rgba(45, 212, 20, 0.1);
+                        border: 2px solid rgba(45, 212, 20, 0.3);
+                        border-radius: 0.5rem;
+                        color: var(--color-neon-green);
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                    }
+                    .calc-btn:hover {
+                        background: rgba(45, 212, 20, 0.2);
+                        border-color: var(--color-neon-green);
+                        transform: scale(1.05);
+                    }
+                    .calc-btn:active {
+                        transform: scale(0.95);
+                    }
+                    .calc-btn.operator {
+                        background: rgba(255, 215, 0, 0.1);
+                        border-color: rgba(255, 215, 0, 0.3);
+                        color: var(--color-gold);
+                    }
+                    .calc-btn.operator:hover {
+                        background: rgba(255, 215, 0, 0.2);
+                        border-color: var(--color-gold);
+                    }
+                    .calc-btn.equals {
+                        background: rgba(45, 212, 20, 0.2);
+                        border-color: var(--color-neon-green);
+                        grid-column: span 2;
+                    }
+                    .calc-btn.clear {
+                        background: rgba(239, 68, 68, 0.1);
+                        border-color: rgba(239, 68, 68, 0.3);
+                        color: #ef4444;
+                    }
+                    .calc-btn.clear:hover {
+                        background: rgba(239, 68, 68, 0.2);
+                        border-color: #ef4444;
+                    }
+                    body.light-mode .calc-btn {
+                        background: rgba(26, 153, 6, 0.05);
+                        border-color: rgba(26, 153, 6, 0.2);
+                        color: #1a9906;
+                    }
+                    body.light-mode .calc-btn:hover {
+                        background: rgba(26, 153, 6, 0.1);
+                        border-color: #1a9906;
+                    }
+                    body.light-mode .calc-btn.operator {
+                        background: rgba(217, 119, 6, 0.05);
+                        border-color: rgba(217, 119, 6, 0.2);
+                        color: #d97706;
+                    }
+                    body.light-mode .calc-btn.operator:hover {
+                        background: rgba(217, 119, 6, 0.1);
+                        border-color: #d97706;
+                    }
+                </style>
+
+                <div class="calculator-display" id="calcDisplay">0</div>
+                <div class="calculator-buttons">
+                    <button class="calc-btn clear" onclick="clearCalc()">C</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('/')">/</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('*')">×</button>
+                    <button class="calc-btn operator" onclick="deleteLastCalc()">⌫</button>
+                    
+                    <button class="calc-btn" onclick="appendToCalc('7')">7</button>
+                    <button class="calc-btn" onclick="appendToCalc('8')">8</button>
+                    <button class="calc-btn" onclick="appendToCalc('9')">9</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('-')">-</button>
+                    
+                    <button class="calc-btn" onclick="appendToCalc('4')">4</button>
+                    <button class="calc-btn" onclick="appendToCalc('5')">5</button>
+                    <button class="calc-btn" onclick="appendToCalc('6')">6</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('+')">+</button>
+                    
+                    <button class="calc-btn" onclick="appendToCalc('1')">1</button>
+                    <button class="calc-btn" onclick="appendToCalc('2')">2</button>
+                    <button class="calc-btn" onclick="appendToCalc('3')">3</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('%')">%</button>
+                    
+                    <button class="calc-btn" onclick="appendToCalc('0')">0</button>
+                    <button class="calc-btn" onclick="appendToCalc('.')">.</button>
+                    <button class="calc-btn equals" onclick="calculateCalc()">=</button>
+                </div>
+
+                <script>
+                    let calcDisplay = document.getElementById('calcDisplay');
+                    let currentCalcValue = '0';
+
+                    function appendToCalc(value) {
+                        if (currentCalcValue === '0' && value !== '.') {
+                            currentCalcValue = value;
+                        } else {
+                            currentCalcValue += value;
+                        }
+                        calcDisplay.textContent = currentCalcValue;
+                    }
+
+                    function clearCalc() {
+                        currentCalcValue = '0';
+                        calcDisplay.textContent = currentCalcValue;
+                    }
+
+                    function deleteLastCalc() {
+                        currentCalcValue = currentCalcValue.slice(0, -1);
+                        if (currentCalcValue === '') {
+                            currentCalcValue = '0';
+                        }
+                        calcDisplay.textContent = currentCalcValue;
+                    }
+
+                    function calculateCalc() {
+                        try {
+                            // Replace × with * for calculation
+                            let expression = currentCalcValue.replace(/×/g, '*');
+                            let result = eval(expression);
+                            currentCalcValue = result.toString();
+                            calcDisplay.textContent = currentCalcValue;
+                        } catch (error) {
+                            calcDisplay.textContent = 'Error';
+                            setTimeout(() => {
+                                currentCalcValue = '0';
+                                calcDisplay.textContent = currentCalcValue;
+                            }, 1500);
+                        }
+                    }
+
+                    // Keyboard support
+                    document.addEventListener('keydown', function(event) {
+                        if (event.key >= '0' && event.key <= '9') {
+                            appendToCalc(event.key);
+                        } else if (event.key === '.') {
+                            appendToCalc('.');
+                        } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+                            appendToCalc(event.key);
+                        } else if (event.key === 'Enter' || event.key === '=') {
+                            calculateCalc();
+                        } else if (event.key === 'Backspace') {
+                            deleteLastCalc();
+                        } else if (event.key === 'Escape' || event.key === 'c' || event.key === 'C') {
+                            clearCalc();
+                        }
+                    });
+                </script>
+            </div>
         </div>
     </main>
     <footer class="footer">
@@ -59,7 +240,7 @@
                 <div class="footer-grid">
                     <div class="footer-col">
                         <div class="footer-logo">
-                            <div class="logo-icon">☪</div>
+                            <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
                             <span class="logo-text">The Believers</span>
                         </div>
                         <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>

@@ -46,6 +46,45 @@ body.light-mode {
     color: #111827;
 }
 
+body.light-mode .logo {
+    color: #111827;
+}
+
+body.light-mode .logo-text {
+    color: #1a9906;
+    text-shadow: none;
+}
+
+body.light-mode .nav-link {
+    color: #4b5563;
+}
+
+body.light-mode .nav-link:hover,
+body.light-mode .nav-link.active {
+    color: #1a9906;
+}
+
+body.light-mode .dropdown-content {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e5e7eb;
+}
+
+body.light-mode .dropdown-content a {
+    color: #4b5563;
+}
+
+body.light-mode .dropdown-content a:hover {
+    color: #1a9906;
+}
+
+body.light-mode .icon-btn {
+    color: #111827;
+}
+
+body.light-mode .menu-toggle span {
+    background: #111827;
+}
+
 .container {
     max-width: 1280px;
     margin: 0 auto;
@@ -84,6 +123,105 @@ body.light-mode {
 .btn-primary:hover {
     box-shadow: var(--shadow-neon);
     transform: scale(1.05);
+}
+
+/* Forms & Prayer Search */
+.location-search {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.location-status {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    color: var(--color-gray-300);
+}
+
+.status-label {
+    font-weight: 600;
+    color: var(--color-white);
+}
+
+.status-value {
+    color: var(--color-gray-300);
+}
+
+.location-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 220px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--color-gray-300);
+}
+
+.form-group input,
+.form-select,
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(57, 255, 20, 0.3);
+    border-radius: 0.5rem;
+    color: var(--color-white);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-select:focus,
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--color-neon-green);
+    box-shadow: var(--shadow-neon-sm);
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.madhab-toggle {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    color: var(--color-gray-300);
+}
+
+.toggle-option {
+    display: flex;
+    gap: 0.35rem;
+    align-items: center;
+    color: var(--color-gray-300);
+}
+
+.toggle-option input[type="radio"] {
+    accent-color: var(--color-neon-green);
+}
+
+body.light-mode .form-group input,
+body.light-mode .form-select,
+body.light-mode .form-input,
+body.light-mode .form-textarea {
+    background: #f5f5f5;
+    color: #000;
+    border-color: #2DD414;
 }
 
 .btn-secondary {
@@ -144,19 +282,26 @@ body.light-mode .glass-card {
 }
 
 .logo-icon {
-    width: 3rem;
-    height: 3rem;
-    background: linear-gradient(135deg, var(--color-neon-green), var(--color-gold));
+    width: 2.25rem;
+    height: 2.25rem;
+    background: transparent;
     border-radius: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.35);
+}
+
+.logo-icon img {
+    width: 80%;
+    height: auto;
 }
 
 .logo:hover .logo-icon {
     transform: scale(1.05) rotate(5deg);
+    box-shadow: 0 0 14px rgba(255, 215, 0, 0.45);
 }
 
 .logo-text {
@@ -344,17 +489,22 @@ body.light-mode .glass-card {
 }
 
 .hero-icon {
-    width: 6rem;
-    height: 6rem;
+    width: 4rem;
+    height: 4rem;
     margin: 0 auto 2rem;
-    background: linear-gradient(135deg, var(--color-neon-green), var(--color-gold));
+    background: transparent;
     border-radius: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    box-shadow: var(--shadow-neon);
+    font-size: 0;
+    box-shadow: 0 0 16px rgba(255, 215, 0, 0.35);
     animation: rotate 3s infinite ease-in-out;
+}
+
+.hero-icon img {
+    width: 70%;
+    height: auto;
 }
 
 @keyframes rotate {
@@ -677,6 +827,47 @@ body.light-mode .glass-card {
 
 .footer-bottom-links a:hover {
     color: var(--color-neon-green);
+}
+
+body.light-mode .footer {
+    background: #ffffff;
+    border-top-color: #e5e7eb;
+}
+
+body.light-mode .footer-logo .logo-text {
+    color: #1a9906;
+}
+
+body.light-mode .footer-desc,
+body.light-mode .footer-links a,
+body.light-mode .footer-contact li,
+body.light-mode .footer-bottom,
+body.light-mode .footer-bottom-links a {
+    color: #6b7280;
+}
+
+body.light-mode .footer-links a:hover,
+body.light-mode .footer-bottom-links a:hover {
+    color: #1a9906;
+}
+
+body.light-mode .footer-title {
+    color: #d97706;
+}
+
+body.light-mode .social-link {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1a9906;
+}
+
+body.light-mode .video-link {
+    background: rgba(0, 0, 0, 0.05);
+    color: #6b7280;
+}
+
+body.light-mode .video-link:hover {
+    background: rgba(26, 153, 6, 0.1);
+    color: #1a9906;
 }
 
 /* Responsive Design */

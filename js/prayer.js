@@ -3,6 +3,10 @@ let prayerData = null;
 let userLocation = null;
 let calculationMethod = localStorage.getItem('prayerMethod') || '2';
 let adhanEnabled = localStorage.getItem('adhanEnabled') === 'true';
+let madhab = localStorage.getItem('prayerMadhab') || '1'; // 1 = Hanafi (default), 0 = Shafi
+let currentLocationLabel = 'Detecting...';
+let countdownInterval = null;
+let preferredSource = localStorage.getItem('preferredPrayerSource') || 'coords'; // 'coords' or 'city'
 
 // Update adhan button state
 function updateAdhanButton() {
@@ -10,6 +14,28 @@ function updateAdhanButton() {
     if (btn) {
         btn.textContent = adhanEnabled ? '🔊 Adhan On' : '🔇 Adhan Off';
     }
+}
+
+function updateLocationLabel(label) {
+    currentLocationLabel = label;
+    const el = document.getElementById('locationLabel');
+    if (el) {
+        el.textContent = label;
+    }
+}
+
+function updateMadhabUI() {
+    const hanafi = document.getElementById('madhabHanafi');
+    const shafi = document.getElementById('madhabShafi');
+    if (hanafi && shafi) {
+        hanafi.checked = madhab === '1';
+        shafi.checked = madhab === '0';
+    }
+}
+
+function setPreferredSource(source) {
+    preferredSource = source;
+    localStorage.setItem('preferredPrayerSource', source);
 }
 
 // Get user location
@@ -30,7 +56,9 @@ function getLocation() {
                     longitude: position.coords.longitude
                 };
                 localStorage.setItem('userLocation', JSON.stringify(userLocation));
-                fetchPrayerTimes();
+                setPreferredSource('coords');
+                fetchPrayerTimes({ latitude: userLocation.latitude, longitude: userLocation.longitude });
+                updateLocationLabel('Using current location');
             },
             error => {
                 console.error('Geolocation error:', error);
@@ -38,7 +66,9 @@ function getLocation() {
                 const saved = localStorage.getItem('userLocation');
                 if (saved) {
                     userLocation = JSON.parse(saved);
-                    fetchPrayerTimes();
+                    setPreferredSource('coords');
+                    fetchPrayerTimes({ latitude: userLocation.latitude, longitude: userLocation.longitude });
+                    updateLocationLabel('Using saved location');
                 } else {
                     showError();
                 }
@@ -50,12 +80,63 @@ function getLocation() {
 }
 
 // Fetch prayer times
-async function fetchPrayerTimes() {
+async function fetchPrayerTimes(options = {}) {
+    const { latitude, longitude, city, country } = options;
+
     try {
-        const response = await fetch(
-            `https://api.aladhan.com/v1/timings?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&method=${calculationMethod}`
-        );
-        
+        const params = new URLSearchParams({ method: calculationMethod, school: madhab });
+        let url = '';
+
+        if (latitude && longitude) {
+            setPreferredSource('coords');
+            params.set('latitude', latitude);
+            params.set('longitude', longitude);
+            url = `https://api.aladhan.com/v1/timings?${params.toString()}`;
+            updateLocationLabel(`Lat ${latitude.toFixed(2)}, Lon ${longitude.toFixed(2)}`);
+        } else if (city && country) {
+            setPreferredSource('city');
+            params.set('city', city);
+            params.set('country', country);
+            url = `https://api.aladhan.com/v1/timingsByCity?${params.toString()}`;
+            updateLocationLabel(`${city}, ${country}`);
+        } else if (preferredSource === 'city') {
+            const lastCity = localStorage.getItem('lastCity');
+            const lastCountry = localStorage.getItem('lastCountry');
+            if (lastCity && lastCountry) {
+                params.set('city', lastCity);
+                params.set('country', lastCountry);
+                url = `https://api.aladhan.com/v1/timingsByCity?${params.toString()}`;
+                updateLocationLabel(`${lastCity}, ${lastCountry}`);
+            }
+        }
+
+        // If city preference not available or not chosen, fall back to coordinates
+        if (!url && userLocation) {
+            params.set('latitude', userLocation.latitude);
+            params.set('longitude', userLocation.longitude);
+            url = `https://api.aladhan.com/v1/timings?${params.toString()}`;
+            updateLocationLabel(`Lat ${userLocation.latitude.toFixed(2)}, Lon ${userLocation.longitude.toFixed(2)}`);
+        }
+
+        // Last resort: last saved city if nothing else worked
+        if (!url) {
+            const lastCity = localStorage.getItem('lastCity');
+            const lastCountry = localStorage.getItem('lastCountry');
+            if (lastCity && lastCountry) {
+                params.set('city', lastCity);
+                params.set('country', lastCountry);
+                url = `https://api.aladhan.com/v1/timingsByCity?${params.toString()}`;
+                updateLocationLabel(`${lastCity}, ${lastCountry}`);
+                setPreferredSource('city');
+            }
+        }
+
+        if (!url) {
+            showError();
+            return;
+        }
+
+        const response = await fetch(url);
         const data = await response.json();
         
         if (data.code === 200) {
@@ -158,7 +239,11 @@ function updateNextPrayer() {
 
 // Start countdown timer
 function startCountdown() {
-    setInterval(updateNextPrayer, 60000); // Update every minute
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+    countdownInterval = setInterval(updateNextPrayer, 60000); // Update every minute
+    updateNextPrayer();
 }
 
 // Toggle settings
@@ -182,6 +267,27 @@ function toggleAdhan() {
     updateAdhanButton();
 }
 
+function changeMadhab(value) {
+    madhab = value;
+    localStorage.setItem('prayerMadhab', madhab);
+    updateMadhabUI();
+    fetchPrayerTimes();
+}
+
+function handleCitySearch(event) {
+    event.preventDefault();
+    const countryInput = document.getElementById('countryInput');
+    const cityInput = document.getElementById('cityInput');
+    const country = countryInput.value.trim();
+    const city = cityInput.value.trim();
+
+    if (!country || !city) return;
+
+    fetchPrayerTimes({ country, city });
+    localStorage.setItem('lastCity', city);
+    localStorage.setItem('lastCountry', country);
+}
+
 // Show error
 function showError() {
     const loading = document.getElementById('loading');
@@ -201,13 +307,45 @@ document.addEventListener('DOMContentLoaded', () => {
         select.value = calculationMethod;
     }
     
+    // Set madhab toggle
+    updateMadhabUI();
+    const hanafi = document.getElementById('madhabHanafi');
+    const shafi = document.getElementById('madhabShafi');
+    if (hanafi && shafi) {
+        hanafi.addEventListener('change', () => changeMadhab('1'));
+        shafi.addEventListener('change', () => changeMadhab('0'));
+    }
+
+    // City search form
+    const cityForm = document.getElementById('cityForm');
+    if (cityForm) {
+        cityForm.addEventListener('submit', handleCitySearch);
+    }
+
+    // Prefill last city/country
+    const lastCity = localStorage.getItem('lastCity');
+    const lastCountry = localStorage.getItem('lastCountry');
+    if (lastCity && lastCountry) {
+        const cityInput = document.getElementById('cityInput');
+        const countryInput = document.getElementById('countryInput');
+        if (cityInput && countryInput) {
+            cityInput.value = lastCity;
+            countryInput.value = lastCountry;
+        }
+    }
+
     updateAdhanButton();
     
     // Try to load from saved location or get new location
     const saved = localStorage.getItem('userLocation');
-    if (saved) {
+    if (preferredSource === 'city' && lastCity && lastCountry) {
+        fetchPrayerTimes({ country: lastCountry, city: lastCity });
+    } else if (saved) {
         userLocation = JSON.parse(saved);
-        fetchPrayerTimes();
+        fetchPrayerTimes({ latitude: userLocation.latitude, longitude: userLocation.longitude });
+        updateLocationLabel('Using saved location');
+    } else if (lastCity && lastCountry) {
+        fetchPrayerTimes({ country: lastCountry, city: lastCity });
     } else {
         getLocation();
     }

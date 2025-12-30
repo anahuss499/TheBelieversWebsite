@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azkar & Duas - The Believers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                    <span class="logo-text">The Believers</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link">Islamic Tools ▾</a>
+                        <div class="dropdown-content">
+                            <a href="prayer-times.html">Prayer Times</a>
+                            <a href="quran.html">Qur'an</a>
+                            <a href="zakat.html">Zakat Calculator</a>
+                            <a href="calendar.html">Calendar</a>
+                            <a href="mosque-finder.html">Mosque Finder</a>
+                        </div>
+                    </div>
+                    <a href="live.html" class="nav-link">Live Streams</a>
+                    <a href="subjects.html" class="nav-link">Learn</a>
+                    <a href="multimedia.html" class="nav-link">Multimedia</a>
+                    <a href="counter.html" class="nav-link">Counter</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="suggestions.html" class="nav-link">Suggestions</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn" id="themeToggle"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="4"/><path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/></svg></button>
+                    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title neon-text">Azkar & Duas</h1>
+                <p class="page-subtitle">Daily remembrance and supplications</p>
+            </div>
+
+            <style>
+                .azkar-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                    gap: 2rem;
+                    margin-top: 2rem;
+                }
+                .azkar-card {
+                    background: linear-gradient(135deg, rgba(45, 212, 20, 0.08) 0%, rgba(0, 0, 0, 0.2) 100%);
+                    border: 2px solid rgba(45, 212, 20, 0.3);
+                    border-radius: 1rem;
+                    padding: 2rem;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    text-decoration: none;
+                    display: block;
+                }
+                .azkar-card:hover {
+                    transform: translateY(-8px);
+                    border-color: var(--color-gold);
+                    box-shadow: 0 12px 30px rgba(45, 212, 20, 0.3);
+                }
+                .azkar-icon {
+                    font-size: 3.5rem;
+                    margin-bottom: 1rem;
+                }
+                .azkar-title {
+                    font-size: 1.5rem;
+                    color: var(--color-neon-green);
+                    font-weight: 600;
+                    margin-bottom: 0.75rem;
+                }
+                .azkar-desc {
+                    color: var(--color-gray-400);
+                    font-size: 0.95rem;
+                    line-height: 1.6;
+                }
+                body.light-mode .azkar-card {
+                    background: linear-gradient(135deg, rgba(45, 212, 20, 0.05) 0%, rgba(0, 0, 0, 0.02) 100%);
+                    border-color: rgba(26, 153, 6, 0.3);
+                }
+                body.light-mode .azkar-title {
+                    color: #1a9906;
+                }
+                body.light-mode .azkar-desc {
+                    color: #6b7280;
+                }
+            </style>
+
+            <div class="azkar-grid">
+                <a href="azkar-morning.html" class="azkar-card">
+                    <div class="azkar-icon">🌅</div>
+                    <h2 class="azkar-title">Morning Azkar</h2>
+                    <p class="azkar-desc">Remembrance and supplications to recite after Fajr prayer and in the morning.</p>
+                </a>
+
+                <a href="azkar-evening.html" class="azkar-card">
+                    <div class="azkar-icon">🌙</div>
+                    <h2 class="azkar-title">Evening Azkar</h2>
+                    <p class="azkar-desc">Remembrance and supplications to recite after Asr prayer and in the evening.</p>
+                </a>
+
+                <a href="azkar-daily.html" class="azkar-card">
+                    <div class="azkar-icon">🤲</div>
+                    <h2 class="azkar-title">Daily Duas</h2>
+                    <p class="azkar-desc">Supplications for entering/leaving home, eating, sleeping, and daily activities.</p>
+                </a>
+            </div>
+
+            <div class="glass-card" style="padding: 2rem; margin-top: 3rem;">
+                <h3 style="color: var(--color-gold); margin-bottom: 1rem;">About Azkar</h3>
+                <p style="color: var(--color-gray-400); line-height: 1.8;">
+                    Azkar (أذكار) are words of remembrance and praise of Allah. They include specific supplications (duas) 
+                    that the Prophet Muhammad ﷺ taught us to recite at different times of the day and during various activities. 
+                    Regular recitation of Azkar brings peace to the heart, protection from harm, and countless rewards.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                        <span class="logo-text">The Believers</span>
+                    </div>
+                    <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
+                    <div class="social-links">
+                        <a href="https://youtube.com" class="social-link" title="YouTube">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="https://tiktok.com" class="social-link" title="TikTok">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-.94-.08A5.77 5.77 0 0 0 6.59 19a5.77 5.77 0 0 0 5.77 5.77 5.77 5.77 0 0 0 5.77-5.77V12.6a7.66 7.66 0 0 0 4.54 1.71v-3.5a4.83 4.83 0 0 1-1.18-.15z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="prayer-times.html">Prayer Times</a></li>
+                        <li><a href="quran.html">Qur'an</a></li>
+                        <li><a href="zakat.html">Zakat Calculator</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>📧 info@thebelievers.com</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Latest Videos</h3>
+                    <div class="footer-videos">
+                        <a href="#" class="video-link">Islamic Lecture 1</a>
+                        <a href="#" class="video-link">Nasheed Collection</a>
+                        <a href="#" class="video-link">Quran Recitation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Believers. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

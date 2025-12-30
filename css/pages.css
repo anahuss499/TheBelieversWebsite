@@ -21,6 +21,24 @@
     font-size: 1.125rem;
 }
 
+body.light-mode .page-subtitle {
+    color: #6b7280;
+}
+
+body.light-mode .page-title {
+    color: #111827;
+}
+
+body.light-mode .neon-text {
+    color: #1a9906;
+    text-shadow: none;
+}
+
+body.light-mode .gold-text {
+    color: #d97706;
+    text-shadow: none;
+}
+
 /* Loading Spinner */
 .loading {
     text-align: center;

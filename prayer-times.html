@@ -13,7 +13,7 @@
         <div class="container">
             <div class="nav-content">
                 <a href="index.html" class="logo">
-                    <div class="logo-icon">☪</div>
+                    <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
                     <span class="logo-text">The Believers</span>
                 </a>
                 <div class="nav-links" id="navLinks">
@@ -28,6 +28,8 @@
                             <a href="mosque-finder.html">Mosque Finder</a>
                         </div>
                     </div>
+                    <a href="live.html" class="nav-link">Live Streams</a>
+                    <a href="subjects.html" class="nav-link">Learn</a>
                     <a href="multimedia.html" class="nav-link">Multimedia</a>
                     <a href="counter.html" class="nav-link">Counter</a>
                     <a href="contact.html" class="nav-link">Contact</a>
@@ -60,6 +62,34 @@
             <div class="page-header">
                 <h1 class="page-title neon-text">Prayer Times</h1>
                 <p class="page-subtitle">Accurate prayer times for your location</p>
+            </div>
+
+            <div class="location-search glass-card">
+                <div class="location-status">
+                    <span class="status-label">Using:</span>
+                    <span id="locationLabel" class="status-value">Detecting location…</span>
+                </div>
+
+                <form class="location-form" id="cityForm">
+                    <div class="form-group">
+                        <label for="countryInput">Country</label>
+                        <input type="text" id="countryInput" placeholder="e.g. United Kingdom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cityInput">City</label>
+                        <input type="text" id="cityInput" placeholder="e.g. London" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Search by City</button>
+                        <button type="button" class="btn btn-secondary" onclick="getLocation()">Use My Location</button>
+                    </div>
+                </form>
+
+                <div class="madhab-toggle">
+                    <span class="status-label">Fiqh School:</span>
+                    <label class="toggle-option"><input type="radio" name="madhab" id="madhabHanafi" value="1"> Hanafi (default)</label>
+                    <label class="toggle-option"><input type="radio" name="madhab" id="madhabShafi" value="0"> Shafi</label>
+                </div>
             </div>
 
             <div id="loading" class="loading">
@@ -125,7 +155,7 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <div class="footer-logo">
-                        <div class="logo-icon">☪</div>
+                        <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
                         <span class="logo-text">The Believers</span>
                     </div>
                     <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
@@ -181,6 +211,7 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/autocomplete.js"></script>
     <script src="js/prayer.js"></script>
 </body>
 </html>
