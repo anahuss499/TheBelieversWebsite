@@ -17,24 +17,24 @@
                     <span class="logo-text">The Believers</span>
                 </a>
                 <div class="nav-links" id="navLinks">
-                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
                     <div class="dropdown">
-                        <a href="#" class="nav-link">Islamic Tools ▾</a>
+                        <a href="#" class="nav-link" data-i18n="nav.tools">Islamic Tools ▾</a>
                         <div class="dropdown-content">
-                            <a href="prayer-times.html">Prayer Times</a>
-                            <a href="quran.html">Qur'an</a>
-                            <a href="zakat.html">Zakat Calculator</a>
-                            <a href="calendar.html">Calendar</a>
-                            <a href="mosque-finder.html">Mosque Finder</a>
-                            <a href="live.html">Live Streams</a>
-                            <a href="subjects.html">Learn</a>
-                            <a href="counter.html">Counter</a>
-                            <a href="99-names.html">99 Names</a>
-                            <a href="azkar.html">Azkar</a>
+                            <a href="prayer-times.html" data-i18n="nav.prayer">Prayer Times</a>
+                            <a href="quran.html" data-i18n="nav.quran">Qur'an</a>
+                            <a href="zakat.html" data-i18n="nav.zakat">Zakat Calculator</a>
+                            <a href="calendar.html" data-i18n="nav.calendar">Calendar</a>
+                            <a href="mosque-finder.html" data-i18n="nav.mosque">Mosque Finder</a>
+                            <a href="live.html" data-i18n="nav.live">Live Streams</a>
+                            <a href="subjects.html" data-i18n="nav.learn">Learn</a>
+                            <a href="counter.html" data-i18n="nav.counter">Counter</a>
+                            <a href="99-names.html" data-i18n="nav.99names">99 Names</a>
+                            <a href="azkar.html" data-i18n="nav.azkar">Azkar</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="suggestions.html" class="nav-link">Suggestions</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="suggestions.html" class="nav-link" data-i18n="nav.suggestions">Suggestions</a>
                 </div>
                                 <div class="nav-actions">
                     <button class="icon-btn" id="searchBtn">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="search-bar" id="searchBar">
-                <input type="text" placeholder="Search..." class="search-input" aria-label="Search site">
+                <input type="text" placeholder="Search..." class="search-input" aria-label="Search site" data-i18n-placeholder="search.placeholder">
                 <div class="search-suggestions" id="searchSuggestions" role="listbox"></div>
             </div>
         </div>
@@ -64,41 +64,41 @@
     <main class="page-content">
         <div class="container">
             <div class="page-header">
-                <h1 class="page-title neon-text">Prayer Times</h1>
-                <p class="page-subtitle">Accurate prayer times for your location</p>
+                <h1 class="page-title neon-text" data-i18n="page.prayer.title">Prayer Times</h1>
+                <p class="page-subtitle" data-i18n="page.prayer.subtitle">Accurate prayer times for your location</p>
             </div>
 
             <div class="location-search glass-card">
                 <div class="location-status">
-                    <span class="status-label">Using:</span>
-                    <span id="locationLabel" class="status-value">Detecting location…</span>
+                    <span class="status-label" data-i18n="page.prayer.using">Using:</span>
+                    <span id="locationLabel" class="status-value" data-i18n="page.prayer.detecting">Detecting location…</span>
                 </div>
 
                 <form class="location-form" id="cityForm">
                     <div class="form-group">
-                        <label for="countryInput">Country</label>
-                        <input type="text" id="countryInput" placeholder="e.g. United Kingdom" required>
+                        <label for="countryInput" data-i18n="page.prayer.country">Country</label>
+                        <input type="text" id="countryInput" placeholder="e.g. United Kingdom" data-i18n-placeholder="page.prayer.placeholder.country" required>
                     </div>
                     <div class="form-group">
-                        <label for="cityInput">City</label>
-                        <input type="text" id="cityInput" placeholder="e.g. London" required>
+                        <label for="cityInput" data-i18n="page.prayer.city">City</label>
+                        <input type="text" id="cityInput" placeholder="e.g. London" data-i18n-placeholder="page.prayer.placeholder.city" required>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Search by City</button>
-                        <button type="button" class="btn btn-secondary" onclick="getLocation()">Use My Location</button>
+                        <button type="submit" class="btn btn-primary" data-i18n="page.prayer.searchByCity">Search by City</button>
+                        <button type="button" class="btn btn-secondary" onclick="getLocation()" data-i18n="page.prayer.useLocation">Use My Location</button>
                     </div>
                 </form>
 
                 <div class="madhab-toggle">
-                    <span class="status-label">Fiqh School:</span>
-                    <label class="toggle-option"><input type="radio" name="madhab" id="madhabHanafi" value="1"> Hanafi (default)</label>
-                    <label class="toggle-option"><input type="radio" name="madhab" id="madhabShafi" value="0"> Shafi</label>
+                    <span class="status-label" data-i18n="page.prayer.madhabLabel">Fiqh School:</span>
+                    <label class="toggle-option"><input type="radio" name="madhab" id="madhabHanafi" value="1"> <span data-i18n="page.prayer.hanafi">Hanafi (default)</span></label>
+                    <label class="toggle-option"><input type="radio" name="madhab" id="madhabShafi" value="0"> <span data-i18n="page.prayer.shafi">Shafi</span></label>
                 </div>
             </div>
 
             <div id="loading" class="loading">
                 <div class="spinner"></div>
-                <p>Loading prayer times...</p>
+                <p data-i18n="page.prayer.loading">Loading prayer times...</p>
             </div>
 
             <div id="prayerContent" class="prayer-content" style="display:none;">
@@ -109,7 +109,7 @@
                             <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
                         </svg>
                     </div>
-                    <h2>Next Prayer</h2>
+                    <h2 data-i18n="page.prayer.nextPrayerTitle">Next Prayer</h2>
                     <h3 class="next-prayer-name gold-text" id="nextPrayerName">-</h3>
                     <p class="next-prayer-time" id="nextPrayerTime">--:--</p>
                     <p class="next-prayer-countdown neon-text" id="nextPrayerCountdown">in --h --m</p>
@@ -128,13 +128,13 @@
 
                 <!-- Settings -->
                 <div class="prayer-actions">
-                    <button class="btn btn-secondary" onclick="toggleSettings()">⚙️ Settings</button>
-                    <button class="btn btn-secondary" onclick="getLocation()">📍 Update Location</button>
-                    <button class="btn btn-secondary" onclick="toggleAdhan()" id="adhanBtn">🔇 Adhan Off</button>
+                    <button class="btn btn-secondary" onclick="toggleSettings()" data-i18n="page.prayer.settings">⚙️ Settings</button>
+                    <button class="btn btn-secondary" onclick="getLocation()" data-i18n="page.prayer.updateLocation">📍 Update Location</button>
+                    <button class="btn btn-secondary" onclick="toggleAdhan()" id="adhanBtn" data-i18n="page.prayer.adhanOff">🔇 Adhan Off</button>
                 </div>
 
                 <div id="settingsPanel" class="settings-panel glass-card" style="display:none;">
-                    <h3 class="gold-text">Calculation Method</h3>
+                    <h3 class="gold-text" data-i18n="page.prayer.calcMethod">Calculation Method</h3>
                     <select id="methodSelect" class="form-select" onchange="changeMethod()">
                         <option value="2">Muslim World League</option>
                         <option value="1">University of Islamic Sciences, Karachi</option>
@@ -148,8 +148,8 @@
             </div>
 
             <div id="errorMessage" class="error-message glass-card" style="display:none;">
-                <p>Unable to load prayer times. Please enable location access or try again later.</p>
-                <button class="btn btn-primary" onclick="getLocation()">Retry</button>
+                <p data-i18n="page.prayer.error">Unable to load prayer times. Please enable location access or try again later.</p>
+                <button class="btn btn-primary" onclick="getLocation()" data-i18n="page.prayer.retry">Retry</button>
             </div>
         </div>
     </main>
@@ -162,7 +162,7 @@
                         <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
                         <span class="logo-text">The Believers</span>
                     </div>
-                    <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
+                    <p class="footer-desc" data-i18n="footer.tagline">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
                     <div class="social-links">
                         <a href="https://youtube.com/@the_believers99?si=VP6NSdDbUNbW5meS" class="social-link" title="YouTube">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
@@ -178,17 +178,17 @@
                 </div>
 
                 <div class="footer-col">
-                    <h3 class="footer-title">Quick Links</h3>
+                    <h3 class="footer-title" data-i18n="footer.quick">Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="prayer-times.html">Prayer Times</a></li>
-                        <li><a href="quran.html">Qur'an</a></li>
-                        <li><a href="zakat.html">Zakat Calculator</a></li>
-                        <li><a href="calendar.html">Calendar</a></li>
+                        <li><a href="prayer-times.html" data-i18n="nav.prayer">Prayer Times</a></li>
+                        <li><a href="quran.html" data-i18n="nav.quran">Qur'an</a></li>
+                        <li><a href="zakat.html" data-i18n="nav.zakat">Zakat Calculator</a></li>
+                        <li><a href="calendar.html" data-i18n="nav.calendar">Calendar</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
-                    <h3 class="footer-title">Contact</h3>
+                    <h3 class="footer-title" data-i18n="footer.contact">Contact</h3>
                     <ul class="footer-contact">
                         <li>📧 info@thebelievers.com</li>
                     </ul>
@@ -196,10 +196,10 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 The Believers. All rights reserved.</p>
+                <p>&copy; 2025 The Believers. <span data-i18n="footer.rights">All rights reserved</span>.</p>
                 <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+                    <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+                    <a href="#" data-i18n="footer.terms">Terms of Service</a>
                 </div>
             </div>
         </div>
@@ -208,5 +208,6 @@
     <script src="js/main.js"></script>
     <script src="js/autocomplete.js"></script>
     <script src="js/prayer.js"></script>
+    <script src="js/auto-translate.js"></script>
 </body>
 </html>
