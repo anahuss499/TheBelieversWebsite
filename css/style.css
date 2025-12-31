@@ -414,13 +414,18 @@ body.light-mode .glass-card {
 
 .search-bar {
     max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
+    overflow: visible;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+    padding: 0;
 }
 
 .search-bar.active {
-    max-height: 5rem;
+    max-height: 22rem;
     padding: 1rem 0;
+    opacity: 1;
+    visibility: visible;
 }
 
 .search-input {
@@ -438,6 +443,58 @@ body.light-mode .glass-card {
 .search-input:focus {
     border-color: var(--color-neon-green);
     box-shadow: var(--shadow-neon-sm);
+}
+
+.search-suggestions {
+    position: relative;
+    margin-top: 0.35rem;
+}
+
+.search-suggestions ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.25rem;
+    background: rgba(17, 24, 39, 0.92);
+    border: 1px solid rgba(45, 212, 20, 0.35);
+    border-radius: 0.65rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 0 20px rgba(45, 212, 20, 0.2);
+    max-height: 280px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1200;
+}
+
+.search-suggestions.show ul {
+    display: block;
+}
+
+.search-suggestions li {
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-gray-200);
+}
+
+.search-suggestions li:hover,
+.search-suggestions li.active {
+    background: rgba(45, 212, 20, 0.12);
+    color: var(--color-white);
+}
+
+.search-suggestions .suggest-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-neon-green);
+    flex-shrink: 0;
+}
+
+.search-suggestions .suggest-meta {
+    font-size: 0.8rem;
+    color: var(--color-gray-400);
 }
 
 /* Hero Section */
@@ -578,10 +635,11 @@ body.light-mode .glass-card {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.75rem;
-    padding: 2rem;
+    padding: 1.35rem;
     text-decoration: none;
     color: var(--color-white);
     transition: all 0.3s ease;
+    min-height: 160px;
 }
 
 .feature-card:hover {
@@ -590,13 +648,13 @@ body.light-mode .glass-card {
 }
 
 .feature-icon {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 0.75rem;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 0.65rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     transition: transform 0.3s ease;
 }
 
@@ -615,9 +673,9 @@ body.light-mode .glass-card {
 }
 
 .feature-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.35rem;
     transition: color 0.3s ease;
 }
 
@@ -625,9 +683,12 @@ body.light-mode .glass-card {
     color: var(--color-neon-green);
 }
 
-.feature-desc {
-    color: var(--color-gray-400);
-    margin-bottom: 1rem;
+/* Hide feature descriptions on small screens for tighter squares */
+@media (max-width: 768px) {
+    .feature-desc { display: none; }
+    .feature-card { min-height: 140px; padding: 1.1rem; }
+    .feature-icon { margin-bottom: 0.65rem; }
+    .feature-title { font-size: 1.05rem; }
 }
 
 .feature-link {
@@ -915,6 +976,13 @@ body.light-mode .video-link:hover {
     }
 }
 
+@media (max-width: 1024px) {
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.25rem;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.5rem;
@@ -929,7 +997,8 @@ body.light-mode .video-link:hover {
     }
     
     .features-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.9rem;
     }
     
     .stats-grid {

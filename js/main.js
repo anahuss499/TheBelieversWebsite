@@ -22,12 +22,129 @@ menuToggle.addEventListener('click', () => {
     menuToggle.classList.toggle('active');
 });
 
-// Search Bar Toggle
+// Search Bar Toggle + Suggestions
 const searchBtn = document.getElementById('searchBtn');
 const searchBar = document.getElementById('searchBar');
+const searchInputEl = document.querySelector('.search-input');
+const searchSuggestionsEl = document.getElementById('searchSuggestions');
+
+const searchablePages = [
+    { title: 'Home', url: 'index.html', meta: 'Main' },
+    { title: 'Prayer Times', url: 'prayer-times.html', meta: 'Islamic Tools' },
+    { title: 'Qur\'an', url: 'quran.html', meta: 'Islamic Tools' },
+    { title: 'Zakat Calculator', url: 'zakat.html', meta: 'Islamic Tools' },
+    { title: 'Calendar', url: 'calendar.html', meta: 'Islamic Tools' },
+    { title: 'Mosque Finder', url: 'mosque-finder.html', meta: 'Islamic Tools' },
+    { title: 'Live Streams', url: 'live.html', meta: 'Islamic Tools' },
+    { title: 'Learn', url: 'subjects.html', meta: 'Courses' },
+    { title: 'Dhikr Counter', url: 'counter.html', meta: 'Islamic Tools' },
+    { title: '99 Names', url: '99-names.html', meta: 'Reflection' },
+    { title: 'Azkar', url: 'azkar.html', meta: 'Supplications' },
+    { title: 'Morning Azkar', url: 'azkar-morning.html', meta: 'Supplications' },
+    { title: 'Evening Azkar', url: 'azkar-evening.html', meta: 'Supplications' },
+    { title: 'Daily Azkar', url: 'azkar-daily.html', meta: 'Supplications' },
+    { title: 'Khulafa Rashidun', url: 'khulafa-rashidun.html', meta: 'History' },
+    { title: 'Islamic Months', url: 'islamic-months.html', meta: 'Calendar' },
+    { title: 'Prophets in Quran', url: 'prophets-in-quran.html', meta: 'Stories' },
+    { title: 'Contact', url: 'contact.html', meta: 'Support' },
+    { title: 'Suggestions', url: 'suggestions.html', meta: 'Feedback' },
+    { title: 'Hajj Lessons', url: 'lessons-hajj.html', meta: 'Learn' },
+    { title: 'Umrah Lessons', url: 'lessons-umrah.html', meta: 'Learn' },
+    { title: 'Tajweed Lessons', url: 'lessons-tajweed.html', meta: 'Learn' },
+    { title: 'Qira\'at Lessons', url: 'lessons-qiraat.html', meta: 'Learn' },
+    { title: 'Fiqh Lessons', url: 'lessons-fiqh.html', meta: 'Learn' },
+    { title: 'Hadith Lessons', url: 'lessons-hadith.html', meta: 'Learn' },
+    { title: '40 Hadith Lessons', url: 'lessons-40hadith.html', meta: 'Learn' },
+    { title: 'Seerah Lessons', url: 'lessons-seerah.html', meta: 'Learn' },
+    { title: 'Aqidah Lessons', url: 'lessons-aqidah.html', meta: 'Learn' },
+    { title: 'Sarf Lessons', url: 'lessons-sarf.html', meta: 'Learn' },
+    { title: 'Nahw Lessons', url: 'lessons-nahw.html', meta: 'Learn' },
+    { title: 'Namaz Lessons', url: 'lessons-namaz.html', meta: 'Learn' },
+];
+
+let activeSuggestion = -1;
+
+const renderSuggestions = (items) => {
+    if (!searchSuggestionsEl) return;
+    if (!items.length) {
+        searchSuggestionsEl.classList.remove('show');
+        searchSuggestionsEl.innerHTML = '';
+        return;
+    }
+
+    const list = document.createElement('ul');
+    items.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.dataset.url = item.url;
+        li.dataset.index = idx;
+        li.innerHTML = `
+            <svg class="suggest-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M10 8l4 4-4 4"></path>
+            </svg>
+            <div>
+                <div>${item.title}</div>
+                <div class="suggest-meta">${item.meta}</div>
+            </div>
+        `;
+        li.addEventListener('click', () => {
+            window.location.href = item.url;
+        });
+        list.appendChild(li);
+    });
+    searchSuggestionsEl.innerHTML = '';
+    searchSuggestionsEl.appendChild(list);
+    searchSuggestionsEl.classList.add('show');
+};
+
+const filterSuggestions = (term) => {
+    const q = term.trim().toLowerCase();
+    if (!q) {
+        searchSuggestionsEl?.classList.remove('show');
+        return;
+    }
+    const results = searchablePages.filter(item => item.title.toLowerCase().includes(q) || (item.meta && item.meta.toLowerCase().includes(q))).slice(0, 8);
+    activeSuggestion = -1;
+    renderSuggestions(results);
+};
 
 searchBtn.addEventListener('click', () => {
     searchBar.classList.toggle('active');
+    if (searchBar.classList.contains('active')) {
+        searchInputEl?.focus();
+        filterSuggestions(searchInputEl?.value || '');
+    } else {
+        searchSuggestionsEl?.classList.remove('show');
+    }
+});
+
+searchInputEl?.addEventListener('input', (e) => {
+    filterSuggestions(e.target.value);
+});
+
+searchInputEl?.addEventListener('keydown', (e) => {
+    const options = searchSuggestionsEl?.querySelectorAll('li') || [];
+    if (!options.length) return;
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeSuggestion = (activeSuggestion + 1) % options.length;
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeSuggestion = (activeSuggestion - 1 + options.length) % options.length;
+    } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const target = options[activeSuggestion >= 0 ? activeSuggestion : 0];
+        if (target) window.location.href = target.dataset.url;
+        return;
+    } else if (e.key === 'Escape') {
+        searchBar.classList.remove('active');
+        searchSuggestionsEl?.classList.remove('show');
+        return;
+    } else {
+        return;
+    }
+    options.forEach((opt, idx) => opt.classList.toggle('active', idx === activeSuggestion));
 });
 
 // Navbar scroll effect
@@ -120,5 +237,6 @@ document.addEventListener('click', (e) => {
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.nav-actions') && !e.target.closest('.search-bar')) {
         searchBar.classList.remove('active');
+        searchSuggestionsEl?.classList.remove('show');
     }
 });

@@ -147,7 +147,7 @@
                 </a>
 
                 <div class="nav-links" id="navLinks">
-                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="index.html" class="nav-link">Home</a>
                     <div class="dropdown">
                         <a href="#" class="nav-link">Islamic Tools ▾</a>
                         <div class="dropdown-content">
@@ -156,17 +156,17 @@
                             <a href="zakat.html">Zakat Calculator</a>
                             <a href="calendar.html">Calendar</a>
                             <a href="mosque-finder.html">Mosque Finder</a>
+                            <a href="live.html">Live Streams</a>
+                            <a href="subjects.html">Learn</a>
+                            <a href="counter.html">Counter</a>
+                            <a href="99-names.html">99 Names</a>
+                            <a href="azkar.html">Azkar</a>
                         </div>
                     </div>
-                    <a href="live.html" class="nav-link">Live Streams</a>
-                    <a href="subjects.html" class="nav-link">Learn</a>
-                    <a href="multimedia.html" class="nav-link">Multimedia</a>
-                    <a href="counter.html" class="nav-link">Counter</a>
                     <a href="contact.html" class="nav-link">Contact</a>
                     <a href="suggestions.html" class="nav-link">Suggestions</a>
                 </div>
-
-                <div class="nav-actions">
+                                <div class="nav-actions">
                     <button class="icon-btn" id="searchBtn">
                         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="10" cy="10" r="7"/>
@@ -174,21 +174,19 @@
                         </svg>
                     </button>
                     <button class="icon-btn" id="themeToggle">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" id="themeIcon">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="10" cy="10" r="4"/>
                             <path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
                         </svg>
                     </button>
                     <button class="menu-toggle" id="menuToggle">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <span></span><span></span><span></span>
                     </button>
                 </div>
             </div>
-
             <div class="search-bar" id="searchBar">
-                <input type="text" placeholder="Search..." class="search-input">
+                <input type="text" placeholder="Search..." class="search-input" aria-label="Search site">
+                <div class="search-suggestions" id="searchSuggestions" role="listbox"></div>
             </div>
         </div>
     </nav>
@@ -209,7 +207,7 @@
                     <div class="greeting-ornament"></div>
                     <div style="width: 100%;">
                         <h1 class="arabic-greeting">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّٰهِ وَبَرَكَاتُهُ</h1>
-                        <p class="greeting-translation">Peace, mercy, and blessings of Allah be upon you</p>
+                        <p class="greeting-translation">Peace Be Upon You, And The Mercy of Allah and His Blessings</p>
                     </div>
                 </div>
                 
@@ -282,17 +280,6 @@
                     <span class="feature-link">Explore →</span>
                 </a>
 
-                <a href="multimedia.html" class="feature-card">
-                    <div class="feature-icon neon-bg">
-                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="8,6 20,12 8,18"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Multimedia</h3>
-                    <p class="feature-desc">Islamic lectures, nasheeds, and podcasts for spiritual growth</p>
-                    <span class="feature-link">Explore →</span>
-                </a>
-
                 <a href="counter.html" class="feature-card">
                     <div class="feature-icon gold-bg">
                         <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
@@ -304,6 +291,43 @@
                     <p class="feature-desc">Digital tasbeeh counter to track your remembrance of Allah</p>
                     <span class="feature-link">Explore →</span>
                 </a>
+
+                <a href="mosque-finder.html" class="feature-card">
+                    <div class="feature-icon neon-bg">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 3l8 6v14H6V9l10-6z"/>
+                            <path d="M12 21v-5a4 4 0 1 1 8 0v5"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Mosque Finder</h3>
+                    <p class="feature-desc">Locate nearby masajid with maps, distance, and direction support</p>
+                    <span class="feature-link">Explore →</span>
+                </a>
+
+                <a href="live.html" class="feature-card">
+                    <div class="feature-icon gold-bg">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="4" y="6" width="18" height="12" rx="2"/>
+                            <path d="M7 12h2m3 0h1m3 0h2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Live Streams</h3>
+                    <p class="feature-desc">Watch live lectures and events from trusted scholars and channels</p>
+                    <span class="feature-link">Explore →</span>
+                </a>
+
+                <a href="subjects.html" class="feature-card">
+                    <div class="feature-icon neon-bg">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 4h16v18H6z"/>
+                            <path d="M10 8h8M10 12h5M10 16h6"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Learn</h3>
+                    <p class="feature-desc">Structured lessons across Tajweed, Fiqh, Seerah, Qira'at, and more</p>
+                    <span class="feature-link">Explore →</span>
+                </a>
+
             </div>
         </div>
     </section>
@@ -359,15 +383,7 @@
                         <li>📧 info@thebelievers.com</li>
                     </ul>
                 </div>
-
-                <div class="footer-col">
-                    <h3 class="footer-title">Latest Videos</h3>
-                    <div class="footer-videos">
-                        <a href="#" class="video-link">Islamic Lecture 1</a>
-                        <a href="#" class="video-link">Nasheed Collection</a>
-                        <a href="#" class="video-link">Quran Recitation</a>
-                    </div>
-                </div>
+            </div>
             </div>
 
             <div class="footer-bottom">

@@ -271,24 +271,27 @@
                             <a href="zakat.html">Zakat Calculator</a>
                             <a href="calendar.html">Calendar</a>
                             <a href="mosque-finder.html">Mosque Finder</a>
+                            <a href="live.html">Live Streams</a>
+                            <a href="subjects.html">Learn</a>
+                            <a href="counter.html">Counter</a>
+                            <a href="99-names.html">99 Names</a>
+                            <a href="azkar.html">Azkar</a>
                         </div>
                     </div>
-                    <a href="live.html" class="nav-link">Live Streams</a>
-                    <a href="subjects.html" class="nav-link">Learn</a>
-                    <a href="multimedia.html" class="nav-link">Multimedia</a>
-                    <a href="counter.html" class="nav-link">Counter</a>
                     <a href="contact.html" class="nav-link">Contact</a>
                     <a href="suggestions.html" class="nav-link">Suggestions</a>
                 </div>
-                <div class="nav-actions">
+                                <div class="nav-actions">
                     <button class="icon-btn" id="searchBtn">
                         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="10" cy="10" r="7"/><path d="M15 15l4 4"/>
+                            <circle cx="10" cy="10" r="7"/>
+                            <path d="M15 15l4 4"/>
                         </svg>
                     </button>
                     <button class="icon-btn" id="themeToggle">
                         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="10" cy="10" r="4"/><path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
+                            <circle cx="10" cy="10" r="4"/>
+                            <path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
                         </svg>
                     </button>
                     <button class="menu-toggle" id="menuToggle">
@@ -297,7 +300,8 @@
                 </div>
             </div>
             <div class="search-bar" id="searchBar">
-                <input type="text" placeholder="Search..." class="search-input">
+                <input type="text" placeholder="Search..." class="search-input" aria-label="Search site">
+                <div class="search-suggestions" id="searchSuggestions" role="listbox"></div>
             </div>
         </div>
     </nav>
@@ -316,18 +320,157 @@
                     border-radius: 0.9rem;
                     background: linear-gradient(135deg, rgba(45, 212, 20, 0.08) 0%, rgba(0, 0, 0, 0.25) 100%);
                     border: 1px solid rgba(45, 212, 20, 0.3);
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 25px rgba(45, 212, 20, 0.2);
                 }
                 .audio-card h3 {
                     margin: 0 0 0.5rem;
                     color: var(--color-gold);
                     font-size: 1.1rem;
                 }
-                .audio-frame {
+                .audio-player {
                     width: 100%;
-                    height: 120px;
-                    border: none;
-                    border-radius: 0.65rem;
+                    margin-top: 0.35rem;
+                    background: radial-gradient(circle at 10% 20%, rgba(45, 212, 20, 0.15), rgba(0, 0, 0, 0.5));
+                    border: 1px solid rgba(45, 212, 20, 0.45);
+                    border-radius: 0.75rem;
+                    padding: 0.85rem;
+                    box-shadow: 0 0 20px rgba(45, 212, 20, 0.25);
+                    accent-color: var(--color-neon-green);
+                    color: var(--color-gray-100);
+                    display: none;
+                }
+                .audio-visual {
+                    height: 8px;
+                    margin-top: 0.65rem;
+                    border-radius: 999px;
+                    background: linear-gradient(90deg, rgba(45, 212, 20, 0.8) 0%, rgba(255, 215, 0, 0.7) 50%, rgba(45, 212, 20, 0.8) 100%);
+                    background-size: 200% 100%;
+                    opacity: 0.25;
+                    filter: drop-shadow(0 0 10px rgba(45, 212, 20, 0.35));
+                    transition: opacity 0.3s ease, filter 0.3s ease;
+                }
+                .audio-visual.playing {
+                    opacity: 0.9;
+                    filter: drop-shadow(0 0 16px rgba(45, 212, 20, 0.55));
+                    animation: audioPulse 1.8s linear infinite;
+                }
+                @keyframes audioPulse {
+                    0% { background-position: 0% 50%; }
+                    100% { background-position: 200% 50%; }
+                }
+
+                .audio-ui {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(230, 241, 230, 0.9));
+                    border: 1px solid rgba(45, 212, 20, 0.4);
+                    border-radius: 999px;
+                    padding: 0.55rem 0.9rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 18px rgba(45, 212, 20, 0.3);
+                }
+                .audio-btn {
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                    border: 1px solid rgba(45, 212, 20, 0.55);
+                    background: radial-gradient(circle at 30% 30%, rgba(45, 212, 20, 0.2), rgba(45, 212, 20, 0.05));
+                    color: #0f172a;
+                    display: grid;
+                    place-items: center;
+                    cursor: pointer;
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                    box-shadow: 0 0 12px rgba(45, 212, 20, 0.4);
+                }
+                .audio-btn:hover { transform: translateY(-1px); box-shadow: 0 0 18px rgba(45, 212, 20, 0.55); }
+                .audio-btn:active { transform: translateY(0); }
+                .audio-icon { width: 14px; height: 14px; }
+
+                .audio-time {
+                    font-size: 0.85rem;
+                    color: #0b1726;
+                    min-width: 45px;
+                    text-align: center;
+                    font-weight: 600;
+                }
+
+                .audio-timeline {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.65rem;
+                }
+                .audio-track {
+                    flex: 1;
+                    height: 12px;
+                    background: linear-gradient(90deg, rgba(17, 24, 39, 0.08), rgba(17, 24, 39, 0.04));
+                    border-radius: 999px;
+                    position: relative;
                     overflow: hidden;
+                    cursor: pointer;
+                    border: 1px solid rgba(17, 24, 39, 0.15);
+                }
+                .audio-progress {
+                    position: absolute;
+                    inset: 0;
+                    width: 0%;
+                    background: linear-gradient(90deg, rgba(45, 212, 20, 0.9), rgba(255, 215, 0, 0.85));
+                    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.15);
+                    transition: width 0.08s linear;
+                }
+                .audio-handle {
+                    position: absolute;
+                    top: 50%;
+                    width: 16px;
+                    height: 16px;
+                    background: #ffffff;
+                    border: 2px solid rgba(45, 212, 20, 0.8);
+                    border-radius: 50%;
+                    box-shadow: 0 0 12px rgba(45, 212, 20, 0.45);
+                    transform: translate(-50%, -50%);
+                    pointer-events: none;
+                }
+
+                .audio-vol {
+                    width: 110px;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                }
+                .audio-vol-track {
+                    flex: 1;
+                    height: 10px;
+                    background: rgba(17, 24, 39, 0.08);
+                    border-radius: 999px;
+                    position: relative;
+                    overflow: hidden;
+                    cursor: pointer;
+                    border: 1px solid rgba(17, 24, 39, 0.12);
+                }
+                .audio-vol-fill {
+                    position: absolute;
+                    inset: 0;
+                    width: 60%;
+                    background: linear-gradient(90deg, rgba(45, 212, 20, 0.9), rgba(255, 215, 0, 0.75));
+                    transition: width 0.1s ease;
+                }
+                .audio-vol-handle {
+                    position: absolute;
+                    top: 50%;
+                    width: 14px;
+                    height: 14px;
+                    background: #ffffff;
+                    border: 2px solid rgba(45, 212, 20, 0.8);
+                    border-radius: 50%;
+                    box-shadow: 0 0 10px rgba(45, 212, 20, 0.35);
+                    transform: translate(-50%, -50%);
+                    pointer-events: none;
+                }
+                .audio-pill-label {
+                    font-size: 0.75rem;
+                    color: #0f172a;
+                    font-weight: 700;
+                    letter-spacing: 0.01em;
                 }
             </style>
 
@@ -343,16 +486,39 @@
 
             <div class="audio-card glass-card" aria-label="Asma ul Husna audio">
                 <h3>🎧 Listen to the 99 Names</h3>
-                <iframe 
-                    class="audio-frame"
-                    src="https://www.youtube-nocookie.com/embed/ta_tTZrarE0?rel=0&modestbranding=1"
-                    title="Asma ul Husna audio"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    loading="lazy"
-                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                <audio 
+                    class="audio-player" 
+                    id="asmaAudio"
+                    preload="metadata" 
+                    src="images/Asma-ul-Husna%20(99%20Names%20of%20Allah).mp3"
+                >
+                    Your browser does not support the audio element. 
+                </audio>
+                <div class="audio-ui" id="asmaAudioUI">
+                    <button class="audio-btn" id="asmaPlayBtn" aria-label="Play or pause">
+                        <svg class="audio-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path id="asmaPlayIcon" d="M8 5v14l11-7z" />
+                        </svg>
+                    </button>
+                    <div class="audio-timeline">
+                        <span class="audio-time" id="asmaCurrent">0:00</span>
+                        <div class="audio-track" id="asmaTrack">
+                            <div class="audio-progress" id="asmaProgress"></div>
+                            <div class="audio-handle" id="asmaHandle"></div>
+                        </div>
+                        <span class="audio-time" id="asmaDuration">0:00</span>
+                    </div>
+                    <div class="audio-vol" aria-label="Volume">
+                        <span class="audio-pill-label">VOL</span>
+                        <div class="audio-vol-track" id="asmaVolTrack">
+                            <div class="audio-vol-fill" id="asmaVolFill"></div>
+                            <div class="audio-vol-handle" id="asmaVolHandle"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="audio-visual" id="asmaAudioVisual" aria-hidden="true"></div>
                 <p style="margin-top: 0.5rem; color: var(--color-gray-300); font-size: 0.9rem;">
-                    If the player doesn't load, <a href="https://youtu.be/ta_tTZrarE0" target="_blank" style="color: var(--color-gold); font-weight: 600;">open in YouTube</a>.
+                    If you prefer, <a href="images/Asma-ul-Husna%20(99%20Names%20of%20Allah).mp3" download style="color: var(--color-gold); font-weight: 600;">download the audio</a> and play it in your own player.
                 </p>
             </div>
 
@@ -1116,16 +1282,7 @@
                     <ul class="footer-contact">
                         <li>📧 info@thebelievers.com</li>
                     </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3 class="footer-title">Latest Videos</h3>
-                    <div class="footer-videos">
-                        <a href="#" class="video-link">Islamic Lecture 1</a>
-                        <a href="#" class="video-link">Nasheed Collection</a>
-                        <a href="#" class="video-link">Quran Recitation</a>
-                    </div>
-                </div>
+                </div>                </div>
             </div>
 
             <div class="footer-bottom">
@@ -1140,6 +1297,120 @@
 
     <script src="js/main.js"></script>
     <script>
+        // Audio visualizer toggle for Asma ul Husna player
+        (function() {
+            const audio = document.getElementById('asmaAudio');
+            const visual = document.getElementById('asmaAudioVisual');
+            const playBtn = document.getElementById('asmaPlayBtn');
+            const playIcon = document.getElementById('asmaPlayIcon');
+            const track = document.getElementById('asmaTrack');
+            const progress = document.getElementById('asmaProgress');
+            const handle = document.getElementById('asmaHandle');
+            const currentTimeEl = document.getElementById('asmaCurrent');
+            const durationEl = document.getElementById('asmaDuration');
+            const volTrack = document.getElementById('asmaVolTrack');
+            const volFill = document.getElementById('asmaVolFill');
+            const volHandle = document.getElementById('asmaVolHandle');
+
+            if (!audio || !visual) return;
+
+            const setPlaying = (isPlaying) => {
+                visual.classList.toggle('playing', isPlaying);
+                if (playIcon) {
+                    playIcon.setAttribute('d', isPlaying ? 'M7 5h4v14H7zm6 0h4v14h-4z' : 'M8 5v14l11-7z');
+                }
+            };
+
+            const formatTime = (seconds) => {
+                const mins = Math.floor(seconds / 60) || 0;
+                const secs = Math.floor(seconds % 60) || 0;
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            };
+
+            const updateDuration = () => {
+                if (durationEl && Number.isFinite(audio.duration)) {
+                    durationEl.textContent = formatTime(audio.duration);
+                }
+            };
+
+            const updateProgress = () => {
+                if (!track || !progress || !handle || !currentTimeEl) return;
+                const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+                progress.style.width = `${pct}%`;
+                handle.style.left = `${pct}%`;
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+            };
+
+            const seekTo = (clientX) => {
+                if (!track || !audio.duration) return;
+                const rect = track.getBoundingClientRect();
+                const clampedX = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+                const pct = clampedX / rect.width;
+                audio.currentTime = pct * audio.duration;
+            };
+
+            const setVolume = (clientX) => {
+                if (!volTrack) return;
+                const rect = volTrack.getBoundingClientRect();
+                const clampedX = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+                const pct = clampedX / rect.width;
+                audio.volume = pct;
+                if (volFill) volFill.style.width = `${pct * 100}%`;
+                if (volHandle) volHandle.style.left = `${pct * 100}%`;
+            };
+
+            // Initialize duration and progress once metadata is ready
+            audio.addEventListener('loadedmetadata', () => {
+                updateDuration();
+                updateProgress();
+            });
+
+            // Init volume visuals based on current volume
+            if (volTrack) {
+                const rect = volTrack.getBoundingClientRect();
+                const volPos = rect.left + (audio.volume * rect.width);
+                setVolume(volPos);
+            }
+
+            playBtn?.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                } else {
+                    audio.pause();
+                }
+            });
+
+            audio.addEventListener('timeupdate', updateProgress);
+            audio.addEventListener('ended', () => { setPlaying(false); updateProgress(); });
+            audio.addEventListener('play', () => setPlaying(true));
+            audio.addEventListener('playing', () => setPlaying(true));
+            audio.addEventListener('pause', () => setPlaying(false));
+            audio.addEventListener('waiting', () => setPlaying(false));
+
+            track?.addEventListener('click', (e) => seekTo(e.clientX));
+
+            let seeking = false;
+            track?.addEventListener('mousedown', (e) => { seeking = true; seekTo(e.clientX); });
+            window.addEventListener('mousemove', (e) => { if (seeking) seekTo(e.clientX); });
+            window.addEventListener('mouseup', () => { seeking = false; });
+
+            volTrack?.addEventListener('click', (e) => setVolume(e.clientX));
+            let adjustingVol = false;
+            volTrack?.addEventListener('mousedown', (e) => { adjustingVol = true; setVolume(e.clientX); });
+            window.addEventListener('mousemove', (e) => { if (adjustingVol) setVolume(e.clientX); });
+            window.addEventListener('mouseup', () => { adjustingVol = false; });
+
+            // Update handle positions on resize
+            window.addEventListener('resize', () => {
+                updateProgress();
+                if (volTrack) {
+                    const rect = volTrack.getBoundingClientRect();
+                    const volPos = rect.left + (audio.volume * rect.width);
+                    setVolume(volPos);
+                }
+            });
+        })();
+
         // Search functionality
         const searchInput = document.getElementById('searchInput');
         const namesGrid = document.getElementById('namesGrid');
