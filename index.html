@@ -9,6 +9,132 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .greeting-section {
+            position: relative;
+            padding: 4rem 0 4rem;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .arabic-greeting {
+            font-family: 'Amiri', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--color-gold);
+            direction: rtl;
+            margin: 0;
+            padding: 0 1rem;
+            letter-spacing: 0.04em;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            filter: drop-shadow(0 0 26px rgba(255, 215, 0, 0.35));
+            opacity: 0;
+            animation: greetingFadeInRTL 1.8s ease-out forwards, greetingFloat 3s ease-in-out 2s infinite;
+        }
+        
+        .greeting-translation {
+            font-size: 1.1rem;
+            color: var(--color-gray-300);
+            margin-top: 0.75rem;
+            opacity: 0;
+            animation: greetingFadeInRTL 1.6s ease-out 0.6s forwards;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        @keyframes greetingFadeInRTL {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes greetingFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .greeting-ornament {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .greeting-ornament::before,
+        .greeting-ornament::after {
+            content: '✦';
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--color-gold);
+            opacity: 0.6;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+        
+        .greeting-ornament::before {
+            left: 20%;
+            top: 50%;
+            animation-delay: 0s;
+        }
+        
+        .greeting-ornament::after {
+            right: 20%;
+            top: 50%;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2) rotate(180deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .arabic-greeting {
+                font-size: 1.75rem;
+                letter-spacing: 0.015em;
+                padding: 0 0.35rem;
+                line-height: 1.1;
+            }
+            
+            .greeting-translation {
+                font-size: 1rem;
+            }
+            
+            .greeting-ornament::before,
+            .greeting-ornament::after {
+                display: none;
+            }
+        }
+        
+        body.light-mode .arabic-greeting {
+            color: #d4af37;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+        }
+        
+        body.light-mode .greeting-translation {
+            color: var(--color-gray-600);
+        }
+    </style>
 </head>
 <body class="dark-mode">
     <!-- Navigation -->
@@ -77,6 +203,16 @@
                 <div class="hero-icon">
                     <img src="images/logo.png" alt="The Believers logo">
                 </div>
+                
+                <!-- Greeting Section -->
+                <div class="greeting-section" style="padding: 2rem 0; margin: 0; width: 100%; display: flex; justify-content: center; align-items: center;">
+                    <div class="greeting-ornament"></div>
+                    <div style="width: 100%;">
+                        <h1 class="arabic-greeting">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّٰهِ وَبَرَكَاتُهُ</h1>
+                        <p class="greeting-translation">Peace, mercy, and blessings of Allah be upon you</p>
+                    </div>
+                </div>
+                
                 <h1 class="hero-title">
                     <span class="hero-welcome">Welcome to</span>
                     <span class="hero-name neon-text">The Believers</span>
@@ -194,7 +330,7 @@
                     </div>
                     <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
                     <div class="social-links">
-                        <a href="https://youtube.com" class="social-link" title="YouTube">
+                        <a href="https://youtube.com/@the_believers99?si=VP6NSdDbUNbW5meS" class="social-link" title="YouTube">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                             </svg>

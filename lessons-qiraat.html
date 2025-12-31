@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qira'at of the Qur'an - The Believers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .intro-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+            border-left: 4px solid var(--color-gold);
+            border-radius: 0.75rem;
+        }
+        .intro-section h2 {
+            color: var(--color-gold);
+            margin: 0 0 1rem;
+            font-size: 1.5rem;
+        }
+        .intro-section p {
+            color: var(--color-gray-200);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+        .intro-section ul {
+            color: var(--color-gray-200);
+            line-height: 1.7;
+            margin-left: 1.5rem;
+        }
+        .intro-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        body.light-mode .intro-section {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 100%);
+        }
+        
+        .qiraat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .qiraat-card {
+            background: linear-gradient(145deg, rgba(45, 212, 20, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%);
+            border: 2px solid rgba(45, 212, 20, 0.3);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .qiraat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-gold);
+            box-shadow: 0 10px 30px rgba(45, 212, 20, 0.2);
+        }
+        
+        .qiraat-number {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--color-gold), #d4af37);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #000;
+        }
+        
+        .qiraat-name-arabic {
+            font-family: 'Amiri', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--color-neon-green);
+            margin-bottom: 0.35rem;
+            direction: rtl;
+            text-align: right;
+        }
+        
+        .qiraat-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .qiraat-transmitters {
+            font-size: 0.9rem;
+            color: var(--color-gray-400);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .qiraat-description {
+            color: var(--color-gray-200);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+        
+        .qiraat-region {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: rgba(45, 212, 20, 0.15);
+            border: 1px solid rgba(45, 212, 20, 0.4);
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-neon-green);
+            margin-top: 0.5rem;
+        }
+        
+        body.light-mode .qiraat-card {
+            background: linear-gradient(145deg, #ffffff 0%, rgba(45, 212, 20, 0.05) 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        body.light-mode .qiraat-name-arabic {
+            color: #1a9906;
+        }
+        
+        .companion-suffix {
+            font-size: 0.75rem;
+            color: var(--color-gold);
+            display: inline;
+            font-weight: 600;
+            font-style: italic;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        body.light-mode .companion-suffix {
+            color: #d4af37;
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(45, 212, 20, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+            border: 1px solid rgba(45, 212, 20, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--color-gold);
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            color: var(--color-gray-300);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                    <span class="logo-text">The Believers</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link">Islamic Tools ▾</a>
+                        <div class="dropdown-content">
+                            <a href="prayer-times.html">Prayer Times</a>
+                            <a href="quran.html">Qur'an</a>
+                            <a href="zakat.html">Zakat Calculator</a>
+                            <a href="calendar.html">Calendar</a>
+                            <a href="mosque-finder.html">Mosque Finder</a>
+                        </div>
+                    </div>
+                    <a href="live.html" class="nav-link">Live Streams</a>
+                    <a href="subjects.html" class="nav-link">Learn</a>
+                    <a href="multimedia.html" class="nav-link">Multimedia</a>
+                    <a href="counter.html" class="nav-link">Counter</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="suggestions.html" class="nav-link">Suggestions</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn" id="themeToggle">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="4"/><path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title neon-text">📖 The Seven Qira'at</h1>
+                <p class="page-subtitle">The Seven Canonical Recitations of the Qur'an</p>
+            </div>
+
+            <div class="intro-section glass-card">
+                <h2>🕌 What are the Qira'at?</h2>
+                <p>Qira'at (قراءات) refers to the different canonical methods of reciting the Qur'an. These variations were revealed by Allah Almighty to Prophet Muhammad ﷺ to accommodate the different dialects of the Arab tribes and make recitation easier for all Muslims.</p>
+                <p>The Prophet Muhammad ﷺ said: "This Qur'an has been revealed in seven different ways (ahruf), so recite it in the way that is easier for you." (Sahih Bukhari & Muslim)</p>
+                <p><strong>Important Note:</strong> All seven Qira'at are authentic, mutawatir (mass-transmitted), and lead back to Prophet Muhammad ﷺ through unbroken chains of transmission. The differences are primarily in pronunciation, vowel marks, and minor variations that do not change the core meanings of the Qur'an.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card glass-card">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Canonical Qira'at</div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Total (including 3 additional)</div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Main Transmitters (Rawi)</div>
+                </div>
+            </div>
+
+            <div class="qiraat-grid">
+                <!-- First Qira'ah: Nafi -->
+                <div class="qiraat-card glass-card">
+                    <div class="qiraat-number">1</div>
+                    <div class="qiraat-name-arabic">نافع المدني</div>
+                    <div class="qiraat-name">Nafi' al-Madani<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></div>
+                    <div class="qiraat-transmitters">Transmitted by: Qalun & Warsh</div>
+                    <div class="qiraat-description">
+                        Nafi' (d. 169 AH / 785 CE) was one of the seven famous reciters. He learned from 70 of the Tabi'un (successors of the Companions). His recitation is widely used in Africa, particularly through the Warsh transmission.
+                    </div>
+                    <div class="qiraat-region">📍 Madinah</div>
+                </div>
+
+                <!-- Second Qira'ah: Ibn Kathir -->
+                <div class="qiraat-card glass-card">
+                    <div class="qiraat-number">2</div>
+                    <div class="qiraat-name-arabic">ابن كثير المكي</div>
+                    <div class="qiraat-name">Ibn Kathir al-Makki<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></div>
+                    <div class="qiraat-transmitters">Transmitted by: Al-Bazzi & Qunbul</div>
+                    <div class="qiraat-description">
+                        Ibn Kathir (d. 120 AH / 737 CE) was a Tabi'i who learned from companions of Prophet Muhammad ﷺ. He was the Imam of recitation in Makkah and known for his piety and knowledge.
+                    </div>
+                    <div class="qiraat-region">📍 Makkah</div>
+                </div>
+
+                <!-- Third Qira'ah: Abu Amr -->
+                <div class="qiraat-card glass-card">
+                    <div class="qiraat-number">3</div>
+                    <div class="qiraat-name-arabic">أبو عمرو البصري</div>
+                    <div class="qiraat-name">Abu Amr al-Basri<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></div>
+                    <div class="qiraat-transmitters">Transmitted by: Ad-Duri & As-Susi</div>
+                    <div class="qiraat-description">
+                        Abu Amr (d. 154 AH / 770 CE) was the Imam of recitation in Basra. He was known for his vast knowledge of Arabic grammar, language, and hadith. His recitation is characterized by precision and linguistic accuracy.
+                    </div>
+                    <div class="qiraat-region">📍 Basra</div>
+                </div>
+
+                <!-- Fourth Qira'ah: Ibn Amir -->
+                <div class="qiraat-card glass-card">
+                    <div class="qiraat-number">4</div>
+                    <div class="qiraat-name-arabic">ابن عامر الشامي</div>
+                    <div class="qiraat-name">Ibn Amir ash-Shami<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></div>
+                    <div class="qiraat-transmitters">Transmitted by: Hisham & Ibn Dhakwan</div>
+                    <div class="qiraat-description">
+                        Ibn Amir (d. 118 AH / 736 CE) was a Tabi'i who learned from companions like Abu Darda<span class="companion-suffix">[may Allah Almighty be pleased with him]</span>. He was the Imam of recitation in Damascus and served as a judge.
+                    </div>
+                    <div class="qiraat-region">📍 Damascus (Syria)</div>
+                </div>
+
+                <!-- Fifth Qira'ah: Asim -->
+                <div class="qiraat-card glass-card">
+                    <div class="qiraat-number">5</div>
+                    <div class="qiraat-name-arabic">عاصم الكوفي</div>
+                    <div class="qiraat-name">Asim al-Kufi<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></div>
+                    <div class="qiraat-transmitters">Transmitted by: Hafs & Shu'bah</div>
+                    <div class="qiraat-description">
+                        Asim (d. 127 AH / 745 CE) was the Imam of recitation in Kufa. His recitation through Hafs is the most widespread in the world today, used in most printed Qur'ans and by the majority of Muslims globally.
+                    </div>
+                    <div class="qiraat-region">📍 Kufa (Most Popular Today)</div>
+                </div>
+
+                <!-- Sixth Qira'ah: Hamzah -->
+                <div class="qiraat-card glass-card">
+                    <div class="qiraat-number">6</div>
+                    <div class="qiraat-name-arabic">حمزة الزيات</div>
+                    <div class="qiraat-name">Hamzah az-Zayyat<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></div>
+                    <div class="qiraat-transmitters">Transmitted by: Khalaf & Khallad</div>
+                    <div class="qiraat-description">
+                        Hamzah (d. 156 AH / 772 CE) was known for his piety and extensive knowledge. He earned the title "az-Zayyat" (the oil dealer) due to his trade. His recitation is known for its strictness in application of rules.
+                    </div>
+                    <div class="qiraat-region">📍 Kufa</div>
+                </div>
+
+                <!-- Seventh Qira'ah: Al-Kisa'i -->
+                <div class="qiraat-card glass-card">
+                    <div class="qiraat-number">7</div>
+                    <div class="qiraat-name-arabic">الكسائي</div>
+                    <div class="qiraat-name">Al-Kisa'i<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></div>
+                    <div class="qiraat-transmitters">Transmitted by: Abul-Harith & Ad-Duri</div>
+                    <div class="qiraat-description">
+                        Al-Kisa'i (d. 189 AH / 804 CE) was a prominent scholar of Arabic grammar and language. He was the teacher of Harun ar-Rashid's sons and served as the Imam of recitation in Baghdad. His recitation combines linguistic beauty with precision.
+                    </div>
+                    <div class="qiraat-region">📍 Kufa / Baghdad</div>
+                </div>
+            </div>
+
+            <div class="intro-section glass-card" style="margin-top: 2rem;">
+                <h2>🌟 The Three Additional Qira'at</h2>
+                <p>In addition to the seven canonical Qira'at, there are three more authentic recitations that are also mutawatir (mass-transmitted):</p>
+                <ul>
+                    <li><strong>Abu Ja'far al-Madani<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></strong> - From Madinah (transmitted by Ibn Wardan & Ibn Jammaz)</li>
+                    <li><strong>Ya'qub al-Hadrami<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></strong> - From Basra (transmitted by Ruways & Rawh)</li>
+                    <li><strong>Khalaf<span class="companion-suffix">[may Allah Almighty have mercy on him]</span></strong> - From Baghdad (transmitted by Ishaq & Idris)</li>
+                </ul>
+                <p>These bring the total to <strong>10 authentic Qira'at</strong>, all of which are accepted by the Muslim Ummah.</p>
+            </div>
+
+            <div class="intro-section glass-card" style="margin-top: 2rem;">
+                <h2>📚 Understanding the Differences</h2>
+                <p><strong>Types of Variations:</strong></p>
+                <ul>
+                    <li><strong>Pronunciation differences:</strong> Such as whether to say "مَالِك" (Maalik) or "مَلِك" (Malik) in Surah Al-Fatihah</li>
+                    <li><strong>Vowel marks:</strong> Different diacritical marks on the same letters</li>
+                    <li><strong>Letter variations:</strong> Minor differences in certain letters that don't change core meanings</li>
+                    <li><strong>Pause and continuation:</strong> Different rules for where to stop and continue</li>
+                </ul>
+                <p><strong>Important:</strong> All variations are divinely preserved and do not contradict each other. They complement one another and enrich the meanings and understanding of the Qur'an.</p>
+            </div>
+
+            <div class="intro-section glass-card" style="margin-top: 2rem;">
+                <h2>✨ Which Qira'ah Should You Learn?</h2>
+                <p><strong>Hafs 'an Asim</strong> is the most widespread recitation today and is used in:</p>
+                <ul>
+                    <li>Most printed Qur'ans worldwide</li>
+                    <li>The majority of Muslim countries</li>
+                    <li>Most Qur'an memorization schools (Hifz programs)</li>
+                    <li>Online Qur'an platforms and apps</li>
+                </ul>
+                <p><strong>Warsh 'an Nafi'</strong> is predominantly used in North and West Africa.</p>
+                <p>All Qira'at are authentic and acceptable. Learning any of them will help you recite the Qur'an correctly and earn the reward from Allah Almighty.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                        <span class="logo-text">The Believers</span>
+                    </div>
+                    <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
+                    <div class="social-links">
+                        <a href="https://youtube.com/@the_believers99?si=VP6NSdDbUNbW5meS" class="social-link" title="YouTube">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="https://tiktok.com" class="social-link" title="TikTok">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-.94-.08A5.77 5.77 0 0 0 6.59 19a5.77 5.77 0 0 0 5.77 5.77 5.77 5.77 0 0 0 5.77-5.77V12.6a7.66 7.66 0 0 0 4.54 1.71v-3.5a4.83 4.83 0 0 1-1.18-.15z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="prayer-times.html">Prayer Times</a></li>
+                        <li><a href="quran.html">Qur'an</a></li>
+                        <li><a href="zakat.html">Zakat Calculator</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>📧 info@thebelievers.com</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Latest Videos</h3>
+                    <div class="footer-videos">
+                        <a href="#" class="video-link">Islamic Lecture 1</a>
+                        <a href="#" class="video-link">Nasheed Collection</a>
+                        <a href="#" class="video-link">Quran Recitation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Believers. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

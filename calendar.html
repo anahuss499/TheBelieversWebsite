@@ -7,6 +7,124 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .calendar-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            margin-top: 1.5rem;
+        }
+
+        .calendar-card {
+            background: linear-gradient(135deg, rgba(45, 212, 20, 0.08) 0%, rgba(0, 0, 0, 0.25) 100%);
+            border: 1px solid rgba(45, 212, 20, 0.25);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        body.light-mode .calendar-card {
+            background: linear-gradient(135deg, rgba(45, 212, 20, 0.05) 0%, rgba(0, 0, 0, 0.02) 100%);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .calendar-card h3 {
+            margin: 0 0 0.75rem;
+            color: var(--color-gold);
+            font-size: 1.15rem;
+        }
+
+        .date-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 1rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 215, 0, 0.08);
+            color: var(--color-gray-100);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .date-line small {
+            color: var(--color-gray-400);
+            font-weight: 500;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 0.75rem 0.9rem;
+            border-radius: 0.65rem;
+            border: 1px solid rgba(45, 212, 20, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--color-gray-50);
+        }
+
+        body.light-mode .input-group input {
+            background: #fff;
+            color: #1f1f1f;
+        }
+
+        .input-group button {
+            padding: 0.75rem 1rem;
+            border-radius: 0.65rem;
+            border: 1px solid rgba(45, 212, 20, 0.4);
+            background: linear-gradient(135deg, var(--color-neon-green), var(--color-gold));
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .conversion-result {
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.65rem;
+            background: rgba(45, 212, 20, 0.12);
+            color: var(--color-gray-100);
+            min-height: 44px;
+        }
+
+        .clock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .clock-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(45, 212, 20, 0.25);
+            border-radius: 0.85rem;
+            padding: 1rem;
+            color: var(--color-gray-50);
+        }
+
+        body.light-mode .clock-card {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .clock-city {
+            color: var(--color-gold);
+            font-weight: 700;
+            margin: 0 0 0.35rem;
+        }
+
+        .clock-time {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .clock-date {
+            color: var(--color-gray-400);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body class="dark-mode">
     <nav class="navbar scrolled" id="navbar">
@@ -45,14 +163,118 @@
     <main class="page-content">
         <div class="container">
             <div class="page-header">
-                <h1 class="page-title neon-text">Hijri Calendar</h1>
-                <p class="page-subtitle">Convert between Gregorian and Hijri dates</p>
+                <h1 class="page-title neon-text">Hijri & Gregorian Calendar</h1>
+                <p class="page-subtitle">See today's date in both calendars, convert dates, and view live world clocks</p>
             </div>
-            <div class="glass-card" style="padding: 3rem; text-align: center;">
-                <div class="hero-icon" style="margin: 0 auto 2rem;">📅</div>
-                <h2 class="gold-text" style="margin-bottom: 1rem;">Calendar Converter Coming Soon</h2>
-                <p style="color: var(--color-gray-400); max-width: 600px; margin: 0 auto;">Convert between Gregorian and Hijri dates with ease.</p>
-                <div style="margin-top: 2rem;"><a href="index.html" class="btn btn-primary">Back to Home</a></div>
+
+            <div class="calendar-grid">
+                <section class="calendar-card glass-card">
+                    <h3>Today</h3>
+                    <div class="date-line">
+                        <span id="today-greg"></span>
+                        <small>Gregorian</small>
+                    </div>
+                    <div class="date-line" style="background: rgba(45, 212, 20, 0.12); border: 1px solid rgba(45, 212, 20, 0.3);">
+                        <span id="today-hijri"></span>
+                        <small>Hijri</small>
+                    </div>
+                </section>
+
+                <section class="calendar-card glass-card">
+                    <h3>Convert Gregorian ➜ Hijri</h3>
+                    <div class="input-group">
+                        <input type="date" id="greg-input" aria-label="Gregorian date">
+                        <button id="convert-to-hijri">Convert</button>
+                    </div>
+                    <div class="conversion-result" id="greg-to-hijri-result">Select a date to convert.</div>
+                </section>
+            </div>
+
+            <div class="calendar-card glass-card" style="margin-top: 1.5rem;">
+                <h3>Live World Clocks</h3>
+                <p style="color: var(--color-gray-300); margin: 0 0 0.75rem;">Current time across key cities</p>
+                <div class="clock-grid" id="clock-grid">
+                    <div class="clock-card">
+                        <div class="clock-city">Makkah — Saudi Arabia</div>
+                        <div class="clock-time" id="clock-makkah"></div>
+                        <div class="clock-date" id="date-makkah"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Madina — Saudi Arabia</div>
+                        <div class="clock-time" id="clock-madina"></div>
+                        <div class="clock-date" id="date-madina"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Islamabad — Pakistan (Capital)</div>
+                        <div class="clock-time" id="clock-islamabad"></div>
+                        <div class="clock-date" id="date-islamabad"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">New Delhi — India (Capital)</div>
+                        <div class="clock-time" id="clock-delhi"></div>
+                        <div class="clock-date" id="date-delhi"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">London — United Kingdom (Capital)</div>
+                        <div class="clock-time" id="clock-london"></div>
+                        <div class="clock-date" id="date-london"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Paris — France (Capital)</div>
+                        <div class="clock-time" id="clock-paris"></div>
+                        <div class="clock-date" id="date-paris"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Berlin — Germany (Capital)</div>
+                        <div class="clock-time" id="clock-berlin"></div>
+                        <div class="clock-date" id="date-berlin"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Madrid — Spain (Capital)</div>
+                        <div class="clock-time" id="clock-madrid"></div>
+                        <div class="clock-date" id="date-madrid"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Rome — Italy (Capital)</div>
+                        <div class="clock-time" id="clock-rome"></div>
+                        <div class="clock-date" id="date-rome"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Istanbul — Türkiye</div>
+                        <div class="clock-time" id="clock-istanbul"></div>
+                        <div class="clock-date" id="date-istanbul"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Washington, D.C. — USA (Capital)</div>
+                        <div class="clock-time" id="clock-dc"></div>
+                        <div class="clock-date" id="date-dc"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">New York — USA</div>
+                        <div class="clock-time" id="clock-ny"></div>
+                        <div class="clock-date" id="date-ny"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Kuala Lumpur — Malaysia (Capital)</div>
+                        <div class="clock-time" id="clock-kl"></div>
+                        <div class="clock-date" id="date-kl"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Jakarta — Indonesia (Capital)</div>
+                        <div class="clock-time" id="clock-jakarta"></div>
+                        <div class="clock-date" id="date-jakarta"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Tokyo — Japan (Capital)</div>
+                        <div class="clock-time" id="clock-tokyo"></div>
+                        <div class="clock-date" id="date-tokyo"></div>
+                    </div>
+                    <div class="clock-card">
+                        <div class="clock-city">Singapore — Singapore (Capital)</div>
+                        <div class="clock-time" id="clock-singapore"></div>
+                        <div class="clock-date" id="date-singapore"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -66,7 +288,7 @@
                         </div>
                         <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
                         <div class="social-links">
-                            <a href="https://youtube.com" class="social-link" title="YouTube">
+                            <a href="https://youtube.com/@the_believers99?si=VP6NSdDbUNbW5meS" class="social-link" title="YouTube">
                                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                                 </svg>
@@ -116,5 +338,6 @@
             </div>
         </footer>
     <script src="js/main.js"></script>
+    <script src="js/calendar.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morning Azkar - The Believers</title>
+    <title>Tajweed Lessons - The Believers</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -45,26 +45,20 @@
 
     <main class="page-content">
         <div class="container">
-            <div style="margin-bottom: 2rem;">
-                <a href="azkar.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-neon-green); text-decoration: none; font-size: 0.95rem;">
-                    ← Back to Azkar
-                </a>
-            </div>
-
             <div class="page-header">
-                <h1 class="page-title neon-text">🌅 Morning Azkar</h1>
-                <p class="page-subtitle">Remembrance to recite after Fajr and in the morning</p>
+                <h1 class="page-title neon-text">📖 Tajweed Lessons</h1>
+                <p class="page-subtitle">Learn the proper rules of Qur'anic recitation</p>
             </div>
 
             <style>
-                .azkar-list {
+                .lesson-list {
                     list-style: none;
                     padding: 0;
                     margin: 0;
                     display: grid;
                     gap: 1rem;
                 }
-                .azkar-item {
+                .lesson-item {
                     padding: 1.25rem 1.5rem;
                     background: linear-gradient(135deg, rgba(45, 212, 20, 0.08) 0%, rgba(0, 0, 0, 0.2) 100%);
                     border: 2px solid rgba(45, 212, 20, 0.3);
@@ -73,37 +67,92 @@
                     font-weight: 600;
                     font-size: 1.1rem;
                     transition: all 0.3s ease;
+                    cursor: pointer;
                 }
-                .azkar-item:hover {
+                .lesson-item:hover {
                     transform: translateX(8px);
                     border-color: var(--color-gold);
                     box-shadow: 0 8px 25px rgba(45, 212, 20, 0.25);
                 }
-                .azkar-status {
+                .lesson-item .lesson-status {
                     color: var(--color-gray-400);
                     font-weight: 400;
                     font-size: 0.9rem;
                     margin-left: 0.5rem;
                 }
-                body.light-mode .azkar-item {
+                body.light-mode .lesson-item {
                     background: linear-gradient(135deg, rgba(45, 212, 20, 0.05) 0%, rgba(0, 0, 0, 0.02) 100%);
                     color: #1a9906;
                 }
+                .intro-section {
+                    margin-bottom: 2rem;
+                    padding: 1.5rem;
+                    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+                    border-left: 4px solid var(--color-gold);
+                    border-radius: 0.75rem;
+                }
+                .intro-section h2 {
+                    color: var(--color-gold);
+                    margin: 0 0 1rem;
+                    font-size: 1.5rem;
+                }
+                .intro-section p {
+                    color: var(--color-gray-200);
+                    line-height: 1.7;
+                    margin-bottom: 0.75rem;
+                }
+                .intro-section ul {
+                    color: var(--color-gray-200);
+                    line-height: 1.7;
+                    margin-left: 1.5rem;
+                }
+                .intro-section ul li {
+                    margin-bottom: 0.5rem;
+                }
+                body.light-mode .intro-section {
+                    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 100%);
+                }
             </style>
+            
+            <div class="intro-section glass-card">
+                <h2>📚 Introduction to Tajweed (تجويد)</h2>
+                <p>Tajweed is the set of rules governing the proper pronunciation and recitation of the Qur'an. The word "Tajweed" literally means "to improve" or "to make better." Learning Tajweed ensures that we recite the words of Allah Almighty exactly as they were revealed to Prophet Muhammad ﷺ.</p>
+                <p><strong>Why is Tajweed important?</strong></p>
+                <ul>
+                    <li>It preserves the original pronunciation of the Qur'an</li>
+                    <li>It beautifies the recitation and makes it melodious</li>
+                    <li>It prevents mistakes that could alter the meaning of verses</li>
+                    <li>It helps us recite with proper respect and reverence</li>
+                </ul>
+                <p><strong>What you'll learn:</strong> Arabic letter articulation points (Makharij), characteristics of letters (Sifaat), rules of Noon Sakin and Tanween, rules of Meem Sakin, Qalqalah, Madd (elongation), and much more.</p>
+            </div>
 
             <div class="glass-card" style="padding: 2rem;">
-                <ol class="azkar-list">
-                    <li class="azkar-item">Ayat Al-Kursi <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Last two verses of Surah Al-Baqarah <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah Al-Ikhlas (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah Al-Falaq (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah An-Nas (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Asbahna wa asbahal-mulku lillah <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma bika asbahna <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma anta Rabbi <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma inni asbahtu <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">SubhanAllah wa bihamdihi (100 times) <span class="azkar-status">— coming soon</span></li>
+                <h3 style="color: var(--color-gold); margin-bottom: 1.5rem; font-size: 1.3rem;">📋 Tajweed Lessons</h3>
+                <ol class="lesson-list">
+                    <li class="lesson-item">Lesson 1: Introduction & Arabic Letters <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 2: Makharij al-Huruf (Articulation Points) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 3: Sifaat al-Huruf (Characteristics of Letters) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 4: Rules of Noon Sakin & Tanween (Izhar) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 5: Rules of Noon Sakin & Tanween (Idgham) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 6: Rules of Noon Sakin & Tanween (Iqlab & Ikhfa) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 7: Rules of Meem Sakin <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 8: Qalqalah (Echoing Sound) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 9: Rules of Lam <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 10: Rules of Ra <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 11: Madd (Elongation) - Part 1 <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 12: Madd (Elongation) - Part 2 <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 13: Stopping & Starting (Waqf & Ibtida) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 14: Hamzatul Wasl & Hamzatul Qat <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 15: Advanced Tajweed Rules <span class="lesson-status">— coming soon</span></li>
                 </ol>
+            </div>
+
+            <div class="intro-section glass-card" style="margin-top: 2rem;">
+                <h2>✨ Benefits of Learning Tajweed</h2>
+                <p><strong>Spiritual Rewards:</strong> The Prophet Muhammad ﷺ said: "The one who is proficient in the recitation of the Qur'an will be with the honorable and obedient scribes (angels), and he who recites the Qur'an and finds it difficult to recite, doing his best to recite it in the best way possible, will have two rewards." (Sahih Bukhari & Muslim)</p>
+                <p><strong>Preservation:</strong> Tajweed has preserved the Qur'an in its original form for over 1400 years, ensuring that Muslims around the world recite it exactly as it was revealed.</p>
+                <p><strong>Understanding:</strong> Proper pronunciation helps you understand the meanings better and prevents confusion between similar-sounding words.</p>
             </div>
         </div>
     </main>

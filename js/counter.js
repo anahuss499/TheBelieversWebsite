@@ -6,6 +6,7 @@ let counters = {
     salawat: 0
 };
 
+// Global lifetime counters (shared across all users)
 let lifetimeCounters = {
     tasbih: 0,
     tahmid: 0,
@@ -17,31 +18,68 @@ let activeCounter = 'tasbih';
 let target = 33;
 let targetReached = false;
 
-// Load saved data
+// API endpoint for global counter storage (free, no setup required)
+const COUNTER_API = 'https://api.countapi.xyz';
+const NAMESPACE = 'thebelieverswebsite';
+
+// Initialize and fetch global lifetime counters
+async function initLifetimeCounters() {
+    const types = ['tasbih', 'tahmid', 'takbir', 'salawat'];
+    
+    for (const type of types) {
+        try {
+            const response = await fetch(`${COUNTER_API}/get/${NAMESPACE}/${type}`);
+            const data = await response.json();
+            lifetimeCounters[type] = data.value || 0;
+        } catch (error) {
+            console.log(`Could not fetch ${type} counter, using 0`);
+            lifetimeCounters[type] = 0;
+        }
+    }
+    
+    updateDisplay();
+}
+
+// Load saved data (session counters only)
 function loadCounters() {
     const saved = localStorage.getItem('dhikrCounters');
     if (saved) {
         counters = JSON.parse(saved);
     }
     
-    const savedLifetime = localStorage.getItem('dhikrLifetimeCounters');
-    if (savedLifetime) {
-        lifetimeCounters = JSON.parse(savedLifetime);
-    }
-    
     const savedTarget = localStorage.getItem('dhikrTarget');
     if (savedTarget) {
         target = parseInt(savedTarget);
-        document.getElementById('targetInput').value = target;
+        const targetInput = document.getElementById('targetInput');
+        if (targetInput) {
+            targetInput.value = target;
+        }
     }
     
     updateDisplay();
 }
 
-// Save data
+// Save session data (counters only, not lifetime)
 function saveCounters() {
     localStorage.setItem('dhikrCounters', JSON.stringify(counters));
-    localStorage.setItem('dhikrLifetimeCounters', JSON.stringify(lifetimeCounters));
+}
+
+// Update global lifetime counter via API
+async function updateLifetimeCounter(counterType) {
+    try {
+        const response = await fetch(`${COUNTER_API}/hit/${NAMESPACE}/${counterType}`);
+        const data = await response.json();
+        
+        if (data.value !== undefined) {
+            lifetimeCounters[counterType] = data.value;
+            updateDisplay();
+        }
+    } catch (error) {
+        console.log('Could not update lifetime counter:', error);
+        // Still increment locally for display
+        lifetimeCounters[counterType]++;
+        updateDisplay();
+    }
 }
 
 // Update display
@@ -128,7 +166,7 @@ document.querySelectorAll('.counter-option').forEach(option => {
 // Increment counter
 function increment() {
     counters[activeCounter]++;
-    lifetimeCounters[activeCounter]++;
+    updateLifetimeCounter(activeCounter); // Update global lifetime counter
     saveCounters();
     updateDisplay();
     
@@ -140,19 +178,20 @@ function increment() {
     }, 200);
 }
 
-// Decrement counter
+// Decrement counter (session only, lifetime counters are never decremented)
 function decrement() {
     if (counters[activeCounter] > 0) {
         counters[activeCounter]--;
-        // Note: We don't decrement lifetime counters
+        // Note: We never decrement lifetime counters - they only increase
         saveCounters();
         updateDisplay();
     }
 }
 
-// Reset current counter
+// Reset current counter (session only, lifetime counters are preserved)
 function reset() {
     counters[activeCounter] = 0;
+    // Lifetime counters are never reset
     saveCounters();
     updateDisplay();
 }
@@ -195,9 +234,10 @@ function closeResetAllModal() {
     }
 }
 
-// Confirm and perform reset all
+// Confirm and perform reset all (session only, lifetime counters are preserved)
 function confirmResetAll() {
     counters = { tasbih: 0, tahmid: 0, takbir: 0, salawat: 0 };
+    // Lifetime counters are never reset - they persist forever for each user
     saveCounters();
     updateDisplay();
     closeResetAllModal();
@@ -222,6 +262,7 @@ document.addEventListener('keydown', (e) => {
 // Make counter main clickable
 document.addEventListener('DOMContentLoaded', () => {
     loadCounters();
+    initLifetimeCounters(); // Load global lifetime counters from API
     
     const counterMain = document.getElementById('counterMainClickable');
     if (counterMain) {

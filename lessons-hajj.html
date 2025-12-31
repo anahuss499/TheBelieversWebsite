@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morning Azkar - The Believers</title>
+    <title>Hajj Guide - The Believers</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -45,65 +45,105 @@
 
     <main class="page-content">
         <div class="container">
-            <div style="margin-bottom: 2rem;">
-                <a href="azkar.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-neon-green); text-decoration: none; font-size: 0.95rem;">
-                    ← Back to Azkar
-                </a>
-            </div>
-
             <div class="page-header">
-                <h1 class="page-title neon-text">🌅 Morning Azkar</h1>
-                <p class="page-subtitle">Remembrance to recite after Fajr and in the morning</p>
+                <h1 class="page-title neon-text">🕋 Hajj Guide</h1>
+                <p class="page-subtitle">Step-by-step rites, du'as, and fiqh essentials for Hajj</p>
             </div>
 
             <style>
-                .azkar-list {
+                .lesson-list {
                     list-style: none;
                     padding: 0;
                     margin: 0;
                     display: grid;
                     gap: 1rem;
                 }
-                .azkar-item {
+                .lesson-item {
                     padding: 1.25rem 1.5rem;
                     background: linear-gradient(135deg, rgba(45, 212, 20, 0.08) 0%, rgba(0, 0, 0, 0.2) 100%);
                     border: 2px solid rgba(45, 212, 20, 0.3);
                     border-radius: 0.75rem;
                     color: var(--color-neon-green);
                     font-weight: 600;
-                    font-size: 1.1rem;
+                    font-size: 1.05rem;
                     transition: all 0.3s ease;
+                    cursor: pointer;
                 }
-                .azkar-item:hover {
+                .lesson-item:hover {
                     transform: translateX(8px);
                     border-color: var(--color-gold);
                     box-shadow: 0 8px 25px rgba(45, 212, 20, 0.25);
                 }
-                .azkar-status {
+                .lesson-item .lesson-status {
                     color: var(--color-gray-400);
                     font-weight: 400;
                     font-size: 0.9rem;
                     margin-left: 0.5rem;
                 }
-                body.light-mode .azkar-item {
+                body.light-mode .lesson-item {
                     background: linear-gradient(135deg, rgba(45, 212, 20, 0.05) 0%, rgba(0, 0, 0, 0.02) 100%);
                     color: #1a9906;
                 }
+                .intro-section {
+                    margin-bottom: 2rem;
+                    padding: 1.5rem;
+                    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+                    border-left: 4px solid var(--color-gold);
+                    border-radius: 0.75rem;
+                }
+                .intro-section h2 {
+                    color: var(--color-gold);
+                    margin: 0 0 1rem;
+                    font-size: 1.5rem;
+                }
+                .intro-section p {
+                    color: var(--color-gray-200);
+                    line-height: 1.7;
+                    margin-bottom: 0.75rem;
+                }
+                .intro-section ul {
+                    color: var(--color-gray-200);
+                    line-height: 1.7;
+                    margin-left: 1.5rem;
+                }
+                .intro-section ul li {
+                    margin-bottom: 0.5rem;
+                }
+                body.light-mode .intro-section {
+                    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 100%);
+                }
             </style>
+            
+            <div class="intro-section glass-card">
+                <h2>📌 Overview of Hajj</h2>
+                <p>Hajj is one of the five pillars of Islam and must be performed once in a lifetime by every Muslim who is physically and financially able. It is performed in the month of Dhul-Hijjah in Makkah and surrounding sites.</p>
+                <p><strong>What you'll learn:</strong> Ihram rules, sequence of rites, key du'as, prohibited acts, and practical tips for health and safety.</p>
+            </div>
 
             <div class="glass-card" style="padding: 2rem;">
-                <ol class="azkar-list">
-                    <li class="azkar-item">Ayat Al-Kursi <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Last two verses of Surah Al-Baqarah <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah Al-Ikhlas (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah Al-Falaq (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah An-Nas (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Asbahna wa asbahal-mulku lillah <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma bika asbahna <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma anta Rabbi <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma inni asbahtu <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">SubhanAllah wa bihamdihi (100 times) <span class="azkar-status">— coming soon</span></li>
+                <h3 style="color: var(--color-gold); margin-bottom: 1.25rem; font-size: 1.25rem;">📋 Hajj Lessons</h3>
+                <ol class="lesson-list">
+                    <li class="lesson-item">Lesson 1: Intention & Ihram <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 2: Entering Makkah & Arrival Tawaf <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 3: Sa'i Between Safa and Marwah <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 4: Mina (8th Dhul-Hijjah) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 5: Arafat (9th Dhul-Hijjah) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 6: Muzdalifah (Night of 9th) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 7: Rami, Slaughter, Shaving, Tawaf al-Ifadah <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 8: Days of Tashreeq & Rami <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 9: Tawaf al-Wida & Departure <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 10: Common Mistakes & Tips <span class="lesson-status">— coming soon</span></li>
                 </ol>
+            </div>
+
+            <div class="intro-section glass-card" style="margin-top: 2rem;">
+                <h2>🕌 Key Sites</h2>
+                <ul>
+                    <li>Masjid al-Haram (Ka'bah) — Tawaf and Sa'i start/end</li>
+                    <li>Mina — Tents, stoning (Jamarat) on Tashreeq days</li>
+                    <li>Arafat — Standing (Wuquf) on 9th Dhul-Hijjah</li>
+                    <li>Muzdalifah — Overnight stay, collecting pebbles</li>
+                </ul>
             </div>
         </div>
     </main>

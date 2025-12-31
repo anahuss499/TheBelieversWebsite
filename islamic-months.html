@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Months - The Believers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .intro-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+            border-left: 4px solid var(--color-gold);
+            border-radius: 0.75rem;
+        }
+        .intro-section h2 {
+            color: var(--color-gold);
+            margin: 0 0 1rem;
+            font-size: 1.5rem;
+        }
+        .intro-section p {
+            color: var(--color-gray-200);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+        body.light-mode .intro-section {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 100%);
+        }
+        
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .month-card {
+            background: linear-gradient(145deg, rgba(45, 212, 20, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%);
+            border: 2px solid rgba(45, 212, 20, 0.3);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .month-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-gold);
+            box-shadow: 0 10px 30px rgba(45, 212, 20, 0.2);
+        }
+        
+        .month-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--color-gold), #d4af37);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        .month-arabic {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-neon-green);
+            margin-bottom: 0.5rem;
+            direction: rtl;
+        }
+        
+        .month-transliteration {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-gold);
+            margin-bottom: 0.75rem;
+        }
+        
+        .month-meaning {
+            color: var(--color-gray-300);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        
+        .month-significance {
+            color: var(--color-gray-200);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(45, 212, 20, 0.2);
+        }
+        
+        .special-badge {
+            display: inline-block;
+            padding: 0.25rem 0.65rem;
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid var(--color-gold);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-gold);
+            margin-top: 0.5rem;
+        }
+        
+        body.light-mode .month-card {
+            background: linear-gradient(145deg, #ffffff 0%, rgba(45, 212, 20, 0.05) 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        body.light-mode .month-arabic {
+            color: #1a9906;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                    <span class="logo-text">The Believers</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link">Islamic Tools ▾</a>
+                        <div class="dropdown-content">
+                            <a href="prayer-times.html">Prayer Times</a>
+                            <a href="quran.html">Qur'an</a>
+                            <a href="zakat.html">Zakat Calculator</a>
+                            <a href="calendar.html">Calendar</a>
+                            <a href="mosque-finder.html">Mosque Finder</a>
+                        </div>
+                    </div>
+                    <a href="live.html" class="nav-link">Live Streams</a>
+                    <a href="subjects.html" class="nav-link">Learn</a>
+                    <a href="multimedia.html" class="nav-link">Multimedia</a>
+                    <a href="counter.html" class="nav-link">Counter</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="suggestions.html" class="nav-link">Suggestions</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn" id="themeToggle">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="4"/><path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title neon-text">🌙 Islamic Months</h1>
+                <p class="page-subtitle">Learn the 12 months of the Islamic Calendar</p>
+            </div>
+
+            <div class="intro-section glass-card">
+                <h2>📅 The Islamic Hijri Calendar</h2>
+                <p>The Islamic calendar, also known as the Hijri calendar, is a lunar calendar consisting of 12 months in a year of 354 or 355 days. It is used to determine the proper days of Islamic holidays and rituals, such as Ramadan, Hajj, and Eid.</p>
+                <p>The calendar began in 622 CE, marking the Hijrah (migration) of Prophet Muhammad ﷺ from Makkah to Madinah. Each month begins with the sighting of the new crescent moon.</p>
+                <p><strong>Did you know?</strong> The Islamic year is approximately 11 days shorter than the Gregorian (solar) year, which means Islamic months shift throughout the seasons over time.</p>
+            </div>
+
+            <div class="months-grid">
+                <!-- Month 1: Muharram -->
+                <div class="month-card glass-card">
+                    <div class="month-number">1</div>
+                    <div class="month-arabic">مُحَرَّم</div>
+                    <div class="month-transliteration">Muharram</div>
+                    <div class="month-meaning">Meaning: "Sacred" or "Forbidden"</div>
+                    <div class="month-significance">
+                        One of the four sacred months in Islam. The 10th day (Ashura) is highly significant - Prophet Musa (Moses) was saved from Pharaoh on this day. Fasting on Ashura is highly recommended.
+                    </div>
+                    <span class="special-badge">🕌 Sacred Month</span>
+                </div>
+
+                <!-- Month 2: Safar -->
+                <div class="month-card glass-card">
+                    <div class="month-number">2</div>
+                    <div class="month-arabic">صَفَر</div>
+                    <div class="month-transliteration">Safar</div>
+                    <div class="month-meaning">Meaning: "Empty" or "Yellow"</div>
+                    <div class="month-significance">
+                        Named because houses were empty (safar) as Arabs would travel during this month, or because leaves turned yellow. No special Islamic observances, contrary to some cultural superstitions.
+                    </div>
+                </div>
+
+                <!-- Month 3: Rabi' al-Awwal -->
+                <div class="month-card glass-card">
+                    <div class="month-number">3</div>
+                    <div class="month-arabic">رَبِيع ٱلْأَوَّل</div>
+                    <div class="month-transliteration">Rabi' al-Awwal</div>
+                    <div class="month-meaning">Meaning: "The First Spring"</div>
+                    <div class="month-significance">
+                        The month in which Prophet Muhammad ﷺ was born (12th of Rabi' al-Awwal according to most scholars). Many Muslims celebrate Mawlid an-Nabi during this month.
+                    </div>
+                    <span class="special-badge">⭐ Birth of the Prophet ﷺ</span>
+                </div>
+
+                <!-- Month 4: Rabi' al-Thani -->
+                <div class="month-card glass-card">
+                    <div class="month-number">4</div>
+                    <div class="month-arabic">رَبِيع ٱلثَّانِي</div>
+                    <div class="month-transliteration">Rabi' al-Thani</div>
+                    <div class="month-meaning">Meaning: "The Second Spring"</div>
+                    <div class="month-significance">
+                        Also known as Rabi' al-Akhir (The Last Spring). No specific Islamic events or observances are associated with this month.
+                    </div>
+                </div>
+
+                <!-- Month 5: Jumada al-Awwal -->
+                <div class="month-card glass-card">
+                    <div class="month-number">5</div>
+                    <div class="month-arabic">جُمَادَىٰ ٱلْأُولَىٰ</div>
+                    <div class="month-transliteration">Jumada al-Awwal</div>
+                    <div class="month-meaning">Meaning: "The First of Parched Land"</div>
+                    <div class="month-significance">
+                        Named from the root word "jamad" meaning dry or frozen, as it originally fell in the dry or winter season. Marks the middle of the Islamic year.
+                    </div>
+                </div>
+
+                <!-- Month 6: Jumada al-Thani -->
+                <div class="month-card glass-card">
+                    <div class="month-number">6</div>
+                    <div class="month-arabic">جُمَادَىٰ ٱلثَّانِيَة</div>
+                    <div class="month-transliteration">Jumada al-Thani</div>
+                    <div class="month-meaning">Meaning: "The Second of Parched Land"</div>
+                    <div class="month-significance">
+                        Also called Jumada al-Akhirah (The Last Jumada). Like its predecessor, it derives its name from the dry season.
+                    </div>
+                </div>
+
+                <!-- Month 7: Rajab -->
+                <div class="month-card glass-card">
+                    <div class="month-number">7</div>
+                    <div class="month-arabic">رَجَب</div>
+                    <div class="month-transliteration">Rajab</div>
+                    <div class="month-meaning">Meaning: "Respect" or "Honor"</div>
+                    <div class="month-significance">
+                        One of the four sacred months. The month of Isra and Mi'raj (the Night Journey and Ascension of Prophet Muhammad ﷺ) occurred on the 27th of Rajab.
+                    </div>
+                    <span class="special-badge">🕌 Sacred Month</span>
+                </div>
+
+                <!-- Month 8: Sha'ban -->
+                <div class="month-card glass-card">
+                    <div class="month-number">8</div>
+                    <div class="month-arabic">شَعْبَان</div>
+                    <div class="month-transliteration">Sha'ban</div>
+                    <div class="month-meaning">Meaning: "Scattered" or "Dispersed"</div>
+                    <div class="month-significance">
+                        The month before Ramadan. Arabs would disperse (sha'b) in search of water. The Prophet ﷺ used to fast frequently in this month. The 15th night (Laylat al-Bara'ah) is significant to many Muslims.
+                    </div>
+                </div>
+
+                <!-- Month 9: Ramadan -->
+                <div class="month-card glass-card">
+                    <div class="month-number">9</div>
+                    <div class="month-arabic">رَمَضَان</div>
+                    <div class="month-transliteration">Ramadan</div>
+                    <div class="month-meaning">Meaning: "Scorching Heat" or "Burning"</div>
+                    <div class="month-significance">
+                        The holiest month of the Islamic year. Muslims fast from dawn to sunset. The Qur'an was first revealed during this month. Laylat al-Qadr (Night of Power) falls in the last ten nights.
+                    </div>
+                    <span class="special-badge">🌟 Month of Fasting</span>
+                </div>
+
+                <!-- Month 10: Shawwal -->
+                <div class="month-card glass-card">
+                    <div class="month-number">10</div>
+                    <div class="month-arabic">شَوَّال</div>
+                    <div class="month-transliteration">Shawwal</div>
+                    <div class="month-meaning">Meaning: "Raised" or "Lifted"</div>
+                    <div class="month-significance">
+                        Begins with Eid al-Fitr, celebrating the end of Ramadan. Fasting six days in Shawwal (after Eid) is highly recommended, earning the reward of fasting an entire year.
+                    </div>
+                    <span class="special-badge">🎉 Eid al-Fitr</span>
+                </div>
+
+                <!-- Month 11: Dhul-Qi'dah -->
+                <div class="month-card glass-card">
+                    <div class="month-number">11</div>
+                    <div class="month-arabic">ذُو ٱلْقَعْدَة</div>
+                    <div class="month-transliteration">Dhul-Qi'dah</div>
+                    <div class="month-meaning">Meaning: "The One of Sitting/Truce"</div>
+                    <div class="month-significance">
+                        One of the four sacred months. Arabs would cease fighting and sit (qa'ada) peacefully. The month before Dhul-Hijjah, when Muslims prepare for Hajj.
+                    </div>
+                    <span class="special-badge">🕌 Sacred Month</span>
+                </div>
+
+                <!-- Month 12: Dhul-Hijjah -->
+                <div class="month-card glass-card">
+                    <div class="month-number">12</div>
+                    <div class="month-arabic">ذُو ٱلْحِجَّة</div>
+                    <div class="month-transliteration">Dhul-Hijjah</div>
+                    <div class="month-meaning">Meaning: "The One of Pilgrimage"</div>
+                    <div class="month-significance">
+                        The sacred month of Hajj pilgrimage (8th-13th). The Day of Arafah (9th) is the best day of the year. Eid al-Adha is celebrated on the 10th. The first ten days are highly blessed.
+                    </div>
+                    <span class="special-badge">🕋 Hajj Month</span>
+                    <span class="special-badge">🕌 Sacred Month</span>
+                </div>
+            </div>
+
+            <div class="intro-section glass-card" style="margin-top: 3rem;">
+                <h2>📖 The Four Sacred Months</h2>
+                <p>Allah says in the Qur'an: <em>"Indeed, the number of months with Allah is twelve [lunar] months in the register of Allah [from] the day He created the heavens and the earth; of these, four are sacred."</em> (Qur'an 9:36)</p>
+                <p>The four sacred months are: <strong>Muharram, Rajab, Dhul-Qi'dah, and Dhul-Hijjah</strong>. During these months, fighting was traditionally forbidden, and sins are considered more grave while good deeds are more rewarded.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                        <span class="logo-text">The Believers</span>
+                    </div>
+                    <p class="footer-desc">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
+                    <div class="social-links">
+                        <a href="https://youtube.com/@the_believers99?si=VP6NSdDbUNbW5meS" class="social-link" title="YouTube">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="https://tiktok.com" class="social-link" title="TikTok">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-.94-.08A5.77 5.77 0 0 0 6.59 19a5.77 5.77 0 0 0 5.77 5.77 5.77 5.77 0 0 0 5.77-5.77V12.6a7.66 7.66 0 0 0 4.54 1.71v-3.5a4.83 4.83 0 0 1-1.18-.15z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="prayer-times.html">Prayer Times</a></li>
+                        <li><a href="quran.html">Qur'an</a></li>
+                        <li><a href="zakat.html">Zakat Calculator</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>📧 info@thebelievers.com</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title">Latest Videos</h3>
+                    <div class="footer-videos">
+                        <a href="#" class="video-link">Islamic Lecture 1</a>
+                        <a href="#" class="video-link">Nasheed Collection</a>
+                        <a href="#" class="video-link">Quran Recitation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Believers. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

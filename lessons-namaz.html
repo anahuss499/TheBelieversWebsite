@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morning Azkar - The Believers</title>
+    <title>How to Pray (Namaz) - The Believers</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -45,26 +45,20 @@
 
     <main class="page-content">
         <div class="container">
-            <div style="margin-bottom: 2rem;">
-                <a href="azkar.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-neon-green); text-decoration: none; font-size: 0.95rem;">
-                    ← Back to Azkar
-                </a>
-            </div>
-
             <div class="page-header">
-                <h1 class="page-title neon-text">🌅 Morning Azkar</h1>
-                <p class="page-subtitle">Remembrance to recite after Fajr and in the morning</p>
+                <h1 class="page-title neon-text">How to Pray (Namaz)</h1>
+                <p class="page-subtitle">Step-by-step guide according to Hanafi Fiqh</p>
             </div>
 
             <style>
-                .azkar-list {
+                .lesson-list {
                     list-style: none;
                     padding: 0;
                     margin: 0;
                     display: grid;
                     gap: 1rem;
                 }
-                .azkar-item {
+                .lesson-item {
                     padding: 1.25rem 1.5rem;
                     background: linear-gradient(135deg, rgba(45, 212, 20, 0.08) 0%, rgba(0, 0, 0, 0.2) 100%);
                     border: 2px solid rgba(45, 212, 20, 0.3);
@@ -73,36 +67,86 @@
                     font-weight: 600;
                     font-size: 1.1rem;
                     transition: all 0.3s ease;
+                    cursor: pointer;
                 }
-                .azkar-item:hover {
+                .lesson-item:hover {
                     transform: translateX(8px);
                     border-color: var(--color-gold);
                     box-shadow: 0 8px 25px rgba(45, 212, 20, 0.25);
                 }
-                .azkar-status {
+                .lesson-item .lesson-status {
                     color: var(--color-gray-400);
                     font-weight: 400;
                     font-size: 0.9rem;
                     margin-left: 0.5rem;
                 }
-                body.light-mode .azkar-item {
+                body.light-mode .lesson-item {
                     background: linear-gradient(135deg, rgba(45, 212, 20, 0.05) 0%, rgba(0, 0, 0, 0.02) 100%);
                     color: #1a9906;
                 }
+                .intro-section {
+                    margin-bottom: 2rem;
+                    padding: 1.5rem;
+                    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+                    border-left: 4px solid var(--color-gold);
+                    border-radius: 0.75rem;
+                }
+                .intro-section h2 {
+                    color: var(--color-gold);
+                    margin: 0 0 1rem;
+                    font-size: 1.5rem;
+                }
+                .intro-section p {
+                    color: var(--color-gray-200);
+                    line-height: 1.7;
+                    margin-bottom: 0.75rem;
+                }
+                body.light-mode .intro-section {
+                    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 100%);
+                }
+                .madhab-note {
+                    margin-top: 1rem;
+                    padding: 1rem;
+                    background: rgba(45, 212, 20, 0.05);
+                    border-radius: 0.5rem;
+                    border: 1px solid rgba(45, 212, 20, 0.2);
+                }
+                .madhab-note strong {
+                    color: var(--color-neon-green);
+                }
             </style>
+            
+            <div class="intro-section glass-card">
+                <h2>🕌 Introduction to Salah (Prayer)</h2>
+                <p>Salah (prayer) is the second pillar of Islam and the most important act of worship. It is the direct connection between a Muslim and Allah, performed five times daily at prescribed times.</p>
+                <p>This comprehensive guide follows the <strong>Hanafi madhab</strong> (school of thought), one of the four major Sunni schools of Islamic jurisprudence. The Hanafi madhab is known for its detailed methodology and is followed by the majority of Muslims worldwide.</p>
+                <p><strong>What you'll learn:</strong> Complete step-by-step instructions for performing Wudu (ablution), the conditions of prayer, how to pray each of the five daily prayers, essential duas and recitations, and common mistakes to avoid.</p>
+                
+                <div class="madhab-note">
+                    <strong>📌 Note:</strong> While this guide follows Hanafi fiqh, the core of Salah is the same across all madhabs. Minor differences exist in hand placement, recitations, and specific rulings, but all are valid ways of worshipping Allah.
+                </div>
+            </div>
 
             <div class="glass-card" style="padding: 2rem;">
-                <ol class="azkar-list">
-                    <li class="azkar-item">Ayat Al-Kursi <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Last two verses of Surah Al-Baqarah <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah Al-Ikhlas (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah Al-Falaq (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Surah An-Nas (3 times) <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Asbahna wa asbahal-mulku lillah <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma bika asbahna <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma anta Rabbi <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">Allahumma inni asbahtu <span class="azkar-status">— coming soon</span></li>
-                    <li class="azkar-item">SubhanAllah wa bihamdihi (100 times) <span class="azkar-status">— coming soon</span></li>
+                <ol class="lesson-list">
+                    <li class="lesson-item">Lesson 1: Conditions of Salah & Times of Prayer <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 2: Wudu (Ablution) - Complete Guide <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 3: Adhan & Iqamah (Call to Prayer) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 4: How to Pray Fajr (2 Rakat) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 5: How to Pray Dhuhr (4 Rakat) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 6: How to Pray Asr (4 Rakat) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 7: How to Pray Maghrib (3 Rakat) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 8: How to Pray Isha (4 Rakat) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 9: Witr Prayer (Hanafi Method) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 10: Sunnah & Nafl Prayers <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 11: Recitations in Salah (Surahs & Duas) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 12: Sajdah al-Sahw (Prostration of Forgetfulness) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 13: Praying While Traveling (Qasr) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 14: Jummah Prayer (Friday) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 15: Eid Prayers <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 16: Common Mistakes in Salah <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 17: Khushu (Humility & Focus in Prayer) <span class="lesson-status">— coming soon</span></li>
+                    <li class="lesson-item">Lesson 18: Praying in Congregation vs Alone <span class="lesson-status">— coming soon</span></li>
                 </ol>
             </div>
         </div>
