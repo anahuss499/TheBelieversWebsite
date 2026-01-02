@@ -28,7 +28,7 @@
             letter-spacing: 0.04em;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
-            filter: drop-shadow(0 0 26px rgba(255, 215, 0, 0.35));
+            filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.2));
             opacity: 0;
             animation: greetingFadeInRTL 1.8s ease-out forwards, greetingFloat 3s ease-in-out 2s infinite;
         }
@@ -81,7 +81,7 @@
             position: absolute;
             font-size: 1.5rem;
             color: var(--color-gold);
-            opacity: 0.6;
+            opacity: 0.4;
             animation: sparkle 3s ease-in-out infinite;
         }
         
@@ -99,11 +99,11 @@
         
         @keyframes sparkle {
             0%, 100% {
-                opacity: 0.3;
+                opacity: 0.2;
                 transform: scale(1) rotate(0deg);
             }
             50% {
-                opacity: 0.8;
+                opacity: 0.4;
                 transform: scale(1.2) rotate(180deg);
             }
         }
@@ -397,6 +397,5 @@
     </footer>
 
     <script src="js/main.js"></script>
-    <script src="js/auto-translate.js"></script>
 </body>
 </html>

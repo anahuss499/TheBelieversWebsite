@@ -17,8 +17,8 @@
     --color-gray-500: #6b7280;
     
     /* Light Mode */
-    --color-light-bg: #F5F5F5;
-    --color-light-card: #FFFFFF;
+    --color-light-bg: #d1d5db;
+    --color-light-card: #bec3cc;
     
     /* Fonts */
     --font-sans: 'Inter', system-ui, sans-serif;
@@ -51,7 +51,7 @@ body.light-mode .logo {
 }
 
 body.light-mode .logo-text {
-    color: #1a9906;
+    color: #0d7a42;
     text-shadow: none;
 }
 
@@ -61,12 +61,12 @@ body.light-mode .nav-link {
 
 body.light-mode .nav-link:hover,
 body.light-mode .nav-link.active {
-    color: #1a9906;
+    color: #0d7a42;
 }
 
 body.light-mode .dropdown-content {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid #e5e7eb;
+    background: rgba(190, 195, 204, 0.98);
+    border: 1px solid #9ca3af;
 }
 
 body.light-mode .dropdown-content a {
@@ -74,7 +74,7 @@ body.light-mode .dropdown-content a {
 }
 
 body.light-mode .dropdown-content a:hover {
-    color: #1a9906;
+    color: #0d7a42;
 }
 
 body.light-mode .icon-btn {
@@ -219,9 +219,9 @@ body.light-mode .form-group input,
 body.light-mode .form-select,
 body.light-mode .form-input,
 body.light-mode .form-textarea {
-    background: #f5f5f5;
-    color: #000;
-    border-color: #2DD414;
+    background: #bec3cc;
+    color: #1f2937;
+    border-color: #0d7a42;
 }
 
 .btn-secondary {
@@ -246,7 +246,7 @@ body.light-mode .form-textarea {
 }
 
 body.light-mode .glass-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(190, 195, 204, 0.95);
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -891,12 +891,12 @@ body.light-mode .glass-card {
 }
 
 body.light-mode .footer {
-    background: #ffffff;
-    border-top-color: #e5e7eb;
+    background: #bec3cc;
+    border-top-color: #9ca3af;
 }
 
 body.light-mode .footer-logo .logo-text {
-    color: #1a9906;
+    color: #0d7a42;
 }
 
 body.light-mode .footer-desc,
@@ -909,16 +909,16 @@ body.light-mode .footer-bottom-links a {
 
 body.light-mode .footer-links a:hover,
 body.light-mode .footer-bottom-links a:hover {
-    color: #1a9906;
+    color: #0d7a42;
 }
 
 body.light-mode .footer-title {
-    color: #d97706;
+    color: #b45309;
 }
 
 body.light-mode .social-link {
     background: rgba(0, 0, 0, 0.05);
-    color: #1a9906;
+    color: #0d7a42;
 }
 
 body.light-mode .video-link {
@@ -927,8 +927,8 @@ body.light-mode .video-link {
 }
 
 body.light-mode .video-link:hover {
-    background: rgba(26, 153, 6, 0.1);
-    color: #1a9906;
+    background: rgba(13, 122, 66, 0.1);
+    color: #0d7a42;
 }
 
 /* Responsive Design */

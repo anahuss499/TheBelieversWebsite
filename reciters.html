@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reciter Biographies - The Believers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .reciter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .reciter-card {
+            background: linear-gradient(135deg, rgba(45, 212, 20, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%);
+            border: 1px solid rgba(45, 212, 20, 0.25);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .reciter-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reciter-photo {
+            width: 96px;
+            height: 96px;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 2px solid var(--color-neon-green);
+            box-shadow: 0 0 15px rgba(45, 212, 20, 0.35);
+            flex-shrink: 0;
+        }
+
+        .reciter-name {
+            margin: 0;
+            font-size: 1.35rem;
+            color: var(--color-neon-green);
+            font-weight: 700;
+        }
+
+        .reciter-tag {
+            color: var(--color-gold);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .reciter-bio {
+            color: var(--color-gray-200);
+            line-height: 1.7;
+            margin: 0 0 1rem;
+        }
+
+        .reciter-meta {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem;
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .reciter-meta li {
+            color: var(--color-gray-100);
+            font-size: 0.95rem;
+        }
+
+        .reciter-meta strong {
+            color: var(--color-gold);
+            font-weight: 700;
+        }
+
+        .reciter-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--color-neon-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .reciter-link:hover {
+            text-decoration: underline;
+        }
+
+        body.light-mode .reciter-card {
+            background: linear-gradient(135deg, #ffffff 0%, rgba(45, 212, 20, 0.05) 100%);
+            border-color: rgba(45, 212, 20, 0.35);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                    <span class="logo-text">The Believers</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link" data-i18n="nav.tools">Islamic Tools ▾</a>
+                        <div class="dropdown-content">
+                            <a href="prayer-times.html" data-i18n="nav.prayer">Prayer Times</a>
+                            <a href="quran.html" data-i18n="nav.quran">Qur'an</a>
+                            <a href="zakat.html" data-i18n="nav.zakat">Zakat Calculator</a>
+                            <a href="calendar.html" data-i18n="nav.calendar">Calendar</a>
+                            <a href="mosque-finder.html" data-i18n="nav.mosque">Mosque Finder</a>
+                            <a href="live.html" data-i18n="nav.live">Live Streams</a>
+                            <a href="subjects.html" data-i18n="nav.learn">Learn</a>
+                            <a href="counter.html" data-i18n="nav.counter">Counter</a>
+                            <a href="99-names.html" data-i18n="nav.99names">99 Names</a>
+                            <a href="azkar.html" data-i18n="nav.azkar">Azkar</a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="suggestions.html" class="nav-link" data-i18n="nav.suggestions">Suggestions</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn" id="searchBtn">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="7"/>
+                            <path d="M15 15l4 4"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="themeToggle">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="4"/>
+                            <path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+            <div class="search-bar" id="searchBar">
+                <input type="text" placeholder="Search..." class="search-input" aria-label="Search site" data-i18n-placeholder="search.placeholder">
+                <div class="search-suggestions" id="searchSuggestions" role="listbox"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title neon-text">Reciter Biographies</h1>
+                <p class="page-subtitle">Learn more about the voices featured on our Qur'an player.</p>
+            </div>
+
+            <div class="reciter-grid">
+                <section class="reciter-card">
+                    <div class="reciter-header">
+                        <img class="reciter-photo" src="images/minshawi.jpg" alt="Portrait of Muhammad Siddiq al-Minshawi" width="96" height="96">
+                        <div>
+                            <h2 class="reciter-name">Muhammad Siddiq al-Minshawi</h2>
+                            <div class="reciter-tag">Murattal · Clear, steady delivery</div>
+                        </div>
+                    </div>
+                    <p class="reciter-bio">Al-Minshawi (1920–1969) was an Egyptian Qur'an reciter celebrated for his calm, deeply reflective style and impeccable tajweed. His recordings remain a go-to for learners because every letter is articulated with clarity and humility.</p>
+                    <ul class="reciter-meta">
+                        <li><strong>Origin:</strong> Sohag, Egypt</li>
+                        <li><strong>Known for:</strong> Crystal-clear makharij and measured pacing ideal for study</li>
+                        <li><strong>Legacy:</strong> Part of the "Four Great Egyptian Reciters" whose voices shaped modern tilawah</li>
+                    </ul>
+                    <a class="reciter-link" href="quran.html">Listen on the Qur'an page →</a>
+                </section>
+
+                <section class="reciter-card">
+                    <div class="reciter-header">
+                        <img class="reciter-photo" src="images/abdulbasit.jpg" alt="Portrait of Abdul Basit Abdus Samad" width="96" height="96">
+                        <div>
+                            <h2 class="reciter-name">Abdul Basit Abdus Samad</h2>
+                            <div class="reciter-tag">Murattal · Majestic, resonant tone</div>
+                        </div>
+                    </div>
+                    <p class="reciter-bio">Shaykh Abdul Basit (1927–1988) captivated listeners with powerful breath control and emotive recitation that popularized Qur'an audio worldwide. His voice is often described as both commanding and deeply soothing.</p>
+                    <ul class="reciter-meta">
+                        <li><strong>Origin:</strong> Armant, Upper Egypt</li>
+                        <li><strong>Known for:</strong> Effortless long breaths and soaring maqamat transitions</li>
+                        <li><strong>Legacy:</strong> First major reciter to tour globally and record widely-distributed cassettes</li>
+                    </ul>
+                    <a class="reciter-link" href="quran.html">Listen on the Qur'an page →</a>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/auto-translate.js"></script>
+    <script src="js/autocomplete.js"></script>
+</body>
+</html>

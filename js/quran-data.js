@@ -1,8 +1,8 @@
 // Indo-Pak Nastaleeq Quran Text (Madinah Version v.9.6.1)
-// Source: https://github.com/junnunkarim/backup__indopak_quran_text
+// Source: https://github.com/junnunkarim/backup__indopak_quran_text (local copy in data/)
 // This data will be lazily loaded when a surah is selected
 
-const quranDataUrl = 'https://raw.githubusercontent.com/junnunkarim/backup__indopak_quran_text/master/Data/Madinah%20Version%20v.9.6.1/Ayah%20by%20Ayah/Indopak.v.9.6-Madinah-Ayah%20by%20Ayah%20with%20Ayah%20Numbers.txt';
+const quranDataUrl = 'data/indopak-quran.txt';
 
 // Cache for parsed Quran data
 let quranCache = {};

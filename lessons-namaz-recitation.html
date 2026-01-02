@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 11: What to Recite in Prayer - The Believers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                    <span class="logo-text">The Believers</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link" data-i18n="nav.tools">Islamic Tools ▾</a>
+                        <div class="dropdown-content">
+                            <a href="prayer-times.html" data-i18n="nav.prayer">Prayer Times</a>
+                            <a href="quran.html" data-i18n="nav.quran">Qur'an</a>
+                            <a href="zakat.html" data-i18n="nav.zakat">Zakat Calculator</a>
+                            <a href="calendar.html" data-i18n="nav.calendar">Calendar</a>
+                            <a href="mosque-finder.html" data-i18n="nav.mosque">Mosque Finder</a>
+                            <a href="live.html" data-i18n="nav.live">Live Streams</a>
+                            <a href="subjects.html" data-i18n="nav.learn">Learn</a>
+                            <a href="counter.html" data-i18n="nav.counter">Counter</a>
+                            <a href="99-names.html" data-i18n="nav.99names">99 Names</a>
+                            <a href="azkar.html" data-i18n="nav.azkar">Azkar</a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="suggestions.html" class="nav-link" data-i18n="nav.suggestions">Suggestions</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn" id="searchBtn">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="7"/>
+                            <path d="M15 15l4 4"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="themeToggle">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="10" cy="10" r="4"/>
+                            <path d="M10 1v2m0 14v2M3 10H1m4-7L3 1m14 2l-2 2M21 10h-2m-2 7l2 2M5 19l2-2"/>
+                        </svg>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+            <div class="search-bar" id="searchBar">
+                <input type="text" placeholder="Search..." class="search-input" aria-label="Search site" data-i18n-placeholder="search.placeholder">
+                <div class="search-suggestions" id="searchSuggestions" role="listbox"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title neon-text">Lesson 0: What to Recite in Prayer</h1>
+                <p class="page-subtitle">Complete Arabic texts with transliteration and English translation</p>
+            </div>
+
+            <div class="glass-card" style="padding: 2rem;">
+                <style>
+                    .prayer-section {
+                        margin-bottom: 2.5rem;
+                        padding: 1.5rem;
+                        background: linear-gradient(135deg, rgba(45, 212, 20, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
+                        border-radius: 1rem;
+                        border: 1px solid rgba(45, 212, 20, 0.2);
+                    }
+                    .prayer-section h3 {
+                        color: var(--color-neon-green);
+                        font-size: 1.4rem;
+                        margin-bottom: 1rem;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
+                    .arabic-text {
+                        font-family: 'Amiri', serif;
+                        font-size: 1.8rem;
+                        color: var(--color-gold);
+                        direction: rtl;
+                        text-align: right;
+                        line-height: 2.5;
+                        margin: 1rem 0;
+                        padding: 1rem;
+                        background: rgba(255, 215, 0, 0.05);
+                        border-radius: 0.5rem;
+                    }
+                    .transliteration {
+                        font-style: italic;
+                        color: var(--color-gray-300);
+                        margin: 0.75rem 0;
+                        line-height: 1.8;
+                    }
+                    .translation {
+                        color: var(--color-gray-200);
+                        margin: 0.75rem 0;
+                        padding-left: 1rem;
+                        border-left: 3px solid var(--color-neon-green);
+                        line-height: 1.8;
+                    }
+                    .note {
+                        background: rgba(255, 215, 0, 0.1);
+                        padding: 1rem;
+                        border-radius: 0.5rem;
+                        margin-top: 1rem;
+                        font-size: 0.95rem;
+                        color: var(--color-gray-300);
+                    }
+                    body.light-mode .prayer-section {
+                        background: linear-gradient(135deg, rgba(45, 212, 20, 0.03) 0%, rgba(0, 0, 0, 0.02) 100%);
+                    }
+                    body.light-mode .arabic-text {
+                        color: #b8860b;
+                    }
+                    body.light-mode .translation {
+                        color: var(--color-gray-700);
+                    }
+                </style>
+
+                <div class="prayer-section">
+                    <h3>🤲 1. Takbīr al-Iḥrām (Opening Takbir)</h3>
+                    <div class="arabic-text">اللّٰهُ أَكْبَرُ</div>
+                    <div class="transliteration">Allāhu Akbar</div>
+                    <div class="translation"><strong>Translation:</strong> Allah is the Greatest</div>
+                    <div class="note">📌 Raise your hands to your ears (men) or shoulders (women) and say Allahu Akbar to begin the prayer.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>📿 2. Thanā (Opening Supplication)</h3>
+                    <div class="arabic-text">سُبْحَانَكَ اللّٰهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَىٰ جَدُّكَ، وَلَا إِلٰهَ غَيْرُكَ</div>
+                    <div class="transliteration">Subḥānaka Allāhumma wa biḥamdika, wa tabāraka ismuka, wa ta'ālā jadduka, wa lā ilāha ghayruka</div>
+                    <div class="translation"><strong>Translation:</strong> Glory be to You, O Allah, and all praise is Yours. Blessed is Your Name and exalted is Your Majesty. There is no god worthy of worship except You.</div>
+                    <div class="note">📌 Recited silently after the opening Takbir.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>🛡️ 3. Ta'awwudh (Seeking Refuge)</h3>
+                    <div class="arabic-text">أَعُوذُ بِاللّٰهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
+                    <div class="transliteration">A'ūdhu billāhi minash-shayṭānir-rajīm</div>
+                    <div class="translation"><strong>Translation:</strong> I seek refuge with Allah from Satan, the accursed.</div>
+                    <div class="note">📌 Recited silently before beginning Surah al-Fatihah.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>✨ 4. Tasmiyah (Bismillah)</h3>
+                    <div class="arabic-text">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ</div>
+                    <div class="transliteration">Bismillāhir-Raḥmānir-Raḥīm</div>
+                    <div class="translation"><strong>Translation:</strong> In the name of Allah, the Most Gracious, the Most Merciful.</div>
+                    <div class="note">📌 Recited silently before Surah al-Fatihah.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>📖 5. Surah al-Fātihah (The Opening)</h3>
+                    <div class="arabic-text">
+                        الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمٰنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ
+                    </div>
+                    <div class="transliteration">
+                        Alḥamdu lillāhi Rabbil-'ālamīn. Ar-Raḥmānir-Raḥīm. Māliki Yawmid-Dīn. Iyyāka na'budu wa iyyāka nasta'īn. Ihdinaṣ-ṣirāṭal-mustaqīm. Ṣirāṭal-ladhīna an'amta 'alayhim ghayril-maghḍūbi 'alayhim walāḍ-ḍāllīn.
+                    </div>
+                    <div class="translation">
+                        <strong>Translation:</strong> All praise is due to Allah, Lord of all the worlds. The Most Gracious, the Most Merciful. Master of the Day of Judgment. You alone we worship, and You alone we ask for help. Guide us on the Straight Path, the path of those who have received Your grace; not the path of those who have brought down wrath upon themselves, nor of those who have gone astray.
+                    </div>
+                    <div class="note">📌 Must be recited in every rak'ah. After completing it, say "Āmīn" silently.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>📜 6. Additional Surah or Verses</h3>
+                    <div class="arabic-text">
+                        قُلْ هُوَ اللّٰهُ أَحَدٌ ۝ اللّٰهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ
+                    </div>
+                    <div class="transliteration">
+                        Qul Huwa Allāhu Aḥad. Allāhuṣ-Ṣamad. Lam yalid wa lam yūlad. Wa lam yakul-lahu kufuwan aḥad.
+                    </div>
+                    <div class="translation">
+                        <strong>Translation (Surah al-Ikhlas):</strong> Say, "He is Allah, [who is] One. Allah, the Eternal Refuge. He neither begets nor is born. Nor is there to Him any equivalent."
+                    </div>
+                    <div class="note">📌 After Surah al-Fatihah, recite any other Surah or at least 3 verses from the Quran. This is done in the first two rak'ahs only.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>🙇 7. Rukū' (Bowing)</h3>
+                    <div class="arabic-text">سُبْحَانَ رَبِّيَ الْعَظِيمِ</div>
+                    <div class="transliteration">Subḥāna Rabbiya al-'Aẓīm</div>
+                    <div class="translation"><strong>Translation:</strong> Glory be to my Lord, the Most Great.</div>
+                    <div class="note">📌 Say "Allahu Akbar" and bow. Recite the above at least 3 times in Ruku'.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>🧍 8. Standing After Rukū'</h3>
+                    <div class="arabic-text">سَمِعَ اللّٰهُ لِمَنْ حَمِدَهُ</div>
+                    <div class="transliteration">Sami'a Allāhu liman ḥamidah</div>
+                    <div class="translation"><strong>Translation:</strong> Allah hears those who praise Him.</div>
+                    <div class="note">📌 When rising from Ruku', the Imam says this. Those praying alone also say it.</div>
+                    
+                    <div class="arabic-text" style="margin-top: 1rem;">رَبَّنَا وَلَكَ الْحَمْدُ</div>
+                    <div class="transliteration">Rabbanā wa lakal-ḥamd</div>
+                    <div class="translation"><strong>Translation:</strong> Our Lord, and to You belongs all praise.</div>
+                    <div class="note">📌 Everyone says this after standing up from Ruku'.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>🕋 9. Sujūd (Prostration)</h3>
+                    <div class="arabic-text">سُبْحَانَ رَبِّيَ الْأَعْلَىٰ</div>
+                    <div class="transliteration">Subḥāna Rabbiya al-A'lā</div>
+                    <div class="translation"><strong>Translation:</strong> Glory be to my Lord, the Most High.</div>
+                    <div class="note">📌 Say "Allahu Akbar" and go into prostration. Recite the above at least 3 times. Perform two prostrations per rak'ah.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>🪑 10. Sitting Between Two Prostrations</h3>
+                    <div class="arabic-text">رَبِّ اغْفِرْ لِي</div>
+                    <div class="transliteration">Rabbighfir lī</div>
+                    <div class="translation"><strong>Translation:</strong> My Lord, forgive me.</div>
+                    <div class="note">📌 Sit briefly between the two prostrations and recite this.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>🤲 11. Tashahhud (At-Tahiyyat)</h3>
+                    <div class="arabic-text">
+                        التَّحِيَّاتُ لِلّٰهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللّٰهِ الصَّالِحِينَ، أَشْهَدُ أَن لَّا إِلٰهَ إِلَّا اللّٰهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ
+                    </div>
+                    <div class="transliteration">
+                        At-taḥiyyātu lillāhi waṣ-ṣalawātu waṭ-ṭayyibāt. As-salāmu 'alayka ayyuhan-Nabiyyu wa raḥmatullāhi wa barakātuh. As-salāmu 'alaynā wa 'alā 'ibādillāhiṣ-ṣāliḥīn. Ashhadu allā ilāha illallāh, wa ashhadu anna Muḥammadan 'abduhu wa rasūluh.
+                    </div>
+                    <div class="translation">
+                        <strong>Translation:</strong> All verbal greetings, prayers, and pure words are for Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no god except Allah, and I bear witness that Muhammad is His servant and messenger.
+                    </div>
+                    <div class="note">📌 Recited while sitting after the second rak'ah and at the end of prayer.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>🌟 12. Durūd (Salutations upon the Prophet)</h3>
+                    <div class="arabic-text">
+                        اللّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ. اللّٰهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ
+                    </div>
+                    <div class="transliteration">
+                        Allāhumma ṣalli 'alā Muḥammadin wa 'alā āli Muḥammad, kamā ṣallayta 'alā Ibrāhīma wa 'alā āli Ibrāhīm, innaka Ḥamīdum-Majīd. Allāhumma bārik 'alā Muḥammadin wa 'alā āli Muḥammad, kamā bārakta 'alā Ibrāhīma wa 'alā āli Ibrāhīm, innaka Ḥamīdum-Majīd.
+                    </div>
+                    <div class="translation">
+                        <strong>Translation:</strong> O Allah, send prayers upon Muhammad and upon the family of Muhammad, as You sent prayers upon Ibrahim and upon the family of Ibrahim. Indeed, You are Praiseworthy and Glorious. O Allah, send blessings upon Muhammad and upon the family of Muhammad, as You blessed Ibrahim and upon the family of Ibrahim. Indeed, You are Praiseworthy and Glorious.
+                    </div>
+                    <div class="note">📌 Recited after Tashahhud in the final sitting.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>🤲 13. Final Du'ā (Optional but Recommended)</h3>
+                    <div class="arabic-text">
+                        رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي ۚ رَبَّنَا وَتَقَبَّلْ دُعَاءِ
+                    </div>
+                    <div class="transliteration">
+                        Rabbi-j'alnī muqīmaṣ-ṣalāti wa min dhurriyyatī, rabbanā wa taqabbal du'ā'
+                    </div>
+                    <div class="translation">
+                        <strong>Translation:</strong> My Lord, make me one who establishes prayer, and [also] from my descendants. Our Lord, accept my supplication.
+                    </div>
+                    <div class="note">📌 Beautiful closing du'ā from Surah Ibrāhīm (14:40) to ask Allah for steadfastness in Salah for yourself and your family.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <h3>☮️ 14. Taslīm (Concluding the Prayer)</h3>
+                    <div class="arabic-text">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللّٰهِ</div>
+                    <div class="transliteration">As-salāmu 'alaykum wa raḥmatullāh</div>
+                    <div class="translation"><strong>Translation:</strong> Peace and mercy of Allah be upon you.</div>
+                    <div class="note">📌 Turn your head to the right and say this, then turn to the left and repeat. This concludes the prayer.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon"><img src="images/logo.png" alt="The Believers logo"></div>
+                        <span class="logo-text">The Believers</span>
+                    </div>
+                    <p class="footer-desc" data-i18n="footer.tagline">Your modern Islamic companion for prayer times, Qur'an study, and spiritual growth.</p>
+                    <div class="social-links">
+                        <a href="https://youtube.com/@the_believers99?si=VP6NSdDbUNbW5meS" class="social-link" title="YouTube">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="https://tiktok.com" class="social-link" title="TikTok">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-.94-.08A5.77 5.77 0 0 0 6.59 19a5.77 5.77 0 0 0 5.77 5.77 5.77 5.77 0 0 0 5.77-5.77V12.6a7.66 7.66 0 0 0 4.54 1.71v-3.5a4.83 4.83 0 0 1-1.18-.15z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title" data-i18n="footer.quick">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="prayer-times.html" data-i18n="nav.prayer">Prayer Times</a></li>
+                        <li><a href="quran.html" data-i18n="nav.quran">Qur'an</a></li>
+                        <li><a href="zakat.html" data-i18n="nav.zakat">Zakat Calculator</a></li>
+                        <li><a href="calendar.html" data-i18n="nav.calendar">Calendar</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-title" data-i18n="footer.contact">Contact</h3>
+                    <ul class="footer-contact">
+                        <li>📧 info@thebelievers.com</li>
+                    </ul>
+                </div>                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Believers. <span data-i18n="footer.rights">All rights reserved</span>.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+                    <a href="#" data-i18n="footer.terms">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
