@@ -22,11 +22,11 @@
 }
 
 body.light-mode .page-subtitle {
-    color: #6b7280;
+    color: #000000;
 }
 
 body.light-mode .page-title {
-    color: #1f2937;
+    color: #000000;
 }
 
 body.light-mode .neon-text {
@@ -204,8 +204,8 @@ body.light-mode .gold-text {
 body.light-mode .form-select,
 body.light-mode .form-input,
 body.light-mode .form-textarea {
-    background: rgba(0, 0, 0, 0.05);
-    color: #111827;
+    background: #FFFFFF;
+    color: #000000;
 }
 
 .error-message {

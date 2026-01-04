@@ -1,26 +1,88 @@
+// Splash Screen - ensure it stays 3s, fades in with strong animation, and always clears
+(function() {
+    const splashScreen = document.getElementById('splashScreen');
+    if (!splashScreen) return;
+
+    const fadeMs = 900;
+    const visibleMs = 3000;
+    const hardTimeoutMs = 6000;
+    let hidden = false;
+    let timersStarted = false;
+    let hideTimer;
+    let hardTimer;
+
+    const hideSplash = () => {
+        if (hidden) return;
+        hidden = true;
+        clearTimeout(hideTimer);
+        clearTimeout(hardTimer);
+
+        splashScreen.style.transition = 'opacity 0.9s ease-out, transform 0.9s ease-out';
+        splashScreen.style.opacity = '0';
+        splashScreen.style.transform = 'scale(0.9)';
+
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+        }, fadeMs);
+    };
+
+    const startTimers = () => {
+        if (timersStarted) return;
+        timersStarted = true;
+        hideTimer = setTimeout(hideSplash, visibleMs);
+        hardTimer = setTimeout(hideSplash, hardTimeoutMs);
+    };
+
+    if (document.readyState === 'complete') {
+        startTimers();
+    } else {
+        window.addEventListener('load', startTimers, { once: true });
+        setTimeout(startTimers, 1200);
+    }
+
+    splashScreen.addEventListener('click', hideSplash);
+    // Add class to trigger animation (with small delay to ensure rendering)
+    setTimeout(() => {
+        splashScreen.classList.add('splash-animate');
+    }, 50);
+})();
+
+// Load theme first before anything else renders
+const storedTheme = localStorage.getItem('theme');
+if (storedTheme !== 'dark') {
+    localStorage.setItem('theme', 'dark');
+}
+const initialTheme = localStorage.getItem('theme');
+const body = document.body;
+const html = document.documentElement;
+
+if (initialTheme === 'light') {
+    body.classList.add('light-mode');
+    html.classList.add('light-mode-init');
+} else {
+    body.classList.remove('light-mode');
+    html.classList.remove('light-mode-init');
+}
+
 // Theme Toggle
 const themeToggle = document.getElementById('themeToggle');
-const body = document.body;
 const themeIcon = document.getElementById('themeIcon');
-
-// Load saved theme
-const savedTheme = localStorage.getItem('theme') || 'dark';
-body.classList.toggle('light-mode', savedTheme === 'light');
 
 themeToggle.addEventListener('click', () => {
     body.classList.toggle('light-mode');
+    html.classList.toggle('light-mode-init');
     const theme = body.classList.contains('light-mode') ? 'light' : 'dark';
     localStorage.setItem('theme', theme);
 });
 
-// Mobile Menu Toggle
+// Old mobile menu toggle - now disabled, using sidebar instead
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 
-menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    menuToggle.classList.toggle('active');
-});
+// Disable old menu toggle since we're using the sidebar
+if (menuToggle) {
+    menuToggle.style.display = 'none';
+}
 
 // Search Bar Toggle + Suggestions
 const searchBtn = document.getElementById('searchBtn');
@@ -225,18 +287,122 @@ document.querySelectorAll('.feature-card, .stat-item').forEach(el => {
     observer.observe(el);
 });
 
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.nav-content') && navLinks.classList.contains('active')) {
-        navLinks.classList.remove('active');
-        menuToggle.classList.remove('active');
-    }
-});
-
 // Close search bar when clicking outside
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.nav-actions') && !e.target.closest('.search-bar')) {
         searchBar.classList.remove('active');
         searchSuggestionsEl?.classList.remove('show');
+    }
+});
+
+// Swipeable Sidebar Menu
+const sidebarMenu = document.getElementById('sidebarMenu');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarClose = document.getElementById('sidebarClose');
+
+let touchStartX = 0;
+let touchCurrentX = 0;
+let touchStartY = 0;
+let touchCurrentY = 0;
+let isSwiping = false;
+let isHorizontalSwipe = false;
+
+// Open sidebar
+function openSidebar() {
+    sidebarMenu.classList.add('active');
+    sidebarOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close sidebar
+function closeSidebar() {
+    sidebarMenu.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Toggle button click
+if (sidebarToggle) {
+    sidebarToggle.addEventListener('click', openSidebar);
+}
+
+// Close button click
+if (sidebarClose) {
+    sidebarClose.addEventListener('click', closeSidebar);
+}
+
+// Overlay click
+if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', closeSidebar);
+}
+
+// Touch events for swipe gesture
+document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchCurrentX = touchStartX;
+    touchCurrentY = touchStartY;
+    
+    // Start swipe detection from right edge or from middle of screen
+    const screenWidth = window.innerWidth;
+    const fromRightEdge = touchStartX > screenWidth - 50;
+    const fromMiddle = touchStartX > screenWidth * 0.3 && touchStartX < screenWidth * 0.7;
+    
+    if (fromRightEdge || fromMiddle) {
+        isSwiping = true;
+    }
+}, { passive: true });
+
+document.addEventListener('touchmove', (e) => {
+    if (!isSwiping) return;
+    
+    touchCurrentX = e.touches[0].clientX;
+    touchCurrentY = e.touches[0].clientY;
+    
+    const deltaX = touchStartX - touchCurrentX;
+    const deltaY = Math.abs(touchStartY - touchCurrentY);
+    
+    // Determine if this is a horizontal swipe
+    if (!isHorizontalSwipe && Math.abs(deltaX) > 10) {
+        isHorizontalSwipe = Math.abs(deltaX) > deltaY;
+    }
+    
+    // If horizontal swipe from right to left (deltaX > 0) and moved at least 20px
+    if (isHorizontalSwipe && deltaX > 20) {
+        openSidebar();
+        isSwiping = false;
+        isHorizontalSwipe = false;
+    }
+}, { passive: true });
+
+document.addEventListener('touchend', () => {
+    isSwiping = false;
+    isHorizontalSwipe = false;
+});
+
+// Swipe to close sidebar (left to right)
+if (sidebarMenu) {
+    let sidebarTouchStartX = 0;
+    
+    sidebarMenu.addEventListener('touchstart', (e) => {
+        sidebarTouchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    
+    sidebarMenu.addEventListener('touchmove', (e) => {
+        const currentX = e.touches[0].clientX;
+        const deltaX = currentX - sidebarTouchStartX;
+        
+        // If swiping right to left (closing gesture)
+        if (deltaX > 50) {
+            closeSidebar();
+        }
+    }, { passive: true });
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebarMenu.classList.contains('active')) {
+        closeSidebar();
     }
 });
